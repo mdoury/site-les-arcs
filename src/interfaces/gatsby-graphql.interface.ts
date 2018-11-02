@@ -19,7 +19,7 @@ export type SubscriptionResolver<
     args: Args,
     context: Context,
     info: GraphQLResolveInfo
-  ): AsyncIterator<R | Result>;
+  ): AsyncIterableIterator<R | Result>;
   resolve?<R = Result, P = Parent>(
     parent: P,
     args: Args,
@@ -51,17 +51,18 @@ export interface Query {
   allDatoCmsField?: DatoCmsFieldConnection | null /** Connection to all DatoCmsField nodes */;
   allDatoCmsModel?: DatoCmsModelConnection | null /** Connection to all DatoCmsModel nodes */;
   allDatoCmsSeoMetaTags?: DatoCmsSeoMetaTagsConnection | null /** Connection to all DatoCmsSeoMetaTags nodes */;
+  allDatoCmsAsset?: DatoCmsAssetConnection | null /** Connection to all DatoCmsAsset nodes */;
   allDatoCmsOneColumnSectionContentTextNode?: DatoCmsOneColumnSectionContentTextNodeConnection | null /** Connection to all DatoCmsOneColumnSectionContentTextNode nodes */;
+  allDatoCmsTwoColumnSectionFirstColumnContentTextNode?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnection | null /** Connection to all DatoCmsTwoColumnSectionFirstColumnContentTextNode nodes */;
+  allDatoCmsTwoColumnSectionSecondColumnContentTextNode?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnection | null /** Connection to all DatoCmsTwoColumnSectionSecondColumnContentTextNode nodes */;
   allDatoCmsPrice?: DatoCmsPriceConnection | null /** Connection to all DatoCmsPrice nodes */;
   allDatoCmsWeek?: DatoCmsWeekConnection | null /** Connection to all DatoCmsWeek nodes */;
   allDatoCmsHomepage?: DatoCmsHomepageConnection | null /** Connection to all DatoCmsHomepage nodes */;
   allDatoCmsFullWidthImage?: DatoCmsFullWidthImageConnection | null /** Connection to all DatoCmsFullWidthImage nodes */;
   allDatoCmsOneColumnSection?: DatoCmsOneColumnSectionConnection | null /** Connection to all DatoCmsOneColumnSection nodes */;
-  allDatoCmsSite?: DatoCmsSiteConnection | null /** Connection to all DatoCmsSite nodes */;
-  allDatoCmsTwoColumnSectionFirstColumnContentTextNode?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnection | null /** Connection to all DatoCmsTwoColumnSectionFirstColumnContentTextNode nodes */;
-  allDatoCmsTwoColumnSectionSecondColumnContentTextNode?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnection | null /** Connection to all DatoCmsTwoColumnSectionSecondColumnContentTextNode nodes */;
+  allDatoCmsPage?: DatoCmsPageConnection | null /** Connection to all DatoCmsPage nodes */;
   allDatoCmsTwoColumnSection?: DatoCmsTwoColumnSectionConnection | null /** Connection to all DatoCmsTwoColumnSection nodes */;
-  allDatoCmsAsset?: DatoCmsAssetConnection | null /** Connection to all DatoCmsAsset nodes */;
+  allDatoCmsSite?: DatoCmsSiteConnection | null /** Connection to all DatoCmsSite nodes */;
   sitePage?: SitePage | null;
   sitePlugin?: SitePlugin | null;
   site?: Site | null;
@@ -73,17 +74,18 @@ export interface Query {
   datoCmsField?: DatoCmsField | null;
   datoCmsModel?: DatoCmsModel | null;
   datoCmsSeoMetaTags?: DatoCmsSeoMetaTags | null;
+  datoCmsAsset?: DatoCmsAsset | null;
   datoCmsOneColumnSectionContentTextNode?: DatoCmsOneColumnSectionContentTextNode | null;
+  datoCmsTwoColumnSectionFirstColumnContentTextNode?: DatoCmsTwoColumnSectionFirstColumnContentTextNode | null;
+  datoCmsTwoColumnSectionSecondColumnContentTextNode?: DatoCmsTwoColumnSectionSecondColumnContentTextNode | null;
   datoCmsPrice?: DatoCmsPrice | null;
   datoCmsWeek?: DatoCmsWeek | null;
   datoCmsHomepage?: DatoCmsHomepage | null;
   datoCmsFullWidthImage?: DatoCmsFullWidthImage | null;
   datoCmsOneColumnSection?: DatoCmsOneColumnSection | null;
-  datoCmsSite?: DatoCmsSite | null;
-  datoCmsTwoColumnSectionFirstColumnContentTextNode?: DatoCmsTwoColumnSectionFirstColumnContentTextNode | null;
-  datoCmsTwoColumnSectionSecondColumnContentTextNode?: DatoCmsTwoColumnSectionSecondColumnContentTextNode | null;
+  datoCmsPage?: DatoCmsPage | null;
   datoCmsTwoColumnSection?: DatoCmsTwoColumnSection | null;
-  datoCmsAsset?: DatoCmsAsset | null;
+  datoCmsSite?: DatoCmsSite | null;
 }
 /** A connection to a list of items. */
 export interface SitePageConnection {
@@ -117,7 +119,7 @@ export interface SitePage extends Node {
   pluginCreator?: SitePlugin | null;
   pluginCreatorId?: string | null;
   componentPath?: string | null;
-  internal?: Internal_23 | null;
+  internal?: Internal_24 | null;
 }
 
 export interface Context {
@@ -132,19 +134,21 @@ export interface SitePlugin extends Node {
   resolve?: string | null;
   name?: string | null;
   version?: string | null;
-  pluginOptions?: PluginOptions_2 | null;
+  pluginOptions?: PluginOptions_3 | null;
   nodeAPIs?: (string | null)[] | null;
   browserAPIs?: (string | null)[] | null;
   ssrAPIs?: (string | null)[] | null;
   pluginFilepath?: string | null;
   packageJson?: PackageJson_2 | null;
-  internal?: Internal_24 | null;
+  internal?: Internal_25 | null;
 }
 
-export interface PluginOptions_2 {
+export interface PluginOptions_3 {
+  plugins?: (Plugins_2 | null)[] | null;
   endpoint?: string | null;
   query?: string | null;
   apiToken?: string | null;
+  maxWidth?: number | null;
   name?: string | null;
   short_name?: string | null;
   start_url?: string | null;
@@ -154,6 +158,19 @@ export interface PluginOptions_2 {
   icons?: (Icons_2 | null)[] | null;
   path?: string | null;
   pathCheck?: boolean | null;
+}
+
+export interface Plugins_2 {
+  resolve?: string | null;
+  id?: string | null;
+  name?: string | null;
+  version?: string | null;
+  pluginOptions?: PluginOptions_4 | null;
+  pluginFilepath?: string | null;
+}
+
+export interface PluginOptions_4 {
+  maxWidth?: number | null;
 }
 
 export interface Icons_2 {
@@ -190,13 +207,13 @@ export interface PeerDependencies_2 {
   version?: string | null;
 }
 
-export interface Internal_24 {
+export interface Internal_25 {
   contentDigest?: string | null;
   type?: string | null;
   owner?: string | null;
 }
 
-export interface Internal_23 {
+export interface Internal_24 {
   type?: string | null;
   contentDigest?: string | null;
   description?: string | null;
@@ -269,7 +286,7 @@ export interface Artist extends Node {
   slug?: string | null;
   picture?: Picture_2 | null;
   records?: (Records_2 | null)[] | null;
-  internal?: Internal_25 | null;
+  internal?: Internal_26 | null;
 }
 
 export interface Picture_2 {
@@ -285,7 +302,7 @@ export interface Records_2 {
   title?: string | null;
 }
 
-export interface Internal_25 {
+export interface Internal_26 {
   type?: string | null;
   content?: string | null;
   contentDigest?: string | null;
@@ -331,7 +348,7 @@ export interface Record extends Node {
   reviews?: (Reviews_2 | null)[] | null;
   createdAt?: Date | null;
   title?: string | null;
-  internal?: Internal_26 | null;
+  internal?: Internal_27 | null;
 }
 
 export interface Tracks_2 {
@@ -356,7 +373,7 @@ export interface Reviews_2 {
   title?: string | null;
 }
 
-export interface Internal_26 {
+export interface Internal_27 {
   type?: string | null;
   content?: string | null;
   contentDigest?: string | null;
@@ -402,7 +419,7 @@ export interface Review extends Node {
   title?: string | null;
   record?: Record_2 | null;
   comments?: (Comments_2 | null)[] | null;
-  internal?: Internal_27 | null;
+  internal?: Internal_28 | null;
 }
 
 export interface Record_2 {
@@ -420,7 +437,7 @@ export interface Comments_2 {
   body?: string | null;
 }
 
-export interface Internal_27 {
+export interface Internal_28 {
   type?: string | null;
   content?: string | null;
   contentDigest?: string | null;
@@ -460,14 +477,14 @@ export interface ReviewMarkdown extends Node {
   parent?: Node | null /** The parent of this node. */;
   children?: (Node | null)[] | null /** The children of this node. */;
   childMarkdownRemark?: MarkdownRemark | null /** The child of this node of type markdownRemark */;
-  internal?: Internal_28 | null;
+  internal?: Internal_29 | null;
 }
 /** Node of type MarkdownRemark */
 export interface MarkdownRemark extends Node {
   id: string /** The id of this node. */;
   parent?: Node | null /** The parent of this node. */;
   children?: (Node | null)[] | null /** The children of this node. */;
-  internal?: Internal_29 | null;
+  internal?: Internal_30 | null;
   frontmatter?: Frontmatter_2 | null;
   rawMarkdownBody?: string | null;
   html?: string | null;
@@ -479,7 +496,7 @@ export interface MarkdownRemark extends Node {
   wordCount?: WordCount | null;
 }
 
-export interface Internal_29 {
+export interface Internal_30 {
   content?: string | null;
   type?: string | null;
   contentDigest?: string | null;
@@ -502,7 +519,7 @@ export interface WordCount {
   words?: number | null;
 }
 
-export interface Internal_28 {
+export interface Internal_29 {
   type?: string | null;
   mediaType?: string | null;
   content?: string | null;
@@ -575,7 +592,7 @@ export interface DatoCmsField extends Node {
   parent?: Node | null /** The parent of this node. */;
   children?: (Node | null)[] | null /** The children of this node. */;
   originalId?: string | null;
-  internal?: Internal_30 | null;
+  internal?: Internal_31 | null;
   label?: string | null;
   fieldType?: string | null;
   apiKey?: string | null;
@@ -586,7 +603,7 @@ export interface DatoCmsField extends Node {
   appeareance?: Appeareance_2 | null;
 }
 
-export interface Internal_30 {
+export interface Internal_31 {
   type?: string | null;
   contentDigest?: string | null;
   owner?: string | null;
@@ -672,7 +689,7 @@ export interface DatoCmsModel extends Node {
   parent?: Node | null /** The parent of this node. */;
   children?: (Node | null)[] | null /** The children of this node. */;
   originalId?: string | null;
-  internal?: Internal_31 | null;
+  internal?: Internal_32 | null;
   name?: string | null;
   singleton?: boolean | null;
   sortable?: boolean | null;
@@ -686,7 +703,7 @@ export interface DatoCmsModel extends Node {
   fields?: (DatoCmsField | null)[] | null;
 }
 
-export interface Internal_31 {
+export interface Internal_32 {
   type?: string | null;
   contentDigest?: string | null;
   owner?: string | null;
@@ -727,7 +744,7 @@ export interface DatoCmsSeoMetaTags extends Node {
   parent?: Node | null /** The parent of this node. */;
   children?: (Node | null)[] | null /** The children of this node. */;
   tags?: (Tags_2 | null)[] | null;
-  internal?: Internal_32 | null;
+  internal?: Internal_33 | null;
 }
 
 export interface Tags_2 {
@@ -742,7 +759,7 @@ export interface Attributes_2 {
   name?: string | null;
 }
 
-export interface Internal_32 {
+export interface Internal_33 {
   type?: string | null;
   contentDigest?: string | null;
   owner?: string | null;
@@ -762,6 +779,78 @@ export interface DatoCmsSeoMetaTagsGroupConnectionEdge {
   node?: DatoCmsSeoMetaTags | null /** The item at the end of the edge */;
   next?: DatoCmsSeoMetaTags | null /** The next edge in the connection */;
   previous?: DatoCmsSeoMetaTags | null /** The previous edge in the connection */;
+}
+/** A connection to a list of items. */
+export interface DatoCmsAssetConnection {
+  pageInfo: PageInfo /** Information to aid in pagination. */;
+  edges?: (DatoCmsAssetEdge | null)[] | null /** A list of edges. */;
+  totalCount?: number | null;
+  distinct?: (string | null)[] | null;
+  group?: (DatoCmsAssetGroupConnectionConnection | null)[] | null;
+}
+/** An edge in a connection. */
+export interface DatoCmsAssetEdge {
+  node?: DatoCmsAsset | null /** The item at the end of the edge */;
+  next?: DatoCmsAsset | null /** The next edge in the connection */;
+  previous?: DatoCmsAsset | null /** The previous edge in the connection */;
+}
+/** Node of type DatoCmsAsset */
+export interface DatoCmsAsset extends Node {
+  id: string /** The id of this node. */;
+  parent?: Node | null /** The parent of this node. */;
+  children?: (Node | null)[] | null /** The children of this node. */;
+  internal?: Internal_34 | null;
+  format?: string | null;
+  size?: number | null;
+  width?: number | null;
+  height?: number | null;
+  title?: string | null;
+  alt?: string | null;
+  url?: string | null;
+  resolutions?: DatoCmsFixed | null;
+  sizes?: DatoCmsFluid | null;
+  inlineSvg?: string | null;
+  fluid?: DatoCmsFluid | null;
+  fixed?: DatoCmsFixed | null;
+}
+
+export interface Internal_34 {
+  type?: string | null;
+  contentDigest?: string | null;
+  owner?: string | null;
+}
+
+export interface DatoCmsFixed {
+  base64?: string | null;
+  aspectRatio?: number | null;
+  width?: number | null;
+  height?: number | null;
+  src?: string | null;
+  srcSet?: string | null;
+}
+
+export interface DatoCmsFluid {
+  base64?: string | null;
+  aspectRatio?: number | null;
+  src?: string | null;
+  srcSet?: string | null;
+  sizes?: string | null;
+}
+/** A connection to a list of items. */
+export interface DatoCmsAssetGroupConnectionConnection {
+  pageInfo: PageInfo /** Information to aid in pagination. */;
+  edges?:
+    | (DatoCmsAssetGroupConnectionEdge | null)[]
+    | null /** A list of edges. */;
+  field?: string | null;
+  fieldValue?: string | null;
+  totalCount?: number | null;
+}
+/** An edge in a connection. */
+export interface DatoCmsAssetGroupConnectionEdge {
+  node?: DatoCmsAsset | null /** The item at the end of the edge */;
+  next?: DatoCmsAsset | null /** The next edge in the connection */;
+  previous?: DatoCmsAsset | null /** The previous edge in the connection */;
 }
 /** A connection to a list of items. */
 export interface DatoCmsOneColumnSectionContentTextNodeConnection {
@@ -788,10 +877,10 @@ export interface DatoCmsOneColumnSectionContentTextNode extends Node {
   children?: (Node | null)[] | null /** The children of this node. */;
   childMarkdownRemark?: MarkdownRemark | null /** The child of this node of type markdownRemark */;
   content?: string | null;
-  internal?: Internal_33 | null;
+  internal?: Internal_35 | null;
 }
 
-export interface Internal_33 {
+export interface Internal_35 {
   type?: string | null;
   mediaType?: string | null;
   content?: string | null;
@@ -815,6 +904,110 @@ export interface DatoCmsOneColumnSectionContentTextNodeGroupConnectionEdge {
   previous?: DatoCmsOneColumnSectionContentTextNode | null /** The previous edge in the connection */;
 }
 /** A connection to a list of items. */
+export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnection {
+  pageInfo: PageInfo /** Information to aid in pagination. */;
+  edges?:
+    | (DatoCmsTwoColumnSectionFirstColumnContentTextNodeEdge | null)[]
+    | null /** A list of edges. */;
+  totalCount?: number | null;
+  distinct?: (string | null)[] | null;
+  group?:
+    | (DatoCmsTwoColumnSectionFirstColumnContentTextNodeGroupConnectionConnection | null)[]
+    | null;
+}
+/** An edge in a connection. */
+export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeEdge {
+  node?: DatoCmsTwoColumnSectionFirstColumnContentTextNode | null /** The item at the end of the edge */;
+  next?: DatoCmsTwoColumnSectionFirstColumnContentTextNode | null /** The next edge in the connection */;
+  previous?: DatoCmsTwoColumnSectionFirstColumnContentTextNode | null /** The previous edge in the connection */;
+}
+/** Node of type DatoCmsTwoColumnSectionFirstColumnContentTextNode */
+export interface DatoCmsTwoColumnSectionFirstColumnContentTextNode
+  extends Node {
+  id: string /** The id of this node. */;
+  parent?: Node | null /** The parent of this node. */;
+  children?: (Node | null)[] | null /** The children of this node. */;
+  childMarkdownRemark?: MarkdownRemark | null /** The child of this node of type markdownRemark */;
+  firstColumnContent?: string | null;
+  internal?: Internal_36 | null;
+}
+
+export interface Internal_36 {
+  type?: string | null;
+  mediaType?: string | null;
+  content?: string | null;
+  contentDigest?: string | null;
+  owner?: string | null;
+}
+/** A connection to a list of items. */
+export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeGroupConnectionConnection {
+  pageInfo: PageInfo /** Information to aid in pagination. */;
+  edges?:
+    | (DatoCmsTwoColumnSectionFirstColumnContentTextNodeGroupConnectionEdge | null)[]
+    | null /** A list of edges. */;
+  field?: string | null;
+  fieldValue?: string | null;
+  totalCount?: number | null;
+}
+/** An edge in a connection. */
+export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeGroupConnectionEdge {
+  node?: DatoCmsTwoColumnSectionFirstColumnContentTextNode | null /** The item at the end of the edge */;
+  next?: DatoCmsTwoColumnSectionFirstColumnContentTextNode | null /** The next edge in the connection */;
+  previous?: DatoCmsTwoColumnSectionFirstColumnContentTextNode | null /** The previous edge in the connection */;
+}
+/** A connection to a list of items. */
+export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnection {
+  pageInfo: PageInfo /** Information to aid in pagination. */;
+  edges?:
+    | (DatoCmsTwoColumnSectionSecondColumnContentTextNodeEdge | null)[]
+    | null /** A list of edges. */;
+  totalCount?: number | null;
+  distinct?: (string | null)[] | null;
+  group?:
+    | (DatoCmsTwoColumnSectionSecondColumnContentTextNodeGroupConnectionConnection | null)[]
+    | null;
+}
+/** An edge in a connection. */
+export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeEdge {
+  node?: DatoCmsTwoColumnSectionSecondColumnContentTextNode | null /** The item at the end of the edge */;
+  next?: DatoCmsTwoColumnSectionSecondColumnContentTextNode | null /** The next edge in the connection */;
+  previous?: DatoCmsTwoColumnSectionSecondColumnContentTextNode | null /** The previous edge in the connection */;
+}
+/** Node of type DatoCmsTwoColumnSectionSecondColumnContentTextNode */
+export interface DatoCmsTwoColumnSectionSecondColumnContentTextNode
+  extends Node {
+  id: string /** The id of this node. */;
+  parent?: Node | null /** The parent of this node. */;
+  children?: (Node | null)[] | null /** The children of this node. */;
+  childMarkdownRemark?: MarkdownRemark | null /** The child of this node of type markdownRemark */;
+  secondColumnContent?: string | null;
+  internal?: Internal_37 | null;
+}
+
+export interface Internal_37 {
+  type?: string | null;
+  mediaType?: string | null;
+  content?: string | null;
+  contentDigest?: string | null;
+  owner?: string | null;
+}
+/** A connection to a list of items. */
+export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeGroupConnectionConnection {
+  pageInfo: PageInfo /** Information to aid in pagination. */;
+  edges?:
+    | (DatoCmsTwoColumnSectionSecondColumnContentTextNodeGroupConnectionEdge | null)[]
+    | null /** A list of edges. */;
+  field?: string | null;
+  fieldValue?: string | null;
+  totalCount?: number | null;
+}
+/** An edge in a connection. */
+export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeGroupConnectionEdge {
+  node?: DatoCmsTwoColumnSectionSecondColumnContentTextNode | null /** The item at the end of the edge */;
+  next?: DatoCmsTwoColumnSectionSecondColumnContentTextNode | null /** The next edge in the connection */;
+  previous?: DatoCmsTwoColumnSectionSecondColumnContentTextNode | null /** The previous edge in the connection */;
+}
+/** A connection to a list of items. */
 export interface DatoCmsPriceConnection {
   pageInfo: PageInfo /** Information to aid in pagination. */;
   edges?: (DatoCmsPriceEdge | null)[] | null /** A list of edges. */;
@@ -835,7 +1028,7 @@ export interface DatoCmsPrice extends Node {
   children?: (Node | null)[] | null /** The children of this node. */;
   childDatoCmsSeoMetaTags?: DatoCmsSeoMetaTags | null /** The child of this node of type datoCmsSeoMetaTags */;
   originalId?: string | null;
-  internal?: Internal_34 | null;
+  internal?: Internal_38 | null;
   locale?: string | null;
   model?: DatoCmsModel | null;
   title?: string | null;
@@ -847,7 +1040,7 @@ export interface DatoCmsPrice extends Node {
   updatedAt?: Date | null;
 }
 
-export interface Internal_34 {
+export interface Internal_38 {
   type?: string | null;
   contentDigest?: string | null;
   owner?: string | null;
@@ -889,7 +1082,7 @@ export interface DatoCmsWeek extends Node {
   children?: (Node | null)[] | null /** The children of this node. */;
   childDatoCmsSeoMetaTags?: DatoCmsSeoMetaTags | null /** The child of this node of type datoCmsSeoMetaTags */;
   originalId?: string | null;
-  internal?: Internal_35 | null;
+  internal?: Internal_39 | null;
   locale?: string | null;
   model?: DatoCmsModel | null;
   title?: string | null;
@@ -900,7 +1093,7 @@ export interface DatoCmsWeek extends Node {
   updatedAt?: Date | null;
 }
 
-export interface Internal_35 {
+export interface Internal_39 {
   type?: string | null;
   contentDigest?: string | null;
   owner?: string | null;
@@ -943,7 +1136,7 @@ export interface DatoCmsHomepage extends Node {
   childDatoCmsAsset?: DatoCmsAsset | null /** The child of this node of type datoCmsAsset */;
   childDatoCmsSeoMetaTags?: DatoCmsSeoMetaTags | null /** The child of this node of type datoCmsSeoMetaTags */;
   originalId?: string | null;
-  internal?: Internal_36 | null;
+  internal?: Internal_40 | null;
   locale?: string | null;
   model?: DatoCmsModel | null;
   title?: string | null;
@@ -952,48 +1145,8 @@ export interface DatoCmsHomepage extends Node {
   seoMetaTags?: DatoCmsSeoMetaTags | null;
   updatedAt?: Date | null;
 }
-/** Node of type DatoCmsAsset */
-export interface DatoCmsAsset extends Node {
-  id: string /** The id of this node. */;
-  parent?: Node | null /** The parent of this node. */;
-  children?: (Node | null)[] | null /** The children of this node. */;
-  internal?: Internal_37 | null;
-  format?: string | null;
-  size?: number | null;
-  width?: number | null;
-  height?: number | null;
-  url?: string | null;
-  resolutions?: DatoCmsFixed | null;
-  sizes?: DatoCmsFluid | null;
-  inlineSvg?: string | null;
-  fluid?: DatoCmsFluid | null;
-  fixed?: DatoCmsFixed | null;
-}
 
-export interface Internal_37 {
-  type?: string | null;
-  contentDigest?: string | null;
-  owner?: string | null;
-}
-
-export interface DatoCmsFixed {
-  base64?: string | null;
-  aspectRatio?: number | null;
-  width?: number | null;
-  height?: number | null;
-  src?: string | null;
-  srcSet?: string | null;
-}
-
-export interface DatoCmsFluid {
-  base64?: string | null;
-  aspectRatio?: number | null;
-  src?: string | null;
-  srcSet?: string | null;
-  sizes?: string | null;
-}
-
-export interface Internal_36 {
+export interface Internal_40 {
   type?: string | null;
   contentDigest?: string | null;
   owner?: string | null;
@@ -1005,9 +1158,11 @@ export interface DatoCmsOneColumnSection extends Node {
   children?: (Node | null)[] | null /** The children of this node. */;
   childDatoCmsOneColumnSectionContentTextNode?: DatoCmsOneColumnSectionContentTextNode | null /** The child of this node of type datoCmsOneColumnSectionContentTextNode */;
   childDatoCmsSeoMetaTags?: DatoCmsSeoMetaTags | null /** The child of this node of type datoCmsSeoMetaTags */;
-  childDatoCmsAsset?: DatoCmsAsset | null /** The child of this node of type datoCmsAsset */;
+  childrenDatoCmsAsset?:
+    | (DatoCmsAsset | null)[]
+    | null /** The children of this node of type datoCmsAsset */;
   originalId?: string | null;
-  internal?: Internal_38 | null;
+  internal?: Internal_41 | null;
   locale?: string | null;
   model?: DatoCmsModel | null;
   title?: string | null;
@@ -1018,7 +1173,30 @@ export interface DatoCmsOneColumnSection extends Node {
   headerImage?: DatoCmsAsset | null;
 }
 
-export interface Internal_38 {
+export interface Internal_41 {
+  type?: string | null;
+  contentDigest?: string | null;
+  owner?: string | null;
+}
+/** Node of type DatoCmsFullWidthImage */
+export interface DatoCmsFullWidthImage extends Node {
+  id: string /** The id of this node. */;
+  parent?: Node | null /** The parent of this node. */;
+  children?: (Node | null)[] | null /** The children of this node. */;
+  childrenDatoCmsAsset?:
+    | (DatoCmsAsset | null)[]
+    | null /** The children of this node of type datoCmsAsset */;
+  childDatoCmsSeoMetaTags?: DatoCmsSeoMetaTags | null /** The child of this node of type datoCmsSeoMetaTags */;
+  originalId?: string | null;
+  internal?: Internal_42 | null;
+  locale?: string | null;
+  model?: DatoCmsModel | null;
+  image?: DatoCmsAsset | null;
+  seoMetaTags?: DatoCmsSeoMetaTags | null;
+  updatedAt?: Date | null;
+}
+
+export interface Internal_42 {
   type?: string | null;
   contentDigest?: string | null;
   owner?: string | null;
@@ -1028,60 +1206,25 @@ export interface DatoCmsTwoColumnSection extends Node {
   id: string /** The id of this node. */;
   parent?: Node | null /** The parent of this node. */;
   children?: (Node | null)[] | null /** The children of this node. */;
+  childDatoCmsAsset?: DatoCmsAsset | null /** The child of this node of type datoCmsAsset */;
   childDatoCmsTwoColumnSectionFirstColumnContentTextNode?: DatoCmsTwoColumnSectionFirstColumnContentTextNode | null /** The child of this node of type datoCmsTwoColumnSectionFirstColumnContentTextNode */;
   childDatoCmsTwoColumnSectionSecondColumnContentTextNode?: DatoCmsTwoColumnSectionSecondColumnContentTextNode | null /** The child of this node of type datoCmsTwoColumnSectionSecondColumnContentTextNode */;
   childDatoCmsSeoMetaTags?: DatoCmsSeoMetaTags | null /** The child of this node of type datoCmsSeoMetaTags */;
   originalId?: string | null;
-  internal?: Internal_39 | null;
+  internal?: Internal_43 | null;
   locale?: string | null;
   model?: DatoCmsModel | null;
   title?: string | null;
+  headerImage?: DatoCmsAsset | null;
   firstColumnContentNode?: DatoCmsTwoColumnSectionFirstColumnContentTextNode | null;
   firstColumnContent?: string | null;
   secondColumnContentNode?: DatoCmsTwoColumnSectionSecondColumnContentTextNode | null;
   secondColumnContent?: string | null;
   seoMetaTags?: DatoCmsSeoMetaTags | null;
   updatedAt?: Date | null;
-  headerImage?: DatoCmsAsset | null;
-}
-/** Node of type DatoCmsTwoColumnSectionFirstColumnContentTextNode */
-export interface DatoCmsTwoColumnSectionFirstColumnContentTextNode
-  extends Node {
-  id: string /** The id of this node. */;
-  parent?: Node | null /** The parent of this node. */;
-  children?: (Node | null)[] | null /** The children of this node. */;
-  childMarkdownRemark?: MarkdownRemark | null /** The child of this node of type markdownRemark */;
-  firstColumnContent?: string | null;
-  internal?: Internal_40 | null;
 }
 
-export interface Internal_40 {
-  type?: string | null;
-  mediaType?: string | null;
-  content?: string | null;
-  contentDigest?: string | null;
-  owner?: string | null;
-}
-/** Node of type DatoCmsTwoColumnSectionSecondColumnContentTextNode */
-export interface DatoCmsTwoColumnSectionSecondColumnContentTextNode
-  extends Node {
-  id: string /** The id of this node. */;
-  parent?: Node | null /** The parent of this node. */;
-  children?: (Node | null)[] | null /** The children of this node. */;
-  childMarkdownRemark?: MarkdownRemark | null /** The child of this node of type markdownRemark */;
-  secondColumnContent?: string | null;
-  internal?: Internal_41 | null;
-}
-
-export interface Internal_41 {
-  type?: string | null;
-  mediaType?: string | null;
-  content?: string | null;
-  contentDigest?: string | null;
-  owner?: string | null;
-}
-
-export interface Internal_39 {
+export interface Internal_43 {
   type?: string | null;
   contentDigest?: string | null;
   owner?: string | null;
@@ -1115,27 +1258,6 @@ export interface DatoCmsFullWidthImageEdge {
   node?: DatoCmsFullWidthImage | null /** The item at the end of the edge */;
   next?: DatoCmsFullWidthImage | null /** The next edge in the connection */;
   previous?: DatoCmsFullWidthImage | null /** The previous edge in the connection */;
-}
-/** Node of type DatoCmsFullWidthImage */
-export interface DatoCmsFullWidthImage extends Node {
-  id: string /** The id of this node. */;
-  parent?: Node | null /** The parent of this node. */;
-  children?: (Node | null)[] | null /** The children of this node. */;
-  childDatoCmsAsset?: DatoCmsAsset | null /** The child of this node of type datoCmsAsset */;
-  childDatoCmsSeoMetaTags?: DatoCmsSeoMetaTags | null /** The child of this node of type datoCmsSeoMetaTags */;
-  originalId?: string | null;
-  internal?: Internal_42 | null;
-  locale?: string | null;
-  model?: DatoCmsModel | null;
-  image?: DatoCmsAsset | null;
-  seoMetaTags?: DatoCmsSeoMetaTags | null;
-  updatedAt?: Date | null;
-}
-
-export interface Internal_42 {
-  type?: string | null;
-  contentDigest?: string | null;
-  owner?: string | null;
 }
 /** A connection to a list of items. */
 export interface DatoCmsFullWidthImageGroupConnectionConnection {
@@ -1184,6 +1306,90 @@ export interface DatoCmsOneColumnSectionGroupConnectionEdge {
   previous?: DatoCmsOneColumnSection | null /** The previous edge in the connection */;
 }
 /** A connection to a list of items. */
+export interface DatoCmsPageConnection {
+  pageInfo: PageInfo /** Information to aid in pagination. */;
+  edges?: (DatoCmsPageEdge | null)[] | null /** A list of edges. */;
+  totalCount?: number | null;
+  distinct?: (string | null)[] | null;
+  group?: (DatoCmsPageGroupConnectionConnection | null)[] | null;
+}
+/** An edge in a connection. */
+export interface DatoCmsPageEdge {
+  node?: DatoCmsPage | null /** The item at the end of the edge */;
+  next?: DatoCmsPage | null /** The next edge in the connection */;
+  previous?: DatoCmsPage | null /** The previous edge in the connection */;
+}
+/** Node of type DatoCmsPage */
+export interface DatoCmsPage extends Node {
+  id: string /** The id of this node. */;
+  parent?: Node | null /** The parent of this node. */;
+  children?: (Node | null)[] | null /** The children of this node. */;
+  childDatoCmsAsset?: DatoCmsAsset | null /** The child of this node of type datoCmsAsset */;
+  childDatoCmsSeoMetaTags?: DatoCmsSeoMetaTags | null /** The child of this node of type datoCmsSeoMetaTags */;
+  originalId?: string | null;
+  internal?: Internal_44 | null;
+  locale?: string | null;
+  model?: DatoCmsModel | null;
+  title?: string | null;
+  slug?: string | null;
+  headerImage?: DatoCmsAsset | null;
+  contenuDeLaPage?: (UnionContenuDeLaPageNode_2 | null)[] | null;
+  seoMetaTags?: DatoCmsSeoMetaTags | null;
+  updatedAt?: Date | null;
+}
+
+export interface Internal_44 {
+  type?: string | null;
+  contentDigest?: string | null;
+  owner?: string | null;
+}
+/** A connection to a list of items. */
+export interface DatoCmsPageGroupConnectionConnection {
+  pageInfo: PageInfo /** Information to aid in pagination. */;
+  edges?:
+    | (DatoCmsPageGroupConnectionEdge | null)[]
+    | null /** A list of edges. */;
+  field?: string | null;
+  fieldValue?: string | null;
+  totalCount?: number | null;
+}
+/** An edge in a connection. */
+export interface DatoCmsPageGroupConnectionEdge {
+  node?: DatoCmsPage | null /** The item at the end of the edge */;
+  next?: DatoCmsPage | null /** The next edge in the connection */;
+  previous?: DatoCmsPage | null /** The previous edge in the connection */;
+}
+/** A connection to a list of items. */
+export interface DatoCmsTwoColumnSectionConnection {
+  pageInfo: PageInfo /** Information to aid in pagination. */;
+  edges?: (DatoCmsTwoColumnSectionEdge | null)[] | null /** A list of edges. */;
+  totalCount?: number | null;
+  distinct?: (string | null)[] | null;
+  group?: (DatoCmsTwoColumnSectionGroupConnectionConnection | null)[] | null;
+}
+/** An edge in a connection. */
+export interface DatoCmsTwoColumnSectionEdge {
+  node?: DatoCmsTwoColumnSection | null /** The item at the end of the edge */;
+  next?: DatoCmsTwoColumnSection | null /** The next edge in the connection */;
+  previous?: DatoCmsTwoColumnSection | null /** The previous edge in the connection */;
+}
+/** A connection to a list of items. */
+export interface DatoCmsTwoColumnSectionGroupConnectionConnection {
+  pageInfo: PageInfo /** Information to aid in pagination. */;
+  edges?:
+    | (DatoCmsTwoColumnSectionGroupConnectionEdge | null)[]
+    | null /** A list of edges. */;
+  field?: string | null;
+  fieldValue?: string | null;
+  totalCount?: number | null;
+}
+/** An edge in a connection. */
+export interface DatoCmsTwoColumnSectionGroupConnectionEdge {
+  node?: DatoCmsTwoColumnSection | null /** The item at the end of the edge */;
+  next?: DatoCmsTwoColumnSection | null /** The next edge in the connection */;
+  previous?: DatoCmsTwoColumnSection | null /** The previous edge in the connection */;
+}
+/** A connection to a list of items. */
 export interface DatoCmsSiteConnection {
   pageInfo: PageInfo /** Information to aid in pagination. */;
   edges?: (DatoCmsSiteEdge | null)[] | null /** A list of edges. */;
@@ -1208,7 +1414,7 @@ export interface DatoCmsSite extends Node {
   internalDomain?: string | null;
   noIndex?: boolean | null;
   originalId?: Date | null;
-  internal?: Internal_43 | null;
+  internal?: Internal_45 | null;
   locale?: string | null;
 }
 
@@ -1247,7 +1453,7 @@ export interface AccentColor_2 {
   green?: number | null;
 }
 
-export interface Internal_43 {
+export interface Internal_45 {
   type?: string | null;
   contentDigest?: string | null;
   owner?: string | null;
@@ -1268,134 +1474,6 @@ export interface DatoCmsSiteGroupConnectionEdge {
   next?: DatoCmsSite | null /** The next edge in the connection */;
   previous?: DatoCmsSite | null /** The previous edge in the connection */;
 }
-/** A connection to a list of items. */
-export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnection {
-  pageInfo: PageInfo /** Information to aid in pagination. */;
-  edges?:
-    | (DatoCmsTwoColumnSectionFirstColumnContentTextNodeEdge | null)[]
-    | null /** A list of edges. */;
-  totalCount?: number | null;
-  distinct?: (string | null)[] | null;
-  group?:
-    | (DatoCmsTwoColumnSectionFirstColumnContentTextNodeGroupConnectionConnection | null)[]
-    | null;
-}
-/** An edge in a connection. */
-export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeEdge {
-  node?: DatoCmsTwoColumnSectionFirstColumnContentTextNode | null /** The item at the end of the edge */;
-  next?: DatoCmsTwoColumnSectionFirstColumnContentTextNode | null /** The next edge in the connection */;
-  previous?: DatoCmsTwoColumnSectionFirstColumnContentTextNode | null /** The previous edge in the connection */;
-}
-/** A connection to a list of items. */
-export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeGroupConnectionConnection {
-  pageInfo: PageInfo /** Information to aid in pagination. */;
-  edges?:
-    | (DatoCmsTwoColumnSectionFirstColumnContentTextNodeGroupConnectionEdge | null)[]
-    | null /** A list of edges. */;
-  field?: string | null;
-  fieldValue?: string | null;
-  totalCount?: number | null;
-}
-/** An edge in a connection. */
-export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeGroupConnectionEdge {
-  node?: DatoCmsTwoColumnSectionFirstColumnContentTextNode | null /** The item at the end of the edge */;
-  next?: DatoCmsTwoColumnSectionFirstColumnContentTextNode | null /** The next edge in the connection */;
-  previous?: DatoCmsTwoColumnSectionFirstColumnContentTextNode | null /** The previous edge in the connection */;
-}
-/** A connection to a list of items. */
-export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnection {
-  pageInfo: PageInfo /** Information to aid in pagination. */;
-  edges?:
-    | (DatoCmsTwoColumnSectionSecondColumnContentTextNodeEdge | null)[]
-    | null /** A list of edges. */;
-  totalCount?: number | null;
-  distinct?: (string | null)[] | null;
-  group?:
-    | (DatoCmsTwoColumnSectionSecondColumnContentTextNodeGroupConnectionConnection | null)[]
-    | null;
-}
-/** An edge in a connection. */
-export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeEdge {
-  node?: DatoCmsTwoColumnSectionSecondColumnContentTextNode | null /** The item at the end of the edge */;
-  next?: DatoCmsTwoColumnSectionSecondColumnContentTextNode | null /** The next edge in the connection */;
-  previous?: DatoCmsTwoColumnSectionSecondColumnContentTextNode | null /** The previous edge in the connection */;
-}
-/** A connection to a list of items. */
-export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeGroupConnectionConnection {
-  pageInfo: PageInfo /** Information to aid in pagination. */;
-  edges?:
-    | (DatoCmsTwoColumnSectionSecondColumnContentTextNodeGroupConnectionEdge | null)[]
-    | null /** A list of edges. */;
-  field?: string | null;
-  fieldValue?: string | null;
-  totalCount?: number | null;
-}
-/** An edge in a connection. */
-export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeGroupConnectionEdge {
-  node?: DatoCmsTwoColumnSectionSecondColumnContentTextNode | null /** The item at the end of the edge */;
-  next?: DatoCmsTwoColumnSectionSecondColumnContentTextNode | null /** The next edge in the connection */;
-  previous?: DatoCmsTwoColumnSectionSecondColumnContentTextNode | null /** The previous edge in the connection */;
-}
-/** A connection to a list of items. */
-export interface DatoCmsTwoColumnSectionConnection {
-  pageInfo: PageInfo /** Information to aid in pagination. */;
-  edges?: (DatoCmsTwoColumnSectionEdge | null)[] | null /** A list of edges. */;
-  totalCount?: number | null;
-  distinct?: (string | null)[] | null;
-  group?: (DatoCmsTwoColumnSectionGroupConnectionConnection | null)[] | null;
-}
-/** An edge in a connection. */
-export interface DatoCmsTwoColumnSectionEdge {
-  node?: DatoCmsTwoColumnSection | null /** The item at the end of the edge */;
-  next?: DatoCmsTwoColumnSection | null /** The next edge in the connection */;
-  previous?: DatoCmsTwoColumnSection | null /** The previous edge in the connection */;
-}
-/** A connection to a list of items. */
-export interface DatoCmsTwoColumnSectionGroupConnectionConnection {
-  pageInfo: PageInfo /** Information to aid in pagination. */;
-  edges?:
-    | (DatoCmsTwoColumnSectionGroupConnectionEdge | null)[]
-    | null /** A list of edges. */;
-  field?: string | null;
-  fieldValue?: string | null;
-  totalCount?: number | null;
-}
-/** An edge in a connection. */
-export interface DatoCmsTwoColumnSectionGroupConnectionEdge {
-  node?: DatoCmsTwoColumnSection | null /** The item at the end of the edge */;
-  next?: DatoCmsTwoColumnSection | null /** The next edge in the connection */;
-  previous?: DatoCmsTwoColumnSection | null /** The previous edge in the connection */;
-}
-/** A connection to a list of items. */
-export interface DatoCmsAssetConnection {
-  pageInfo: PageInfo /** Information to aid in pagination. */;
-  edges?: (DatoCmsAssetEdge | null)[] | null /** A list of edges. */;
-  totalCount?: number | null;
-  distinct?: (string | null)[] | null;
-  group?: (DatoCmsAssetGroupConnectionConnection | null)[] | null;
-}
-/** An edge in a connection. */
-export interface DatoCmsAssetEdge {
-  node?: DatoCmsAsset | null /** The item at the end of the edge */;
-  next?: DatoCmsAsset | null /** The next edge in the connection */;
-  previous?: DatoCmsAsset | null /** The previous edge in the connection */;
-}
-/** A connection to a list of items. */
-export interface DatoCmsAssetGroupConnectionConnection {
-  pageInfo: PageInfo /** Information to aid in pagination. */;
-  edges?:
-    | (DatoCmsAssetGroupConnectionEdge | null)[]
-    | null /** A list of edges. */;
-  field?: string | null;
-  fieldValue?: string | null;
-  totalCount?: number | null;
-}
-/** An edge in a connection. */
-export interface DatoCmsAssetGroupConnectionEdge {
-  node?: DatoCmsAsset | null /** The item at the end of the edge */;
-  next?: DatoCmsAsset | null /** The next edge in the connection */;
-  previous?: DatoCmsAsset | null /** The previous edge in the connection */;
-}
 /** Node of type Site */
 export interface Site extends Node {
   id: string /** The id of this node. */;
@@ -1407,14 +1485,14 @@ export interface Site extends Node {
   pathPrefix?: string | null;
   polyfill?: boolean | null;
   buildTime?: Date | null;
-  internal?: Internal_44 | null;
+  internal?: Internal_46 | null;
 }
 
 export interface SiteMetadata_2 {
   title?: string | null;
 }
 
-export interface Internal_44 {
+export interface Internal_46 {
   contentDigest?: string | null;
   type?: string | null;
   owner?: string | null;
@@ -1559,9 +1637,11 @@ export interface SitePageConnectionPluginCreatorVersionQueryString {
 }
 
 export interface SitePageConnectionPluginCreatorPluginOptionsInputObject {
+  plugins?: SitePageConnectionPluginCreatorPluginOptionsPluginsQueryList | null;
   endpoint?: SitePageConnectionPluginCreatorPluginOptionsEndpointQueryString | null;
   query?: SitePageConnectionPluginCreatorPluginOptionsQueryQueryString | null;
   apiToken?: SitePageConnectionPluginCreatorPluginOptionsApiTokenQueryString | null;
+  maxWidth?: SitePageConnectionPluginCreatorPluginOptionsMaxWidthQueryInteger | null;
   name?: SitePageConnectionPluginCreatorPluginOptionsNameQueryString | null;
   short_name?: SitePageConnectionPluginCreatorPluginOptionsShortNameQueryString | null;
   start_url?: SitePageConnectionPluginCreatorPluginOptionsStartUrlQueryString | null;
@@ -1571,6 +1651,79 @@ export interface SitePageConnectionPluginCreatorPluginOptionsInputObject {
   icons?: SitePageConnectionPluginCreatorPluginOptionsIconsQueryList | null;
   path?: SitePageConnectionPluginCreatorPluginOptionsPathQueryString | null;
   pathCheck?: SitePageConnectionPluginCreatorPluginOptionsPathCheckQueryBoolean | null;
+}
+
+export interface SitePageConnectionPluginCreatorPluginOptionsPluginsQueryList {
+  elemMatch?: SitePageConnectionPluginCreatorPluginOptionsPluginsInputObject | null;
+}
+
+export interface SitePageConnectionPluginCreatorPluginOptionsPluginsInputObject {
+  resolve?: SitePageConnectionPluginCreatorPluginOptionsPluginsResolveQueryString | null;
+  id?: SitePageConnectionPluginCreatorPluginOptionsPluginsIdQueryString | null;
+  name?: SitePageConnectionPluginCreatorPluginOptionsPluginsNameQueryString | null;
+  version?: SitePageConnectionPluginCreatorPluginOptionsPluginsVersionQueryString | null;
+  pluginOptions?: SitePageConnectionPluginCreatorPluginOptionsPluginsPluginOptionsInputObject | null;
+  pluginFilepath?: SitePageConnectionPluginCreatorPluginOptionsPluginsPluginFilepathQueryString | null;
+}
+
+export interface SitePageConnectionPluginCreatorPluginOptionsPluginsResolveQueryString {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface SitePageConnectionPluginCreatorPluginOptionsPluginsIdQueryString {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface SitePageConnectionPluginCreatorPluginOptionsPluginsNameQueryString {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface SitePageConnectionPluginCreatorPluginOptionsPluginsVersionQueryString {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface SitePageConnectionPluginCreatorPluginOptionsPluginsPluginOptionsInputObject {
+  maxWidth?: SitePageConnectionPluginCreatorPluginOptionsPluginsPluginOptionsMaxWidthQueryInteger | null;
+}
+
+export interface SitePageConnectionPluginCreatorPluginOptionsPluginsPluginOptionsMaxWidthQueryInteger {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface SitePageConnectionPluginCreatorPluginOptionsPluginsPluginFilepathQueryString {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
 }
 
 export interface SitePageConnectionPluginCreatorPluginOptionsEndpointQueryString {
@@ -1598,6 +1751,17 @@ export interface SitePageConnectionPluginCreatorPluginOptionsApiTokenQueryString
   glob?: string | null;
   in?: (string | null)[] | null;
   nin?: (string | null)[] | null;
+}
+
+export interface SitePageConnectionPluginCreatorPluginOptionsMaxWidthQueryInteger {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
 }
 
 export interface SitePageConnectionPluginCreatorPluginOptionsNameQueryString {
@@ -2068,9 +2232,11 @@ export interface SitePluginConnectionVersionQueryString_2 {
 }
 
 export interface SitePluginConnectionPluginOptionsInputObject_2 {
+  plugins?: SitePluginConnectionPluginOptionsPluginsQueryList_2 | null;
   endpoint?: SitePluginConnectionPluginOptionsEndpointQueryString_2 | null;
   query?: SitePluginConnectionPluginOptionsQueryQueryString_2 | null;
   apiToken?: SitePluginConnectionPluginOptionsApiTokenQueryString_2 | null;
+  maxWidth?: SitePluginConnectionPluginOptionsMaxWidthQueryInteger_2 | null;
   name?: SitePluginConnectionPluginOptionsNameQueryString_2 | null;
   short_name?: SitePluginConnectionPluginOptionsShortNameQueryString_2 | null;
   start_url?: SitePluginConnectionPluginOptionsStartUrlQueryString_2 | null;
@@ -2080,6 +2246,79 @@ export interface SitePluginConnectionPluginOptionsInputObject_2 {
   icons?: SitePluginConnectionPluginOptionsIconsQueryList_2 | null;
   path?: SitePluginConnectionPluginOptionsPathQueryString_2 | null;
   pathCheck?: SitePluginConnectionPluginOptionsPathCheckQueryBoolean_2 | null;
+}
+
+export interface SitePluginConnectionPluginOptionsPluginsQueryList_2 {
+  elemMatch?: SitePluginConnectionPluginOptionsPluginsInputObject_2 | null;
+}
+
+export interface SitePluginConnectionPluginOptionsPluginsInputObject_2 {
+  resolve?: SitePluginConnectionPluginOptionsPluginsResolveQueryString_2 | null;
+  id?: SitePluginConnectionPluginOptionsPluginsIdQueryString_2 | null;
+  name?: SitePluginConnectionPluginOptionsPluginsNameQueryString_2 | null;
+  version?: SitePluginConnectionPluginOptionsPluginsVersionQueryString_2 | null;
+  pluginOptions?: SitePluginConnectionPluginOptionsPluginsPluginOptionsInputObject_2 | null;
+  pluginFilepath?: SitePluginConnectionPluginOptionsPluginsPluginFilepathQueryString_2 | null;
+}
+
+export interface SitePluginConnectionPluginOptionsPluginsResolveQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface SitePluginConnectionPluginOptionsPluginsIdQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface SitePluginConnectionPluginOptionsPluginsNameQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface SitePluginConnectionPluginOptionsPluginsVersionQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface SitePluginConnectionPluginOptionsPluginsPluginOptionsInputObject_2 {
+  maxWidth?: SitePluginConnectionPluginOptionsPluginsPluginOptionsMaxWidthQueryInteger_2 | null;
+}
+
+export interface SitePluginConnectionPluginOptionsPluginsPluginOptionsMaxWidthQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface SitePluginConnectionPluginOptionsPluginsPluginFilepathQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
 }
 
 export interface SitePluginConnectionPluginOptionsEndpointQueryString_2 {
@@ -2107,6 +2346,17 @@ export interface SitePluginConnectionPluginOptionsApiTokenQueryString_2 {
   glob?: string | null;
   in?: (string | null)[] | null;
   nin?: (string | null)[] | null;
+}
+
+export interface SitePluginConnectionPluginOptionsMaxWidthQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
 }
 
 export interface SitePluginConnectionPluginOptionsNameQueryString_2 {
@@ -4086,6 +4336,717 @@ export interface DatoCmsSeoMetaTagsConnectionInternalOwnerQueryString_2 {
   nin?: (string | null)[] | null;
 }
 
+export interface DatoCmsAssetConnectionSort {
+  fields: (DatoCmsAssetConnectionSortByFieldsEnum | null)[];
+  order?: DatoCmsAssetConnectionSortOrderValues | null;
+}
+/** Filter connection on its fields */
+export interface FilterDatoCmsAsset {
+  id?: DatoCmsAssetConnectionIdQueryString_2 | null;
+  internal?: DatoCmsAssetConnectionInternalInputObject_2 | null;
+  format?: DatoCmsAssetConnectionFormatQueryString_2 | null;
+  size?: DatoCmsAssetConnectionSizeQueryInteger_2 | null;
+  width?: DatoCmsAssetConnectionWidthQueryInteger_2 | null;
+  height?: DatoCmsAssetConnectionHeightQueryInteger_2 | null;
+  title?: DatoCmsAssetConnectionTitleQueryString_2 | null;
+  alt?: DatoCmsAssetConnectionAltQueryString_2 | null;
+  url?: DatoCmsAssetConnectionUrlQueryString_2 | null;
+  resolutions?: ResolutionsTypeName_4 | null;
+  sizes?: SizesTypeName_4 | null;
+  inlineSvg?: InlineSvgQueryString_4 | null;
+  fluid?: FluidTypeName_4 | null;
+  fixed?: FixedTypeName_4 | null;
+}
+
+export interface DatoCmsAssetConnectionIdQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsAssetConnectionInternalInputObject_2 {
+  type?: DatoCmsAssetConnectionInternalTypeQueryString_2 | null;
+  contentDigest?: DatoCmsAssetConnectionInternalContentDigestQueryString_2 | null;
+  owner?: DatoCmsAssetConnectionInternalOwnerQueryString_2 | null;
+}
+
+export interface DatoCmsAssetConnectionInternalTypeQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsAssetConnectionInternalContentDigestQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsAssetConnectionInternalOwnerQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsAssetConnectionFormatQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsAssetConnectionSizeQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsAssetConnectionWidthQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsAssetConnectionHeightQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsAssetConnectionTitleQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsAssetConnectionAltQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsAssetConnectionUrlQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface ResolutionsTypeName_4 {
+  base64?: ResolutionsBase64QueryString_4 | null;
+  aspectRatio?: ResolutionsAspectRatioQueryFloat_4 | null;
+  width?: ResolutionsWidthQueryFloat_4 | null;
+  height?: ResolutionsHeightQueryFloat_4 | null;
+  src?: ResolutionsSrcQueryString_4 | null;
+  srcSet?: ResolutionsSrcSetQueryString_4 | null;
+}
+
+export interface ResolutionsBase64QueryString_4 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface ResolutionsAspectRatioQueryFloat_4 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface ResolutionsWidthQueryFloat_4 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface ResolutionsHeightQueryFloat_4 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface ResolutionsSrcQueryString_4 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface ResolutionsSrcSetQueryString_4 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface SizesTypeName_4 {
+  base64?: SizesBase64QueryString_4 | null;
+  aspectRatio?: SizesAspectRatioQueryFloat_4 | null;
+  src?: SizesSrcQueryString_4 | null;
+  srcSet?: SizesSrcSetQueryString_4 | null;
+  sizes?: SizesSizesQueryString_4 | null;
+}
+
+export interface SizesBase64QueryString_4 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface SizesAspectRatioQueryFloat_4 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface SizesSrcQueryString_4 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface SizesSrcSetQueryString_4 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface SizesSizesQueryString_4 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface InlineSvgQueryString_4 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface FluidTypeName_4 {
+  base64?: FluidBase64QueryString_4 | null;
+  aspectRatio?: FluidAspectRatioQueryFloat_4 | null;
+  src?: FluidSrcQueryString_4 | null;
+  srcSet?: FluidSrcSetQueryString_4 | null;
+  sizes?: FluidSizesQueryString_4 | null;
+}
+
+export interface FluidBase64QueryString_4 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface FluidAspectRatioQueryFloat_4 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface FluidSrcQueryString_4 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface FluidSrcSetQueryString_4 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface FluidSizesQueryString_4 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface FixedTypeName_4 {
+  base64?: FixedBase64QueryString_4 | null;
+  aspectRatio?: FixedAspectRatioQueryFloat_4 | null;
+  width?: FixedWidthQueryFloat_4 | null;
+  height?: FixedHeightQueryFloat_4 | null;
+  src?: FixedSrcQueryString_4 | null;
+  srcSet?: FixedSrcSetQueryString_4 | null;
+}
+
+export interface FixedBase64QueryString_4 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface FixedAspectRatioQueryFloat_4 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface FixedWidthQueryFloat_4 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface FixedHeightQueryFloat_4 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface FixedSrcQueryString_4 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface FixedSrcSetQueryString_4 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsImgixParams {
+  auto?:
+    | string
+    | null /** Applies automatic enhancements to images. (https://docs.imgix.com/apis/url/auto) */;
+  ba?:
+    | string
+    | null /** Changes the blend alignment relative to the parent image. (https://docs.imgix.com/apis/url/blending/ba) */;
+  balph?:
+    | number
+    | null /** Changes the alpha of the blend image. (https://docs.imgix.com/apis/url/blending/balph) */;
+  bc?:
+    | string
+    | null /** Specifies the type of crop for blend images. (https://docs.imgix.com/apis/url/blending/bc) */;
+  bf?:
+    | string
+    | null /** Specifies the fit mode for blend images. (https://docs.imgix.com/apis/url/blending/bf) */;
+  bg?:
+    | string
+    | null /** Colors the background of padded images. (https://docs.imgix.com/apis/url/bg) */;
+  bh?:
+    | string
+    | null /** Adjusts the height of the blend image. (https://docs.imgix.com/apis/url/blending/bh) */;
+  blend?:
+    | string
+    | null /** Specifies the location of the blend image. (https://docs.imgix.com/apis/url/blending/blend) */;
+  blur?:
+    | number
+    | null /** Applies a gaussian blur to an image. (https://docs.imgix.com/apis/url/stylize/blur) */;
+  bm?:
+    | string
+    | null /** Sets the blend mode for a blend image. (https://docs.imgix.com/apis/url/blending/bm) */;
+  borderRadiusInner?:
+    | string
+    | null /** Sets the inner radius of the image's border in pixels. (https://docs.imgix.com/apis/url/border-and-padding/border-radius-inner) */;
+  borderRadius?:
+    | string
+    | null /** Sets the outer radius of the image's border in pixels. (https://docs.imgix.com/apis/url/border-and-padding/border-radius) */;
+  border?:
+    | string
+    | null /** Applies a border to an image. (https://docs.imgix.com/apis/url/border-and-padding/border) */;
+  bp?:
+    | number
+    | null /** Applies padding to the blend image. (https://docs.imgix.com/apis/url/blending/bp) */;
+  bri?:
+    | number
+    | null /** Adjusts the brightness of the source image. (https://docs.imgix.com/apis/url/adjustment/bri) */;
+  bs?:
+    | string
+    | null /** Adjusts the size of the blend image. (https://docs.imgix.com/apis/url/blending/bs) */;
+  bw?:
+    | string
+    | null /** Adjusts the width of the blend image. (https://docs.imgix.com/apis/url/blending/bw) */;
+  bx?:
+    | number
+    | null /** Adjusts the x-offset of the blend image relative to its parent. (https://docs.imgix.com/apis/url/blending/bx) */;
+  by?:
+    | number
+    | null /** Adjusts the y-offset of the blend image relative to its parent. (https://docs.imgix.com/apis/url/blending/by) */;
+  ch?:
+    | string
+    | null /** Sets one or more Client-Hints headers (https://docs.imgix.com/apis/url/format/ch) */;
+  chromasub?:
+    | number
+    | null /** Specifies the output chroma subsampling rate. (https://docs.imgix.com/apis/url/format/chromasub) */;
+  colorquant?:
+    | number
+    | null /** Limits the number of unique colors in an image. (https://docs.imgix.com/apis/url/format/colorquant) */;
+  colors?:
+    | number
+    | null /** Specifies how many colors to include in a palette-extraction response. (https://docs.imgix.com/apis/url/color-palette/colors) */;
+  con?:
+    | number
+    | null /** Adjusts the contrast of the source image. (https://docs.imgix.com/apis/url/adjustment/con) */;
+  cornerRadius?:
+    | string
+    | null /** Specifies the radius value for a rounded corner mask. (https://docs.imgix.com/apis/url/mask/corner-radius) */;
+  crop?:
+    | string
+    | null /** Specifies how to crop an image. (https://docs.imgix.com/apis/url/size/crop) */;
+  cs?:
+    | string
+    | null /** Specifies the color space of the output image. (https://docs.imgix.com/apis/url/format/cs) */;
+  dl?:
+    | string
+    | null /** Forces a URL to use send-file in its response. (https://docs.imgix.com/apis/url/format/dl) */;
+  dpi?:
+    | number
+    | null /** Sets the DPI value in the EXIF header. (https://docs.imgix.com/apis/url/format/dpi) */;
+  dpr?:
+    | number
+    | null /** Adjusts the device-pixel ratio of the output image. (https://docs.imgix.com/apis/url/dpr) */;
+  exp?:
+    | number
+    | null /** Adjusts the exposure of the output image. (https://docs.imgix.com/apis/url/adjustment/exp) */;
+  expires?:
+    | string
+    | null /** A Unix timestamp specifying a UTC time. Requests made to this URL after that time will output a 404 status code. (https://docs.imgix.com/apis/url/expires) */;
+  faceindex?:
+    | number
+    | null /** Selects a face to crop to. (https://docs.imgix.com/apis/url/face-detection/faceindex) */;
+  facepad?:
+    | number
+    | null /** Adjusts padding around a selected face. (https://docs.imgix.com/apis/url/face-detection/facepad) */;
+  faces?:
+    | number
+    | null /** Specifies that face data should be included in output when combined with `fm=json`. (https://docs.imgix.com/apis/url/face-detection/faces) */;
+  fit?:
+    | string
+    | null /** Specifies how to map the source image to the output image dimensions. (https://docs.imgix.com/apis/url/size/fit) */;
+  flip?:
+    | string
+    | null /** Flips an image on a specified axis. (https://docs.imgix.com/apis/url/rotation/flip) */;
+  fm?:
+    | string
+    | null /** Changes the format of the output image. (https://docs.imgix.com/apis/url/format/fm) */;
+  fpDebug?:
+    | boolean
+    | null /** Displays crosshairs identifying the location of the set focal point (https://docs.imgix.com/apis/url/focalpoint-crop/fp-debug) */;
+  fpX?:
+    | number
+    | null /** Sets the relative horizontal value for the focal point of an image (https://docs.imgix.com/apis/url/focalpoint-crop/fp-x) */;
+  fpY?:
+    | number
+    | null /** Sets the relative vertical value for the focal point of an image (https://docs.imgix.com/apis/url/focalpoint-crop/fp-y) */;
+  fpZ?:
+    | number
+    | null /** Sets the relative zoom value for the focal point of an image (https://docs.imgix.com/apis/url/focalpoint-crop/fp-z) */;
+  gam?:
+    | number
+    | null /** Adjusts the gamma of the source image. (https://docs.imgix.com/apis/url/adjustment/gam) */;
+  h?:
+    | string
+    | null /** Adjusts the height of the output image. (https://docs.imgix.com/apis/url/size/h) */;
+  high?:
+    | number
+    | null /** Adjusts the highlights of the source image. (https://docs.imgix.com/apis/url/adjustment/high) */;
+  htn?:
+    | number
+    | null /** Applies a half-tone effect to the source image. (https://docs.imgix.com/apis/url/stylize/htn) */;
+  hue?:
+    | number
+    | null /** Adjusts the hue of the source image. (https://docs.imgix.com/apis/url/adjustment/hue) */;
+  invert?:
+    | boolean
+    | null /** Inverts the colors on the source image. (https://docs.imgix.com/apis/url/adjustment/invert) */;
+  lossless?:
+    | boolean
+    | null /** Specifies that the output image should be a lossless variant. (https://docs.imgix.com/apis/url/format/lossless) */;
+  mark?:
+    | string
+    | null /** Specifies the location of the watermark image. (https://docs.imgix.com/apis/url/watermark/mark) */;
+  markalign?:
+    | string
+    | null /** Changes the watermark alignment relative to the parent image. (https://docs.imgix.com/apis/url/watermark/markalign) */;
+  markalpha?:
+    | number
+    | null /** Changes the alpha of the watermark image. (https://docs.imgix.com/apis/url/watermark/markalpha) */;
+  markbase?:
+    | string
+    | null /** Changes base URL of the watermark image. (https://docs.imgix.com/apis/url/watermark/markbase) */;
+  markfit?:
+    | string
+    | null /** Specifies the fit mode for watermark images. (https://docs.imgix.com/apis/url/watermark/markfit) */;
+  markh?:
+    | string
+    | null /** Adjusts the height of the watermark image. (https://docs.imgix.com/apis/url/watermark/markh) */;
+  markpad?:
+    | number
+    | null /** Applies padding to the watermark image. (https://docs.imgix.com/apis/url/watermark/markpad) */;
+  markscale?:
+    | number
+    | null /** Adjusts the scale of the watermark image. (https://docs.imgix.com/apis/url/watermark/markscale) */;
+  markw?:
+    | string
+    | null /** Adjusts the width of the watermark image. (https://docs.imgix.com/apis/url/watermark/markw) */;
+  markx?:
+    | number
+    | null /** Adjusts the x-offset of the watermark image relative to its parent. (https://docs.imgix.com/apis/url/watermark/markx) */;
+  marky?:
+    | number
+    | null /** Adjusts the y-offset of the watermark image relative to its parent. (https://docs.imgix.com/apis/url/watermark/marky) */;
+  mask?:
+    | string
+    | null /** Defines the type of mask and specifies the URL if that type is selected. (https://docs.imgix.com/apis/url/mask) */;
+  maskbg?:
+    | string
+    | null /** Colors the background of the transparent mask area of images (https://docs.imgix.com/apis/url/mask/mask-bg) */;
+  maxH?:
+    | number
+    | null /** Specifies the maximum height of the output image in pixels. (https://docs.imgix.com/apis/url/size/max-h) */;
+  maxW?:
+    | number
+    | null /** Specifies the maximum width of the output image in pixels. (https://docs.imgix.com/apis/url/size/max-w) */;
+  minH?:
+    | number
+    | null /** Specifies the minimum height of the output image in pixels. (https://docs.imgix.com/apis/url/size/min-h) */;
+  minW?:
+    | number
+    | null /** Specifies the minimum width of the output image in pixels. (https://docs.imgix.com/apis/url/size/min-w) */;
+  mono?:
+    | string
+    | null /** Applies a monochrome effect to the source image. (https://docs.imgix.com/apis/url/stylize/mono) */;
+  nr?:
+    | number
+    | null /** Reduces the noise in an image. (https://docs.imgix.com/apis/url/noise-reduction/nr) */;
+  nrs?:
+    | number
+    | null /** Provides a threshold by which to sharpen an image. (https://docs.imgix.com/apis/url/noise-reduction/nrs) */;
+  or?:
+    | number
+    | null /** Changes the image orientation. (https://docs.imgix.com/apis/url/rotation/or) */;
+  pad?:
+    | number
+    | null /** Pads an image. (https://docs.imgix.com/apis/url/border-and-padding/pad) */;
+  page?:
+    | number
+    | null /** Selects a page from a PDF for display. (https://docs.imgix.com/apis/url/pdf-page-number) */;
+  palette?:
+    | string
+    | null /** Specifies an output format for palette-extraction. (https://docs.imgix.com/apis/url/color-palette/palette) */;
+  prefix?:
+    | string
+    | null /** Specifies a CSS prefix for all classes in palette-extraction. (https://docs.imgix.com/apis/url/color-palette/prefix) */;
+  px?:
+    | number
+    | null /** Applies a pixelation effect to an image. (https://docs.imgix.com/apis/url/stylize/px) */;
+  q?:
+    | number
+    | null /** Adjusts the quality of an output image. (https://docs.imgix.com/apis/url/format/q) */;
+  rect?:
+    | string
+    | null /** Crops an image to a specified rectangle. (https://docs.imgix.com/apis/url/size/rect) */;
+  rot?:
+    | number
+    | null /** Rotates an image by a specified number of degrees. (https://docs.imgix.com/apis/url/rotation/rot) */;
+  sat?:
+    | number
+    | null /** Adjusts the saturation of an image. (https://docs.imgix.com/apis/url/adjustment/sat) */;
+  sepia?:
+    | number
+    | null /** Applies a sepia effect to an image. (https://docs.imgix.com/apis/url/stylize/sepia) */;
+  shad?:
+    | number
+    | null /** Adjusts the highlights of the source image. (https://docs.imgix.com/apis/url/adjustment/shad) */;
+  sharp?:
+    | number
+    | null /** Adjusts the sharpness of the source image. (https://docs.imgix.com/apis/url/adjustment/sharp) */;
+  trim?:
+    | string
+    | null /** Trims the source image. (https://docs.imgix.com/apis/url/trim/trim) */;
+  trimcolor?:
+    | string
+    | null /** Specifies a trim color on a trim operation. (https://docs.imgix.com/apis/url/trim/trimcolor) */;
+  trimmd?:
+    | number
+    | null /** Specifies the mean difference on a trim operation. (https://docs.imgix.com/apis/url/trim/trimmd) */;
+  trimsd?:
+    | number
+    | null /** Specifies the standard deviation on a trim operation. (https://docs.imgix.com/apis/url/trim/trimsd) */;
+  trimtol?:
+    | number
+    | null /** Specifies the tolerance on a trim operation. (https://docs.imgix.com/apis/url/trim/trimtol) */;
+  txt?:
+    | string
+    | null /** Sets the text string to render. (https://docs.imgix.com/apis/url/text/txt) */;
+  txtalign?:
+    | string
+    | null /** Sets the vertical and horizontal alignment of rendered text relative to the base image. (https://docs.imgix.com/apis/url/text/txtalign) */;
+  txtclip?:
+    | string
+    | null /** Sets the clipping properties of rendered text. (https://docs.imgix.com/apis/url/text/txtclip) */;
+  txtclr?:
+    | string
+    | null /** Specifies the color of rendered text. (https://docs.imgix.com/apis/url/text/txtclr) */;
+  txtfit?:
+    | string
+    | null /** Specifies the fit approach for rendered text. (https://docs.imgix.com/apis/url/text/txtfit) */;
+  txtfont?:
+    | string
+    | null /** Selects a font for rendered text. (https://docs.imgix.com/apis/url/text/txtfont) */;
+  txtlead?:
+    | number
+    | null /** Sets the leading (line spacing) for rendered text. Only works on the multi-line text endpoint. (https://docs.imgix.com/apis/url/text/txtlead) */;
+  txtlig?:
+    | number
+    | null /** Controls the level of ligature substitution (https://docs.imgix.com/apis/url/text/txtlig) */;
+  txtline?:
+    | number
+    | null /** Outlines the rendered text with a specified color. (https://docs.imgix.com/apis/url/text/txtline) */;
+  txtlineclr?:
+    | string
+    | null /** Specifies a text outline color. (https://docs.imgix.com/apis/url/text/txtlineclr) */;
+  txtpad?:
+    | number
+    | null /** Specifies the padding (in device-independent pixels) between a textbox and the edges of the base image. (https://docs.imgix.com/apis/url/text/txtpad) */;
+  txtshad?:
+    | number
+    | null /** Applies a shadow to rendered text. (https://docs.imgix.com/apis/url/text/txtshad) */;
+  txtsize?:
+    | number
+    | null /** Sets the font size of rendered text. (https://docs.imgix.com/apis/url/text/txtsize) */;
+  txttrack?:
+    | number
+    | null /** Sets the tracking (letter spacing) for rendered text. Only works on the multi-line text endpoint. (https://docs.imgix.com/apis/url/text/txtlead) */;
+  txtwidth?:
+    | number
+    | null /** Sets the width of rendered text. (https://docs.imgix.com/apis/url/text/txtwidth) */;
+  usm?:
+    | number
+    | null /** Sharpens the source image using an unsharp mask. (https://docs.imgix.com/apis/url/adjustment/usm) */;
+  usmrad?:
+    | number
+    | null /** Specifies the radius for an unsharp mask operation. (https://docs.imgix.com/apis/url/adjustment/usmrad) */;
+  vib?:
+    | number
+    | null /** Adjusts the vibrance of an image. (https://docs.imgix.com/apis/url/adjustment/vib) */;
+  w?:
+    | string
+    | null /** Adjusts the width of the output image. (https://docs.imgix.com/apis/url/size/w) */;
+}
+
 export interface DatoCmsOneColumnSectionContentTextNodeConnectionSort {
   fields: (DatoCmsOneColumnSectionContentTextNodeConnectionSortByFieldsEnum | null)[];
   order?: DatoCmsOneColumnSectionContentTextNodeConnectionSortOrderValues | null;
@@ -4160,6 +5121,170 @@ export interface DatoCmsOneColumnSectionContentTextNodeConnectionInternalContent
 }
 
 export interface DatoCmsOneColumnSectionContentTextNodeConnectionInternalOwnerQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionSort {
+  fields: (DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionSortByFieldsEnum | null)[];
+  order?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionSortOrderValues | null;
+}
+/** Filter connection on its fields */
+export interface FilterDatoCmsTwoColumnSectionFirstColumnContentTextNode {
+  id?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionIdQueryString_2 | null;
+  firstColumnContent?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionFirstColumnContentQueryString_2 | null;
+  internal?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionInternalInputObject_2 | null;
+}
+
+export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionIdQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionFirstColumnContentQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionInternalInputObject_2 {
+  type?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionInternalTypeQueryString_2 | null;
+  mediaType?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionInternalMediaTypeQueryString_2 | null;
+  content?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionInternalContentQueryString_2 | null;
+  contentDigest?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionInternalContentDigestQueryString_2 | null;
+  owner?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionInternalOwnerQueryString_2 | null;
+}
+
+export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionInternalTypeQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionInternalMediaTypeQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionInternalContentQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionInternalContentDigestQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionInternalOwnerQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionSort {
+  fields: (DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionSortByFieldsEnum | null)[];
+  order?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionSortOrderValues | null;
+}
+/** Filter connection on its fields */
+export interface FilterDatoCmsTwoColumnSectionSecondColumnContentTextNode {
+  id?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionIdQueryString_2 | null;
+  secondColumnContent?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionSecondColumnContentQueryString_2 | null;
+  internal?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionInternalInputObject_2 | null;
+}
+
+export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionIdQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionSecondColumnContentQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionInternalInputObject_2 {
+  type?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionInternalTypeQueryString_2 | null;
+  mediaType?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionInternalMediaTypeQueryString_2 | null;
+  content?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionInternalContentQueryString_2 | null;
+  contentDigest?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionInternalContentDigestQueryString_2 | null;
+  owner?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionInternalOwnerQueryString_2 | null;
+}
+
+export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionInternalTypeQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionInternalMediaTypeQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionInternalContentQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionInternalContentDigestQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionInternalOwnerQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -5324,6 +6449,8 @@ export interface DatoCmsHomepageConnectionHeaderImageInputObject_2 {
   size?: DatoCmsHomepageConnectionHeaderImageSizeQueryInteger_2 | null;
   width?: DatoCmsHomepageConnectionHeaderImageWidthQueryInteger_2 | null;
   height?: DatoCmsHomepageConnectionHeaderImageHeightQueryInteger_2 | null;
+  title?: DatoCmsHomepageConnectionHeaderImageTitleQueryString_2 | null;
+  alt?: DatoCmsHomepageConnectionHeaderImageAltQueryString_2 | null;
   url?: DatoCmsHomepageConnectionHeaderImageUrlQueryString_2 | null;
 }
 
@@ -5418,6 +6545,24 @@ export interface DatoCmsHomepageConnectionHeaderImageHeightQueryInteger_2 {
   lte?: number | null;
   in?: (number | null)[] | null;
   nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsHomepageConnectionHeaderImageTitleQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsHomepageConnectionHeaderImageAltQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
 }
 
 export interface DatoCmsHomepageConnectionHeaderImageUrlQueryString_2 {
@@ -5668,327 +6813,6 @@ export interface DatoCmsHomepageConnectionUpdatedAtQueryString_2 {
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsImgixParams {
-  auto?:
-    | string
-    | null /** Applies automatic enhancements to images. (https://docs.imgix.com/apis/url/auto) */;
-  ba?:
-    | string
-    | null /** Changes the blend alignment relative to the parent image. (https://docs.imgix.com/apis/url/blending/ba) */;
-  balph?:
-    | number
-    | null /** Changes the alpha of the blend image. (https://docs.imgix.com/apis/url/blending/balph) */;
-  bc?:
-    | string
-    | null /** Specifies the type of crop for blend images. (https://docs.imgix.com/apis/url/blending/bc) */;
-  bf?:
-    | string
-    | null /** Specifies the fit mode for blend images. (https://docs.imgix.com/apis/url/blending/bf) */;
-  bg?:
-    | string
-    | null /** Colors the background of padded images. (https://docs.imgix.com/apis/url/bg) */;
-  bh?:
-    | string
-    | null /** Adjusts the height of the blend image. (https://docs.imgix.com/apis/url/blending/bh) */;
-  blend?:
-    | string
-    | null /** Specifies the location of the blend image. (https://docs.imgix.com/apis/url/blending/blend) */;
-  blur?:
-    | number
-    | null /** Applies a gaussian blur to an image. (https://docs.imgix.com/apis/url/stylize/blur) */;
-  bm?:
-    | string
-    | null /** Sets the blend mode for a blend image. (https://docs.imgix.com/apis/url/blending/bm) */;
-  borderRadiusInner?:
-    | string
-    | null /** Sets the inner radius of the image's border in pixels. (https://docs.imgix.com/apis/url/border-and-padding/border-radius-inner) */;
-  borderRadius?:
-    | string
-    | null /** Sets the outer radius of the image's border in pixels. (https://docs.imgix.com/apis/url/border-and-padding/border-radius) */;
-  border?:
-    | string
-    | null /** Applies a border to an image. (https://docs.imgix.com/apis/url/border-and-padding/border) */;
-  bp?:
-    | number
-    | null /** Applies padding to the blend image. (https://docs.imgix.com/apis/url/blending/bp) */;
-  bri?:
-    | number
-    | null /** Adjusts the brightness of the source image. (https://docs.imgix.com/apis/url/adjustment/bri) */;
-  bs?:
-    | string
-    | null /** Adjusts the size of the blend image. (https://docs.imgix.com/apis/url/blending/bs) */;
-  bw?:
-    | string
-    | null /** Adjusts the width of the blend image. (https://docs.imgix.com/apis/url/blending/bw) */;
-  bx?:
-    | number
-    | null /** Adjusts the x-offset of the blend image relative to its parent. (https://docs.imgix.com/apis/url/blending/bx) */;
-  by?:
-    | number
-    | null /** Adjusts the y-offset of the blend image relative to its parent. (https://docs.imgix.com/apis/url/blending/by) */;
-  ch?:
-    | string
-    | null /** Sets one or more Client-Hints headers (https://docs.imgix.com/apis/url/format/ch) */;
-  chromasub?:
-    | number
-    | null /** Specifies the output chroma subsampling rate. (https://docs.imgix.com/apis/url/format/chromasub) */;
-  colorquant?:
-    | number
-    | null /** Limits the number of unique colors in an image. (https://docs.imgix.com/apis/url/format/colorquant) */;
-  colors?:
-    | number
-    | null /** Specifies how many colors to include in a palette-extraction response. (https://docs.imgix.com/apis/url/color-palette/colors) */;
-  con?:
-    | number
-    | null /** Adjusts the contrast of the source image. (https://docs.imgix.com/apis/url/adjustment/con) */;
-  cornerRadius?:
-    | string
-    | null /** Specifies the radius value for a rounded corner mask. (https://docs.imgix.com/apis/url/mask/corner-radius) */;
-  crop?:
-    | string
-    | null /** Specifies how to crop an image. (https://docs.imgix.com/apis/url/size/crop) */;
-  cs?:
-    | string
-    | null /** Specifies the color space of the output image. (https://docs.imgix.com/apis/url/format/cs) */;
-  dl?:
-    | string
-    | null /** Forces a URL to use send-file in its response. (https://docs.imgix.com/apis/url/format/dl) */;
-  dpi?:
-    | number
-    | null /** Sets the DPI value in the EXIF header. (https://docs.imgix.com/apis/url/format/dpi) */;
-  dpr?:
-    | number
-    | null /** Adjusts the device-pixel ratio of the output image. (https://docs.imgix.com/apis/url/dpr) */;
-  exp?:
-    | number
-    | null /** Adjusts the exposure of the output image. (https://docs.imgix.com/apis/url/adjustment/exp) */;
-  expires?:
-    | string
-    | null /** A Unix timestamp specifying a UTC time. Requests made to this URL after that time will output a 404 status code. (https://docs.imgix.com/apis/url/expires) */;
-  faceindex?:
-    | number
-    | null /** Selects a face to crop to. (https://docs.imgix.com/apis/url/face-detection/faceindex) */;
-  facepad?:
-    | number
-    | null /** Adjusts padding around a selected face. (https://docs.imgix.com/apis/url/face-detection/facepad) */;
-  faces?:
-    | number
-    | null /** Specifies that face data should be included in output when combined with `fm=json`. (https://docs.imgix.com/apis/url/face-detection/faces) */;
-  fit?:
-    | string
-    | null /** Specifies how to map the source image to the output image dimensions. (https://docs.imgix.com/apis/url/size/fit) */;
-  flip?:
-    | string
-    | null /** Flips an image on a specified axis. (https://docs.imgix.com/apis/url/rotation/flip) */;
-  fm?:
-    | string
-    | null /** Changes the format of the output image. (https://docs.imgix.com/apis/url/format/fm) */;
-  fpDebug?:
-    | boolean
-    | null /** Displays crosshairs identifying the location of the set focal point (https://docs.imgix.com/apis/url/focalpoint-crop/fp-debug) */;
-  fpX?:
-    | number
-    | null /** Sets the relative horizontal value for the focal point of an image (https://docs.imgix.com/apis/url/focalpoint-crop/fp-x) */;
-  fpY?:
-    | number
-    | null /** Sets the relative vertical value for the focal point of an image (https://docs.imgix.com/apis/url/focalpoint-crop/fp-y) */;
-  fpZ?:
-    | number
-    | null /** Sets the relative zoom value for the focal point of an image (https://docs.imgix.com/apis/url/focalpoint-crop/fp-z) */;
-  gam?:
-    | number
-    | null /** Adjusts the gamma of the source image. (https://docs.imgix.com/apis/url/adjustment/gam) */;
-  h?:
-    | string
-    | null /** Adjusts the height of the output image. (https://docs.imgix.com/apis/url/size/h) */;
-  high?:
-    | number
-    | null /** Adjusts the highlights of the source image. (https://docs.imgix.com/apis/url/adjustment/high) */;
-  htn?:
-    | number
-    | null /** Applies a half-tone effect to the source image. (https://docs.imgix.com/apis/url/stylize/htn) */;
-  hue?:
-    | number
-    | null /** Adjusts the hue of the source image. (https://docs.imgix.com/apis/url/adjustment/hue) */;
-  invert?:
-    | boolean
-    | null /** Inverts the colors on the source image. (https://docs.imgix.com/apis/url/adjustment/invert) */;
-  lossless?:
-    | boolean
-    | null /** Specifies that the output image should be a lossless variant. (https://docs.imgix.com/apis/url/format/lossless) */;
-  mark?:
-    | string
-    | null /** Specifies the location of the watermark image. (https://docs.imgix.com/apis/url/watermark/mark) */;
-  markalign?:
-    | string
-    | null /** Changes the watermark alignment relative to the parent image. (https://docs.imgix.com/apis/url/watermark/markalign) */;
-  markalpha?:
-    | number
-    | null /** Changes the alpha of the watermark image. (https://docs.imgix.com/apis/url/watermark/markalpha) */;
-  markbase?:
-    | string
-    | null /** Changes base URL of the watermark image. (https://docs.imgix.com/apis/url/watermark/markbase) */;
-  markfit?:
-    | string
-    | null /** Specifies the fit mode for watermark images. (https://docs.imgix.com/apis/url/watermark/markfit) */;
-  markh?:
-    | string
-    | null /** Adjusts the height of the watermark image. (https://docs.imgix.com/apis/url/watermark/markh) */;
-  markpad?:
-    | number
-    | null /** Applies padding to the watermark image. (https://docs.imgix.com/apis/url/watermark/markpad) */;
-  markscale?:
-    | number
-    | null /** Adjusts the scale of the watermark image. (https://docs.imgix.com/apis/url/watermark/markscale) */;
-  markw?:
-    | string
-    | null /** Adjusts the width of the watermark image. (https://docs.imgix.com/apis/url/watermark/markw) */;
-  markx?:
-    | number
-    | null /** Adjusts the x-offset of the watermark image relative to its parent. (https://docs.imgix.com/apis/url/watermark/markx) */;
-  marky?:
-    | number
-    | null /** Adjusts the y-offset of the watermark image relative to its parent. (https://docs.imgix.com/apis/url/watermark/marky) */;
-  mask?:
-    | string
-    | null /** Defines the type of mask and specifies the URL if that type is selected. (https://docs.imgix.com/apis/url/mask) */;
-  maskbg?:
-    | string
-    | null /** Colors the background of the transparent mask area of images (https://docs.imgix.com/apis/url/mask/mask-bg) */;
-  maxH?:
-    | number
-    | null /** Specifies the maximum height of the output image in pixels. (https://docs.imgix.com/apis/url/size/max-h) */;
-  maxW?:
-    | number
-    | null /** Specifies the maximum width of the output image in pixels. (https://docs.imgix.com/apis/url/size/max-w) */;
-  minH?:
-    | number
-    | null /** Specifies the minimum height of the output image in pixels. (https://docs.imgix.com/apis/url/size/min-h) */;
-  minW?:
-    | number
-    | null /** Specifies the minimum width of the output image in pixels. (https://docs.imgix.com/apis/url/size/min-w) */;
-  mono?:
-    | string
-    | null /** Applies a monochrome effect to the source image. (https://docs.imgix.com/apis/url/stylize/mono) */;
-  nr?:
-    | number
-    | null /** Reduces the noise in an image. (https://docs.imgix.com/apis/url/noise-reduction/nr) */;
-  nrs?:
-    | number
-    | null /** Provides a threshold by which to sharpen an image. (https://docs.imgix.com/apis/url/noise-reduction/nrs) */;
-  or?:
-    | number
-    | null /** Changes the image orientation. (https://docs.imgix.com/apis/url/rotation/or) */;
-  pad?:
-    | number
-    | null /** Pads an image. (https://docs.imgix.com/apis/url/border-and-padding/pad) */;
-  page?:
-    | number
-    | null /** Selects a page from a PDF for display. (https://docs.imgix.com/apis/url/pdf-page-number) */;
-  palette?:
-    | string
-    | null /** Specifies an output format for palette-extraction. (https://docs.imgix.com/apis/url/color-palette/palette) */;
-  prefix?:
-    | string
-    | null /** Specifies a CSS prefix for all classes in palette-extraction. (https://docs.imgix.com/apis/url/color-palette/prefix) */;
-  px?:
-    | number
-    | null /** Applies a pixelation effect to an image. (https://docs.imgix.com/apis/url/stylize/px) */;
-  q?:
-    | number
-    | null /** Adjusts the quality of an output image. (https://docs.imgix.com/apis/url/format/q) */;
-  rect?:
-    | string
-    | null /** Crops an image to a specified rectangle. (https://docs.imgix.com/apis/url/size/rect) */;
-  rot?:
-    | number
-    | null /** Rotates an image by a specified number of degrees. (https://docs.imgix.com/apis/url/rotation/rot) */;
-  sat?:
-    | number
-    | null /** Adjusts the saturation of an image. (https://docs.imgix.com/apis/url/adjustment/sat) */;
-  sepia?:
-    | number
-    | null /** Applies a sepia effect to an image. (https://docs.imgix.com/apis/url/stylize/sepia) */;
-  shad?:
-    | number
-    | null /** Adjusts the highlights of the source image. (https://docs.imgix.com/apis/url/adjustment/shad) */;
-  sharp?:
-    | number
-    | null /** Adjusts the sharpness of the source image. (https://docs.imgix.com/apis/url/adjustment/sharp) */;
-  trim?:
-    | string
-    | null /** Trims the source image. (https://docs.imgix.com/apis/url/trim/trim) */;
-  trimcolor?:
-    | string
-    | null /** Specifies a trim color on a trim operation. (https://docs.imgix.com/apis/url/trim/trimcolor) */;
-  trimmd?:
-    | number
-    | null /** Specifies the mean difference on a trim operation. (https://docs.imgix.com/apis/url/trim/trimmd) */;
-  trimsd?:
-    | number
-    | null /** Specifies the standard deviation on a trim operation. (https://docs.imgix.com/apis/url/trim/trimsd) */;
-  trimtol?:
-    | number
-    | null /** Specifies the tolerance on a trim operation. (https://docs.imgix.com/apis/url/trim/trimtol) */;
-  txt?:
-    | string
-    | null /** Sets the text string to render. (https://docs.imgix.com/apis/url/text/txt) */;
-  txtalign?:
-    | string
-    | null /** Sets the vertical and horizontal alignment of rendered text relative to the base image. (https://docs.imgix.com/apis/url/text/txtalign) */;
-  txtclip?:
-    | string
-    | null /** Sets the clipping properties of rendered text. (https://docs.imgix.com/apis/url/text/txtclip) */;
-  txtclr?:
-    | string
-    | null /** Specifies the color of rendered text. (https://docs.imgix.com/apis/url/text/txtclr) */;
-  txtfit?:
-    | string
-    | null /** Specifies the fit approach for rendered text. (https://docs.imgix.com/apis/url/text/txtfit) */;
-  txtfont?:
-    | string
-    | null /** Selects a font for rendered text. (https://docs.imgix.com/apis/url/text/txtfont) */;
-  txtlead?:
-    | number
-    | null /** Sets the leading (line spacing) for rendered text. Only works on the multi-line text endpoint. (https://docs.imgix.com/apis/url/text/txtlead) */;
-  txtlig?:
-    | number
-    | null /** Controls the level of ligature substitution (https://docs.imgix.com/apis/url/text/txtlig) */;
-  txtline?:
-    | number
-    | null /** Outlines the rendered text with a specified color. (https://docs.imgix.com/apis/url/text/txtline) */;
-  txtlineclr?:
-    | string
-    | null /** Specifies a text outline color. (https://docs.imgix.com/apis/url/text/txtlineclr) */;
-  txtpad?:
-    | number
-    | null /** Specifies the padding (in device-independent pixels) between a textbox and the edges of the base image. (https://docs.imgix.com/apis/url/text/txtpad) */;
-  txtshad?:
-    | number
-    | null /** Applies a shadow to rendered text. (https://docs.imgix.com/apis/url/text/txtshad) */;
-  txtsize?:
-    | number
-    | null /** Sets the font size of rendered text. (https://docs.imgix.com/apis/url/text/txtsize) */;
-  txttrack?:
-    | number
-    | null /** Sets the tracking (letter spacing) for rendered text. Only works on the multi-line text endpoint. (https://docs.imgix.com/apis/url/text/txtlead) */;
-  txtwidth?:
-    | number
-    | null /** Sets the width of rendered text. (https://docs.imgix.com/apis/url/text/txtwidth) */;
-  usm?:
-    | number
-    | null /** Sharpens the source image using an unsharp mask. (https://docs.imgix.com/apis/url/adjustment/usm) */;
-  usmrad?:
-    | number
-    | null /** Specifies the radius for an unsharp mask operation. (https://docs.imgix.com/apis/url/adjustment/usmrad) */;
-  vib?:
-    | number
-    | null /** Adjusts the vibrance of an image. (https://docs.imgix.com/apis/url/adjustment/vib) */;
-  w?:
-    | string
-    | null /** Adjusts the width of the output image. (https://docs.imgix.com/apis/url/size/w) */;
-}
-
 export interface DatoCmsFullWidthImageConnectionSort {
   fields: (DatoCmsFullWidthImageConnectionSortByFieldsEnum | null)[];
   order?: DatoCmsFullWidthImageConnectionSortOrderValues | null;
@@ -6216,6 +7040,8 @@ export interface DatoCmsFullWidthImageConnectionImageInputObject_2 {
   size?: DatoCmsFullWidthImageConnectionImageSizeQueryInteger_2 | null;
   width?: DatoCmsFullWidthImageConnectionImageWidthQueryInteger_2 | null;
   height?: DatoCmsFullWidthImageConnectionImageHeightQueryInteger_2 | null;
+  title?: DatoCmsFullWidthImageConnectionImageTitleQueryString_2 | null;
+  alt?: DatoCmsFullWidthImageConnectionImageAltQueryString_2 | null;
   url?: DatoCmsFullWidthImageConnectionImageUrlQueryString_2 | null;
 }
 
@@ -6310,6 +7136,24 @@ export interface DatoCmsFullWidthImageConnectionImageHeightQueryInteger_2 {
   lte?: number | null;
   in?: (number | null)[] | null;
   nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsFullWidthImageConnectionImageTitleQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsFullWidthImageConnectionImageAltQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
 }
 
 export interface DatoCmsFullWidthImageConnectionImageUrlQueryString_2 {
@@ -6922,6 +7766,8 @@ export interface DatoCmsOneColumnSectionConnectionHeaderImageInputObject_2 {
   size?: DatoCmsOneColumnSectionConnectionHeaderImageSizeQueryInteger_2 | null;
   width?: DatoCmsOneColumnSectionConnectionHeaderImageWidthQueryInteger_2 | null;
   height?: DatoCmsOneColumnSectionConnectionHeaderImageHeightQueryInteger_2 | null;
+  title?: DatoCmsOneColumnSectionConnectionHeaderImageTitleQueryString_2 | null;
+  alt?: DatoCmsOneColumnSectionConnectionHeaderImageAltQueryString_2 | null;
   url?: DatoCmsOneColumnSectionConnectionHeaderImageUrlQueryString_2 | null;
 }
 
@@ -7018,6 +7864,24 @@ export interface DatoCmsOneColumnSectionConnectionHeaderImageHeightQueryInteger_
   nin?: (number | null)[] | null;
 }
 
+export interface DatoCmsOneColumnSectionConnectionHeaderImageTitleQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsOneColumnSectionConnectionHeaderImageAltQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
 export interface DatoCmsOneColumnSectionConnectionHeaderImageUrlQueryString_2 {
   eq?: string | null;
   ne?: string | null;
@@ -7027,24 +7891,26 @@ export interface DatoCmsOneColumnSectionConnectionHeaderImageUrlQueryString_2 {
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsSiteConnectionSort {
-  fields: (DatoCmsSiteConnectionSortByFieldsEnum | null)[];
-  order?: DatoCmsSiteConnectionSortOrderValues | null;
+export interface DatoCmsPageConnectionSort {
+  fields: (DatoCmsPageConnectionSortByFieldsEnum | null)[];
+  order?: DatoCmsPageConnectionSortOrderValues | null;
 }
 /** Filter connection on its fields */
-export interface FilterDatoCmsSite {
-  id?: DatoCmsSiteConnectionIdQueryString_2 | null;
-  name?: DatoCmsSiteConnectionNameQueryString_2 | null;
-  locales?: DatoCmsSiteConnectionLocalesQueryList_2 | null;
-  theme?: DatoCmsSiteConnectionThemeInputObject_2 | null;
-  internalDomain?: DatoCmsSiteConnectionInternalDomainQueryString_2 | null;
-  noIndex?: DatoCmsSiteConnectionNoIndexQueryBoolean_2 | null;
-  originalId?: DatoCmsSiteConnectionOriginalIdQueryString_2 | null;
-  internal?: DatoCmsSiteConnectionInternalInputObject_2 | null;
-  locale?: DatoCmsSiteConnectionLocaleQueryString_2 | null;
+export interface FilterDatoCmsPage {
+  id?: DatoCmsPageConnectionIdQueryString_2 | null;
+  originalId?: DatoCmsPageConnectionOriginalIdQueryString_2 | null;
+  internal?: DatoCmsPageConnectionInternalInputObject_2 | null;
+  locale?: DatoCmsPageConnectionLocaleQueryString_2 | null;
+  model?: DatoCmsPageConnectionModelInputObject_2 | null;
+  title?: DatoCmsPageConnectionTitleQueryString_2 | null;
+  slug?: DatoCmsPageConnectionSlugQueryString_2 | null;
+  headerImage?: DatoCmsPageConnectionHeaderImageInputObject_2 | null;
+  contenuDeLaPage?: DatoCmsPageConnectionContenuDeLaPageQueryList_2 | null;
+  seoMetaTags?: DatoCmsPageConnectionSeoMetaTagsInputObject_2 | null;
+  updatedAt?: DatoCmsPageConnectionUpdatedAtQueryString_2 | null;
 }
 
-export interface DatoCmsSiteConnectionIdQueryString_2 {
+export interface DatoCmsPageConnectionIdQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -7053,7 +7919,7 @@ export interface DatoCmsSiteConnectionIdQueryString_2 {
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsSiteConnectionNameQueryString_2 {
+export interface DatoCmsPageConnectionOriginalIdQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -7062,7 +7928,13 @@ export interface DatoCmsSiteConnectionNameQueryString_2 {
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsSiteConnectionLocalesQueryList_2 {
+export interface DatoCmsPageConnectionInternalInputObject_2 {
+  type?: DatoCmsPageConnectionInternalTypeQueryString_2 | null;
+  contentDigest?: DatoCmsPageConnectionInternalContentDigestQueryString_2 | null;
+  owner?: DatoCmsPageConnectionInternalOwnerQueryString_2 | null;
+}
+
+export interface DatoCmsPageConnectionInternalTypeQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -7071,218 +7943,7 @@ export interface DatoCmsSiteConnectionLocalesQueryList_2 {
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsSiteConnectionThemeInputObject_2 {
-  primaryColor?: DatoCmsSiteConnectionThemePrimaryColorInputObject_2 | null;
-  lightColor?: DatoCmsSiteConnectionThemeLightColorInputObject_2 | null;
-  darkColor?: DatoCmsSiteConnectionThemeDarkColorInputObject_2 | null;
-  accentColor?: DatoCmsSiteConnectionThemeAccentColorInputObject_2 | null;
-}
-
-export interface DatoCmsSiteConnectionThemePrimaryColorInputObject_2 {
-  red?: DatoCmsSiteConnectionThemePrimaryColorRedQueryInteger_2 | null;
-  blue?: DatoCmsSiteConnectionThemePrimaryColorBlueQueryInteger_2 | null;
-  alpha?: DatoCmsSiteConnectionThemePrimaryColorAlphaQueryInteger_2 | null;
-  green?: DatoCmsSiteConnectionThemePrimaryColorGreenQueryInteger_2 | null;
-}
-
-export interface DatoCmsSiteConnectionThemePrimaryColorRedQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteConnectionThemePrimaryColorBlueQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteConnectionThemePrimaryColorAlphaQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteConnectionThemePrimaryColorGreenQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteConnectionThemeLightColorInputObject_2 {
-  red?: DatoCmsSiteConnectionThemeLightColorRedQueryInteger_2 | null;
-  blue?: DatoCmsSiteConnectionThemeLightColorBlueQueryInteger_2 | null;
-  alpha?: DatoCmsSiteConnectionThemeLightColorAlphaQueryInteger_2 | null;
-  green?: DatoCmsSiteConnectionThemeLightColorGreenQueryInteger_2 | null;
-}
-
-export interface DatoCmsSiteConnectionThemeLightColorRedQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteConnectionThemeLightColorBlueQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteConnectionThemeLightColorAlphaQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteConnectionThemeLightColorGreenQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteConnectionThemeDarkColorInputObject_2 {
-  red?: DatoCmsSiteConnectionThemeDarkColorRedQueryInteger_2 | null;
-  blue?: DatoCmsSiteConnectionThemeDarkColorBlueQueryInteger_2 | null;
-  alpha?: DatoCmsSiteConnectionThemeDarkColorAlphaQueryInteger_2 | null;
-  green?: DatoCmsSiteConnectionThemeDarkColorGreenQueryInteger_2 | null;
-}
-
-export interface DatoCmsSiteConnectionThemeDarkColorRedQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteConnectionThemeDarkColorBlueQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteConnectionThemeDarkColorAlphaQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteConnectionThemeDarkColorGreenQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteConnectionThemeAccentColorInputObject_2 {
-  red?: DatoCmsSiteConnectionThemeAccentColorRedQueryInteger_2 | null;
-  blue?: DatoCmsSiteConnectionThemeAccentColorBlueQueryInteger_2 | null;
-  alpha?: DatoCmsSiteConnectionThemeAccentColorAlphaQueryInteger_2 | null;
-  green?: DatoCmsSiteConnectionThemeAccentColorGreenQueryInteger_2 | null;
-}
-
-export interface DatoCmsSiteConnectionThemeAccentColorRedQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteConnectionThemeAccentColorBlueQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteConnectionThemeAccentColorAlphaQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteConnectionThemeAccentColorGreenQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteConnectionInternalDomainQueryString_2 {
+export interface DatoCmsPageConnectionInternalContentDigestQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -7291,14 +7952,115 @@ export interface DatoCmsSiteConnectionInternalDomainQueryString_2 {
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsSiteConnectionNoIndexQueryBoolean_2 {
+export interface DatoCmsPageConnectionInternalOwnerQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageConnectionLocaleQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageConnectionModelInputObject_2 {
+  id?: DatoCmsPageConnectionModelIdQueryString_2 | null;
+  originalId?: DatoCmsPageConnectionModelOriginalIdQueryString_2 | null;
+  internal?: DatoCmsPageConnectionModelInternalInputObject_2 | null;
+  name?: DatoCmsPageConnectionModelNameQueryString_2 | null;
+  singleton?: DatoCmsPageConnectionModelSingletonQueryBoolean_2 | null;
+  sortable?: DatoCmsPageConnectionModelSortableQueryBoolean_2 | null;
+  apiKey?: DatoCmsPageConnectionModelApiKeyQueryString_2 | null;
+  tree?: DatoCmsPageConnectionModelTreeQueryBoolean_2 | null;
+  modularBlock?: DatoCmsPageConnectionModelModularBlockQueryBoolean_2 | null;
+  draftModeActive?: DatoCmsPageConnectionModelDraftModeActiveQueryBoolean_2 | null;
+  allLocalesRequired?: DatoCmsPageConnectionModelAllLocalesRequiredQueryBoolean_2 | null;
+  collectionAppeareance?: DatoCmsPageConnectionModelCollectionAppeareanceQueryString_2 | null;
+  hasSingletonItem?: DatoCmsPageConnectionModelHasSingletonItemQueryBoolean_2 | null;
+}
+
+export interface DatoCmsPageConnectionModelIdQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageConnectionModelOriginalIdQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageConnectionModelInternalInputObject_2 {
+  type?: DatoCmsPageConnectionModelInternalTypeQueryString_2 | null;
+  contentDigest?: DatoCmsPageConnectionModelInternalContentDigestQueryString_2 | null;
+  owner?: DatoCmsPageConnectionModelInternalOwnerQueryString_2 | null;
+}
+
+export interface DatoCmsPageConnectionModelInternalTypeQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageConnectionModelInternalContentDigestQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageConnectionModelInternalOwnerQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageConnectionModelNameQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageConnectionModelSingletonQueryBoolean_2 {
   eq?: boolean | null;
   ne?: boolean | null;
   in?: (boolean | null)[] | null;
   nin?: (boolean | null)[] | null;
 }
 
-export interface DatoCmsSiteConnectionOriginalIdQueryString_2 {
+export interface DatoCmsPageConnectionModelSortableQueryBoolean_2 {
+  eq?: boolean | null;
+  ne?: boolean | null;
+  in?: (boolean | null)[] | null;
+  nin?: (boolean | null)[] | null;
+}
+
+export interface DatoCmsPageConnectionModelApiKeyQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -7307,13 +8069,35 @@ export interface DatoCmsSiteConnectionOriginalIdQueryString_2 {
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsSiteConnectionInternalInputObject_2 {
-  type?: DatoCmsSiteConnectionInternalTypeQueryString_2 | null;
-  contentDigest?: DatoCmsSiteConnectionInternalContentDigestQueryString_2 | null;
-  owner?: DatoCmsSiteConnectionInternalOwnerQueryString_2 | null;
+export interface DatoCmsPageConnectionModelTreeQueryBoolean_2 {
+  eq?: boolean | null;
+  ne?: boolean | null;
+  in?: (boolean | null)[] | null;
+  nin?: (boolean | null)[] | null;
 }
 
-export interface DatoCmsSiteConnectionInternalTypeQueryString_2 {
+export interface DatoCmsPageConnectionModelModularBlockQueryBoolean_2 {
+  eq?: boolean | null;
+  ne?: boolean | null;
+  in?: (boolean | null)[] | null;
+  nin?: (boolean | null)[] | null;
+}
+
+export interface DatoCmsPageConnectionModelDraftModeActiveQueryBoolean_2 {
+  eq?: boolean | null;
+  ne?: boolean | null;
+  in?: (boolean | null)[] | null;
+  nin?: (boolean | null)[] | null;
+}
+
+export interface DatoCmsPageConnectionModelAllLocalesRequiredQueryBoolean_2 {
+  eq?: boolean | null;
+  ne?: boolean | null;
+  in?: (boolean | null)[] | null;
+  nin?: (boolean | null)[] | null;
+}
+
+export interface DatoCmsPageConnectionModelCollectionAppeareanceQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -7322,7 +8106,14 @@ export interface DatoCmsSiteConnectionInternalTypeQueryString_2 {
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsSiteConnectionInternalContentDigestQueryString_2 {
+export interface DatoCmsPageConnectionModelHasSingletonItemQueryBoolean_2 {
+  eq?: boolean | null;
+  ne?: boolean | null;
+  in?: (boolean | null)[] | null;
+  nin?: (boolean | null)[] | null;
+}
+
+export interface DatoCmsPageConnectionTitleQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -7331,7 +8122,7 @@ export interface DatoCmsSiteConnectionInternalContentDigestQueryString_2 {
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsSiteConnectionInternalOwnerQueryString_2 {
+export interface DatoCmsPageConnectionSlugQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -7340,7 +8131,20 @@ export interface DatoCmsSiteConnectionInternalOwnerQueryString_2 {
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsSiteConnectionLocaleQueryString_2 {
+export interface DatoCmsPageConnectionHeaderImageInputObject_2 {
+  id?: DatoCmsPageConnectionHeaderImageIdQueryString_2 | null;
+  parent?: DatoCmsPageConnectionHeaderImageParentQueryString_2 | null;
+  internal?: DatoCmsPageConnectionHeaderImageInternalInputObject_2 | null;
+  format?: DatoCmsPageConnectionHeaderImageFormatQueryString_2 | null;
+  size?: DatoCmsPageConnectionHeaderImageSizeQueryInteger_2 | null;
+  width?: DatoCmsPageConnectionHeaderImageWidthQueryInteger_2 | null;
+  height?: DatoCmsPageConnectionHeaderImageHeightQueryInteger_2 | null;
+  title?: DatoCmsPageConnectionHeaderImageTitleQueryString_2 | null;
+  alt?: DatoCmsPageConnectionHeaderImageAltQueryString_2 | null;
+  url?: DatoCmsPageConnectionHeaderImageUrlQueryString_2 | null;
+}
+
+export interface DatoCmsPageConnectionHeaderImageIdQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -7349,18 +8153,7 @@ export interface DatoCmsSiteConnectionLocaleQueryString_2 {
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionSort {
-  fields: (DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionSortByFieldsEnum | null)[];
-  order?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionSortOrderValues | null;
-}
-/** Filter connection on its fields */
-export interface FilterDatoCmsTwoColumnSectionFirstColumnContentTextNode {
-  id?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionIdQueryString_2 | null;
-  firstColumnContent?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionFirstColumnContentQueryString_2 | null;
-  internal?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionInternalInputObject_2 | null;
-}
-
-export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionIdQueryString_2 {
+export interface DatoCmsPageConnectionHeaderImageParentQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -7369,7 +8162,13 @@ export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionIdQu
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionFirstColumnContentQueryString_2 {
+export interface DatoCmsPageConnectionHeaderImageInternalInputObject_2 {
+  type?: DatoCmsPageConnectionHeaderImageInternalTypeQueryString_2 | null;
+  contentDigest?: DatoCmsPageConnectionHeaderImageInternalContentDigestQueryString_2 | null;
+  owner?: DatoCmsPageConnectionHeaderImageInternalOwnerQueryString_2 | null;
+}
+
+export interface DatoCmsPageConnectionHeaderImageInternalTypeQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -7378,15 +8177,7 @@ export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionFirs
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionInternalInputObject_2 {
-  type?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionInternalTypeQueryString_2 | null;
-  mediaType?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionInternalMediaTypeQueryString_2 | null;
-  content?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionInternalContentQueryString_2 | null;
-  contentDigest?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionInternalContentDigestQueryString_2 | null;
-  owner?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionInternalOwnerQueryString_2 | null;
-}
-
-export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionInternalTypeQueryString_2 {
+export interface DatoCmsPageConnectionHeaderImageInternalContentDigestQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -7395,7 +8186,7 @@ export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionInte
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionInternalMediaTypeQueryString_2 {
+export interface DatoCmsPageConnectionHeaderImageInternalOwnerQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -7404,7 +8195,7 @@ export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionInte
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionInternalContentQueryString_2 {
+export interface DatoCmsPageConnectionHeaderImageFormatQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -7413,7 +8204,40 @@ export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionInte
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionInternalContentDigestQueryString_2 {
+export interface DatoCmsPageConnectionHeaderImageSizeQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsPageConnectionHeaderImageWidthQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsPageConnectionHeaderImageHeightQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsPageConnectionHeaderImageTitleQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -7422,7 +8246,7 @@ export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionInte
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionInternalOwnerQueryString_2 {
+export interface DatoCmsPageConnectionHeaderImageAltQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -7431,18 +8255,7 @@ export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionInte
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionSort {
-  fields: (DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionSortByFieldsEnum | null)[];
-  order?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionSortOrderValues | null;
-}
-/** Filter connection on its fields */
-export interface FilterDatoCmsTwoColumnSectionSecondColumnContentTextNode {
-  id?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionIdQueryString_2 | null;
-  secondColumnContent?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionSecondColumnContentQueryString_2 | null;
-  internal?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionInternalInputObject_2 | null;
-}
-
-export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionIdQueryString_2 {
+export interface DatoCmsPageConnectionHeaderImageUrlQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -7451,7 +8264,20 @@ export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionIdQ
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionSecondColumnContentQueryString_2 {
+export interface DatoCmsPageConnectionContenuDeLaPageQueryList_2 {
+  elemMatch?: DatoCmsPageConnectionContenuDeLaPageInputObject_2 | null;
+}
+
+export interface DatoCmsPageConnectionContenuDeLaPageInputObject_2 {
+  id?: DatoCmsPageConnectionContenuDeLaPageIdQueryString_2 | null;
+  originalId?: DatoCmsPageConnectionContenuDeLaPageOriginalIdQueryString_2 | null;
+  children?: DatoCmsPageConnectionContenuDeLaPageChildrenQueryList_2 | null;
+  internal?: DatoCmsPageConnectionContenuDeLaPageInternalInputObject_2 | null;
+  locale?: DatoCmsPageConnectionContenuDeLaPageLocaleQueryString_2 | null;
+  updatedAt?: DatoCmsPageConnectionContenuDeLaPageUpdatedAtQueryString_2 | null;
+}
+
+export interface DatoCmsPageConnectionContenuDeLaPageIdQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -7460,15 +8286,7 @@ export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionSec
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionInternalInputObject_2 {
-  type?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionInternalTypeQueryString_2 | null;
-  mediaType?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionInternalMediaTypeQueryString_2 | null;
-  content?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionInternalContentQueryString_2 | null;
-  contentDigest?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionInternalContentDigestQueryString_2 | null;
-  owner?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionInternalOwnerQueryString_2 | null;
-}
-
-export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionInternalTypeQueryString_2 {
+export interface DatoCmsPageConnectionContenuDeLaPageOriginalIdQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -7477,7 +8295,7 @@ export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionInt
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionInternalMediaTypeQueryString_2 {
+export interface DatoCmsPageConnectionContenuDeLaPageChildrenQueryList_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -7486,7 +8304,13 @@ export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionInt
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionInternalContentQueryString_2 {
+export interface DatoCmsPageConnectionContenuDeLaPageInternalInputObject_2 {
+  type?: DatoCmsPageConnectionContenuDeLaPageInternalTypeQueryString_2 | null;
+  contentDigest?: DatoCmsPageConnectionContenuDeLaPageInternalContentDigestQueryString_2 | null;
+  owner?: DatoCmsPageConnectionContenuDeLaPageInternalOwnerQueryString_2 | null;
+}
+
+export interface DatoCmsPageConnectionContenuDeLaPageInternalTypeQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -7495,7 +8319,7 @@ export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionInt
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionInternalContentDigestQueryString_2 {
+export interface DatoCmsPageConnectionContenuDeLaPageInternalContentDigestQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -7504,7 +8328,153 @@ export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionInt
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionInternalOwnerQueryString_2 {
+export interface DatoCmsPageConnectionContenuDeLaPageInternalOwnerQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageConnectionContenuDeLaPageLocaleQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageConnectionContenuDeLaPageUpdatedAtQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageConnectionSeoMetaTagsInputObject_2 {
+  id?: DatoCmsPageConnectionSeoMetaTagsIdQueryString_2 | null;
+  parent?: DatoCmsPageConnectionSeoMetaTagsParentQueryString_2 | null;
+  tags?: DatoCmsPageConnectionSeoMetaTagsTagsQueryList_2 | null;
+  internal?: DatoCmsPageConnectionSeoMetaTagsInternalInputObject_2 | null;
+}
+
+export interface DatoCmsPageConnectionSeoMetaTagsIdQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageConnectionSeoMetaTagsParentQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageConnectionSeoMetaTagsTagsQueryList_2 {
+  elemMatch?: DatoCmsPageConnectionSeoMetaTagsTagsInputObject_2 | null;
+}
+
+export interface DatoCmsPageConnectionSeoMetaTagsTagsInputObject_2 {
+  tagName?: DatoCmsPageConnectionSeoMetaTagsTagsTagNameQueryString_2 | null;
+  content?: DatoCmsPageConnectionSeoMetaTagsTagsContentQueryString_2 | null;
+  attributes?: DatoCmsPageConnectionSeoMetaTagsTagsAttributesInputObject_2 | null;
+}
+
+export interface DatoCmsPageConnectionSeoMetaTagsTagsTagNameQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageConnectionSeoMetaTagsTagsContentQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageConnectionSeoMetaTagsTagsAttributesInputObject_2 {
+  property?: DatoCmsPageConnectionSeoMetaTagsTagsAttributesPropertyQueryString_2 | null;
+  content?: DatoCmsPageConnectionSeoMetaTagsTagsAttributesContentQueryString_2 | null;
+  name?: DatoCmsPageConnectionSeoMetaTagsTagsAttributesNameQueryString_2 | null;
+}
+
+export interface DatoCmsPageConnectionSeoMetaTagsTagsAttributesPropertyQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageConnectionSeoMetaTagsTagsAttributesContentQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageConnectionSeoMetaTagsTagsAttributesNameQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageConnectionSeoMetaTagsInternalInputObject_2 {
+  type?: DatoCmsPageConnectionSeoMetaTagsInternalTypeQueryString_2 | null;
+  contentDigest?: DatoCmsPageConnectionSeoMetaTagsInternalContentDigestQueryString_2 | null;
+  owner?: DatoCmsPageConnectionSeoMetaTagsInternalOwnerQueryString_2 | null;
+}
+
+export interface DatoCmsPageConnectionSeoMetaTagsInternalTypeQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageConnectionSeoMetaTagsInternalContentDigestQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageConnectionSeoMetaTagsInternalOwnerQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageConnectionUpdatedAtQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -7525,6 +8495,7 @@ export interface FilterDatoCmsTwoColumnSection {
   locale?: DatoCmsTwoColumnSectionConnectionLocaleQueryString_2 | null;
   model?: DatoCmsTwoColumnSectionConnectionModelInputObject_2 | null;
   title?: DatoCmsTwoColumnSectionConnectionTitleQueryString_2 | null;
+  headerImage?: DatoCmsTwoColumnSectionConnectionHeaderImageInputObject_2 | null;
   firstColumnContentNode?: DatoCmsTwoColumnSectionConnectionFirstColumnContentNodeInputObject_2 | null;
   firstColumnContent?: DatoCmsTwoColumnSectionConnectionFirstColumnContentQueryString_2 | null;
   secondColumnContentNode?: DatoCmsTwoColumnSectionConnectionSecondColumnContentNodeInputObject_2 | null;
@@ -7737,6 +8708,139 @@ export interface DatoCmsTwoColumnSectionConnectionModelHasSingletonItemQueryBool
 }
 
 export interface DatoCmsTwoColumnSectionConnectionTitleQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionConnectionHeaderImageInputObject_2 {
+  id?: DatoCmsTwoColumnSectionConnectionHeaderImageIdQueryString_2 | null;
+  parent?: DatoCmsTwoColumnSectionConnectionHeaderImageParentQueryString_2 | null;
+  internal?: DatoCmsTwoColumnSectionConnectionHeaderImageInternalInputObject_2 | null;
+  format?: DatoCmsTwoColumnSectionConnectionHeaderImageFormatQueryString_2 | null;
+  size?: DatoCmsTwoColumnSectionConnectionHeaderImageSizeQueryInteger_2 | null;
+  width?: DatoCmsTwoColumnSectionConnectionHeaderImageWidthQueryInteger_2 | null;
+  height?: DatoCmsTwoColumnSectionConnectionHeaderImageHeightQueryInteger_2 | null;
+  title?: DatoCmsTwoColumnSectionConnectionHeaderImageTitleQueryString_2 | null;
+  alt?: DatoCmsTwoColumnSectionConnectionHeaderImageAltQueryString_2 | null;
+  url?: DatoCmsTwoColumnSectionConnectionHeaderImageUrlQueryString_2 | null;
+}
+
+export interface DatoCmsTwoColumnSectionConnectionHeaderImageIdQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionConnectionHeaderImageParentQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionConnectionHeaderImageInternalInputObject_2 {
+  type?: DatoCmsTwoColumnSectionConnectionHeaderImageInternalTypeQueryString_2 | null;
+  contentDigest?: DatoCmsTwoColumnSectionConnectionHeaderImageInternalContentDigestQueryString_2 | null;
+  owner?: DatoCmsTwoColumnSectionConnectionHeaderImageInternalOwnerQueryString_2 | null;
+}
+
+export interface DatoCmsTwoColumnSectionConnectionHeaderImageInternalTypeQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionConnectionHeaderImageInternalContentDigestQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionConnectionHeaderImageInternalOwnerQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionConnectionHeaderImageFormatQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionConnectionHeaderImageSizeQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionConnectionHeaderImageWidthQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionConnectionHeaderImageHeightQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionConnectionHeaderImageTitleQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionConnectionHeaderImageAltQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionConnectionHeaderImageUrlQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -8085,27 +9189,24 @@ export interface DatoCmsTwoColumnSectionConnectionUpdatedAtQueryString_2 {
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsAssetConnectionSort {
-  fields: (DatoCmsAssetConnectionSortByFieldsEnum | null)[];
-  order?: DatoCmsAssetConnectionSortOrderValues | null;
+export interface DatoCmsSiteConnectionSort {
+  fields: (DatoCmsSiteConnectionSortByFieldsEnum | null)[];
+  order?: DatoCmsSiteConnectionSortOrderValues | null;
 }
 /** Filter connection on its fields */
-export interface FilterDatoCmsAsset {
-  id?: DatoCmsAssetConnectionIdQueryString_2 | null;
-  internal?: DatoCmsAssetConnectionInternalInputObject_2 | null;
-  format?: DatoCmsAssetConnectionFormatQueryString_2 | null;
-  size?: DatoCmsAssetConnectionSizeQueryInteger_2 | null;
-  width?: DatoCmsAssetConnectionWidthQueryInteger_2 | null;
-  height?: DatoCmsAssetConnectionHeightQueryInteger_2 | null;
-  url?: DatoCmsAssetConnectionUrlQueryString_2 | null;
-  resolutions?: ResolutionsTypeName_4 | null;
-  sizes?: SizesTypeName_4 | null;
-  inlineSvg?: InlineSvgQueryString_4 | null;
-  fluid?: FluidTypeName_4 | null;
-  fixed?: FixedTypeName_4 | null;
+export interface FilterDatoCmsSite {
+  id?: DatoCmsSiteConnectionIdQueryString_2 | null;
+  name?: DatoCmsSiteConnectionNameQueryString_2 | null;
+  locales?: DatoCmsSiteConnectionLocalesQueryList_2 | null;
+  theme?: DatoCmsSiteConnectionThemeInputObject_2 | null;
+  internalDomain?: DatoCmsSiteConnectionInternalDomainQueryString_2 | null;
+  noIndex?: DatoCmsSiteConnectionNoIndexQueryBoolean_2 | null;
+  originalId?: DatoCmsSiteConnectionOriginalIdQueryString_2 | null;
+  internal?: DatoCmsSiteConnectionInternalInputObject_2 | null;
+  locale?: DatoCmsSiteConnectionLocaleQueryString_2 | null;
 }
 
-export interface DatoCmsAssetConnectionIdQueryString_2 {
+export interface DatoCmsSiteConnectionIdQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -8114,13 +9215,7 @@ export interface DatoCmsAssetConnectionIdQueryString_2 {
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsAssetConnectionInternalInputObject_2 {
-  type?: DatoCmsAssetConnectionInternalTypeQueryString_2 | null;
-  contentDigest?: DatoCmsAssetConnectionInternalContentDigestQueryString_2 | null;
-  owner?: DatoCmsAssetConnectionInternalOwnerQueryString_2 | null;
-}
-
-export interface DatoCmsAssetConnectionInternalTypeQueryString_2 {
+export interface DatoCmsSiteConnectionNameQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -8129,7 +9224,7 @@ export interface DatoCmsAssetConnectionInternalTypeQueryString_2 {
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsAssetConnectionInternalContentDigestQueryString_2 {
+export interface DatoCmsSiteConnectionLocalesQueryList_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -8138,25 +9233,21 @@ export interface DatoCmsAssetConnectionInternalContentDigestQueryString_2 {
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsAssetConnectionInternalOwnerQueryString_2 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
+export interface DatoCmsSiteConnectionThemeInputObject_2 {
+  primaryColor?: DatoCmsSiteConnectionThemePrimaryColorInputObject_2 | null;
+  lightColor?: DatoCmsSiteConnectionThemeLightColorInputObject_2 | null;
+  darkColor?: DatoCmsSiteConnectionThemeDarkColorInputObject_2 | null;
+  accentColor?: DatoCmsSiteConnectionThemeAccentColorInputObject_2 | null;
 }
 
-export interface DatoCmsAssetConnectionFormatQueryString_2 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
+export interface DatoCmsSiteConnectionThemePrimaryColorInputObject_2 {
+  red?: DatoCmsSiteConnectionThemePrimaryColorRedQueryInteger_2 | null;
+  blue?: DatoCmsSiteConnectionThemePrimaryColorBlueQueryInteger_2 | null;
+  alpha?: DatoCmsSiteConnectionThemePrimaryColorAlphaQueryInteger_2 | null;
+  green?: DatoCmsSiteConnectionThemePrimaryColorGreenQueryInteger_2 | null;
 }
 
-export interface DatoCmsAssetConnectionSizeQueryInteger_2 {
+export interface DatoCmsSiteConnectionThemePrimaryColorRedQueryInteger_2 {
   eq?: number | null;
   ne?: number | null;
   gt?: number | null;
@@ -8167,7 +9258,7 @@ export interface DatoCmsAssetConnectionSizeQueryInteger_2 {
   nin?: (number | null)[] | null;
 }
 
-export interface DatoCmsAssetConnectionWidthQueryInteger_2 {
+export interface DatoCmsSiteConnectionThemePrimaryColorBlueQueryInteger_2 {
   eq?: number | null;
   ne?: number | null;
   gt?: number | null;
@@ -8178,7 +9269,7 @@ export interface DatoCmsAssetConnectionWidthQueryInteger_2 {
   nin?: (number | null)[] | null;
 }
 
-export interface DatoCmsAssetConnectionHeightQueryInteger_2 {
+export interface DatoCmsSiteConnectionThemePrimaryColorAlphaQueryInteger_2 {
   eq?: number | null;
   ne?: number | null;
   gt?: number | null;
@@ -8189,34 +9280,7 @@ export interface DatoCmsAssetConnectionHeightQueryInteger_2 {
   nin?: (number | null)[] | null;
 }
 
-export interface DatoCmsAssetConnectionUrlQueryString_2 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
-}
-
-export interface ResolutionsTypeName_4 {
-  base64?: ResolutionsBase64QueryString_4 | null;
-  aspectRatio?: ResolutionsAspectRatioQueryFloat_4 | null;
-  width?: ResolutionsWidthQueryFloat_4 | null;
-  height?: ResolutionsHeightQueryFloat_4 | null;
-  src?: ResolutionsSrcQueryString_4 | null;
-  srcSet?: ResolutionsSrcSetQueryString_4 | null;
-}
-
-export interface ResolutionsBase64QueryString_4 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
-}
-
-export interface ResolutionsAspectRatioQueryFloat_4 {
+export interface DatoCmsSiteConnectionThemePrimaryColorGreenQueryInteger_2 {
   eq?: number | null;
   ne?: number | null;
   gt?: number | null;
@@ -8227,7 +9291,14 @@ export interface ResolutionsAspectRatioQueryFloat_4 {
   nin?: (number | null)[] | null;
 }
 
-export interface ResolutionsWidthQueryFloat_4 {
+export interface DatoCmsSiteConnectionThemeLightColorInputObject_2 {
+  red?: DatoCmsSiteConnectionThemeLightColorRedQueryInteger_2 | null;
+  blue?: DatoCmsSiteConnectionThemeLightColorBlueQueryInteger_2 | null;
+  alpha?: DatoCmsSiteConnectionThemeLightColorAlphaQueryInteger_2 | null;
+  green?: DatoCmsSiteConnectionThemeLightColorGreenQueryInteger_2 | null;
+}
+
+export interface DatoCmsSiteConnectionThemeLightColorRedQueryInteger_2 {
   eq?: number | null;
   ne?: number | null;
   gt?: number | null;
@@ -8238,7 +9309,7 @@ export interface ResolutionsWidthQueryFloat_4 {
   nin?: (number | null)[] | null;
 }
 
-export interface ResolutionsHeightQueryFloat_4 {
+export interface DatoCmsSiteConnectionThemeLightColorBlueQueryInteger_2 {
   eq?: number | null;
   ne?: number | null;
   gt?: number | null;
@@ -8249,42 +9320,7 @@ export interface ResolutionsHeightQueryFloat_4 {
   nin?: (number | null)[] | null;
 }
 
-export interface ResolutionsSrcQueryString_4 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
-}
-
-export interface ResolutionsSrcSetQueryString_4 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
-}
-
-export interface SizesTypeName_4 {
-  base64?: SizesBase64QueryString_4 | null;
-  aspectRatio?: SizesAspectRatioQueryFloat_4 | null;
-  src?: SizesSrcQueryString_4 | null;
-  srcSet?: SizesSrcSetQueryString_4 | null;
-  sizes?: SizesSizesQueryString_4 | null;
-}
-
-export interface SizesBase64QueryString_4 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
-}
-
-export interface SizesAspectRatioQueryFloat_4 {
+export interface DatoCmsSiteConnectionThemeLightColorAlphaQueryInteger_2 {
   eq?: number | null;
   ne?: number | null;
   gt?: number | null;
@@ -8295,60 +9331,7 @@ export interface SizesAspectRatioQueryFloat_4 {
   nin?: (number | null)[] | null;
 }
 
-export interface SizesSrcQueryString_4 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
-}
-
-export interface SizesSrcSetQueryString_4 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
-}
-
-export interface SizesSizesQueryString_4 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
-}
-
-export interface InlineSvgQueryString_4 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
-}
-
-export interface FluidTypeName_4 {
-  base64?: FluidBase64QueryString_4 | null;
-  aspectRatio?: FluidAspectRatioQueryFloat_4 | null;
-  src?: FluidSrcQueryString_4 | null;
-  srcSet?: FluidSrcSetQueryString_4 | null;
-  sizes?: FluidSizesQueryString_4 | null;
-}
-
-export interface FluidBase64QueryString_4 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
-}
-
-export interface FluidAspectRatioQueryFloat_4 {
+export interface DatoCmsSiteConnectionThemeLightColorGreenQueryInteger_2 {
   eq?: number | null;
   ne?: number | null;
   gt?: number | null;
@@ -8359,52 +9342,14 @@ export interface FluidAspectRatioQueryFloat_4 {
   nin?: (number | null)[] | null;
 }
 
-export interface FluidSrcQueryString_4 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
+export interface DatoCmsSiteConnectionThemeDarkColorInputObject_2 {
+  red?: DatoCmsSiteConnectionThemeDarkColorRedQueryInteger_2 | null;
+  blue?: DatoCmsSiteConnectionThemeDarkColorBlueQueryInteger_2 | null;
+  alpha?: DatoCmsSiteConnectionThemeDarkColorAlphaQueryInteger_2 | null;
+  green?: DatoCmsSiteConnectionThemeDarkColorGreenQueryInteger_2 | null;
 }
 
-export interface FluidSrcSetQueryString_4 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
-}
-
-export interface FluidSizesQueryString_4 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
-}
-
-export interface FixedTypeName_4 {
-  base64?: FixedBase64QueryString_4 | null;
-  aspectRatio?: FixedAspectRatioQueryFloat_4 | null;
-  width?: FixedWidthQueryFloat_4 | null;
-  height?: FixedHeightQueryFloat_4 | null;
-  src?: FixedSrcQueryString_4 | null;
-  srcSet?: FixedSrcSetQueryString_4 | null;
-}
-
-export interface FixedBase64QueryString_4 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
-}
-
-export interface FixedAspectRatioQueryFloat_4 {
+export interface DatoCmsSiteConnectionThemeDarkColorRedQueryInteger_2 {
   eq?: number | null;
   ne?: number | null;
   gt?: number | null;
@@ -8415,7 +9360,7 @@ export interface FixedAspectRatioQueryFloat_4 {
   nin?: (number | null)[] | null;
 }
 
-export interface FixedWidthQueryFloat_4 {
+export interface DatoCmsSiteConnectionThemeDarkColorBlueQueryInteger_2 {
   eq?: number | null;
   ne?: number | null;
   gt?: number | null;
@@ -8426,7 +9371,7 @@ export interface FixedWidthQueryFloat_4 {
   nin?: (number | null)[] | null;
 }
 
-export interface FixedHeightQueryFloat_4 {
+export interface DatoCmsSiteConnectionThemeDarkColorAlphaQueryInteger_2 {
   eq?: number | null;
   ne?: number | null;
   gt?: number | null;
@@ -8437,7 +9382,69 @@ export interface FixedHeightQueryFloat_4 {
   nin?: (number | null)[] | null;
 }
 
-export interface FixedSrcQueryString_4 {
+export interface DatoCmsSiteConnectionThemeDarkColorGreenQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsSiteConnectionThemeAccentColorInputObject_2 {
+  red?: DatoCmsSiteConnectionThemeAccentColorRedQueryInteger_2 | null;
+  blue?: DatoCmsSiteConnectionThemeAccentColorBlueQueryInteger_2 | null;
+  alpha?: DatoCmsSiteConnectionThemeAccentColorAlphaQueryInteger_2 | null;
+  green?: DatoCmsSiteConnectionThemeAccentColorGreenQueryInteger_2 | null;
+}
+
+export interface DatoCmsSiteConnectionThemeAccentColorRedQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsSiteConnectionThemeAccentColorBlueQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsSiteConnectionThemeAccentColorAlphaQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsSiteConnectionThemeAccentColorGreenQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsSiteConnectionInternalDomainQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -8446,7 +9453,56 @@ export interface FixedSrcQueryString_4 {
   nin?: (string | null)[] | null;
 }
 
-export interface FixedSrcSetQueryString_4 {
+export interface DatoCmsSiteConnectionNoIndexQueryBoolean_2 {
+  eq?: boolean | null;
+  ne?: boolean | null;
+  in?: (boolean | null)[] | null;
+  nin?: (boolean | null)[] | null;
+}
+
+export interface DatoCmsSiteConnectionOriginalIdQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsSiteConnectionInternalInputObject_2 {
+  type?: DatoCmsSiteConnectionInternalTypeQueryString_2 | null;
+  contentDigest?: DatoCmsSiteConnectionInternalContentDigestQueryString_2 | null;
+  owner?: DatoCmsSiteConnectionInternalOwnerQueryString_2 | null;
+}
+
+export interface DatoCmsSiteConnectionInternalTypeQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsSiteConnectionInternalContentDigestQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsSiteConnectionInternalOwnerQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsSiteConnectionLocaleQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -8575,9 +9631,11 @@ export interface SitePagePluginCreatorVersionQueryString {
 }
 
 export interface SitePagePluginCreatorPluginOptionsInputObject {
+  plugins?: SitePagePluginCreatorPluginOptionsPluginsQueryList | null;
   endpoint?: SitePagePluginCreatorPluginOptionsEndpointQueryString | null;
   query?: SitePagePluginCreatorPluginOptionsQueryQueryString | null;
   apiToken?: SitePagePluginCreatorPluginOptionsApiTokenQueryString | null;
+  maxWidth?: SitePagePluginCreatorPluginOptionsMaxWidthQueryInteger | null;
   name?: SitePagePluginCreatorPluginOptionsNameQueryString | null;
   short_name?: SitePagePluginCreatorPluginOptionsShortNameQueryString | null;
   start_url?: SitePagePluginCreatorPluginOptionsStartUrlQueryString | null;
@@ -8587,6 +9645,79 @@ export interface SitePagePluginCreatorPluginOptionsInputObject {
   icons?: SitePagePluginCreatorPluginOptionsIconsQueryList | null;
   path?: SitePagePluginCreatorPluginOptionsPathQueryString | null;
   pathCheck?: SitePagePluginCreatorPluginOptionsPathCheckQueryBoolean | null;
+}
+
+export interface SitePagePluginCreatorPluginOptionsPluginsQueryList {
+  elemMatch?: SitePagePluginCreatorPluginOptionsPluginsInputObject | null;
+}
+
+export interface SitePagePluginCreatorPluginOptionsPluginsInputObject {
+  resolve?: SitePagePluginCreatorPluginOptionsPluginsResolveQueryString | null;
+  id?: SitePagePluginCreatorPluginOptionsPluginsIdQueryString | null;
+  name?: SitePagePluginCreatorPluginOptionsPluginsNameQueryString | null;
+  version?: SitePagePluginCreatorPluginOptionsPluginsVersionQueryString | null;
+  pluginOptions?: SitePagePluginCreatorPluginOptionsPluginsPluginOptionsInputObject | null;
+  pluginFilepath?: SitePagePluginCreatorPluginOptionsPluginsPluginFilepathQueryString | null;
+}
+
+export interface SitePagePluginCreatorPluginOptionsPluginsResolveQueryString {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface SitePagePluginCreatorPluginOptionsPluginsIdQueryString {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface SitePagePluginCreatorPluginOptionsPluginsNameQueryString {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface SitePagePluginCreatorPluginOptionsPluginsVersionQueryString {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface SitePagePluginCreatorPluginOptionsPluginsPluginOptionsInputObject {
+  maxWidth?: SitePagePluginCreatorPluginOptionsPluginsPluginOptionsMaxWidthQueryInteger | null;
+}
+
+export interface SitePagePluginCreatorPluginOptionsPluginsPluginOptionsMaxWidthQueryInteger {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface SitePagePluginCreatorPluginOptionsPluginsPluginFilepathQueryString {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
 }
 
 export interface SitePagePluginCreatorPluginOptionsEndpointQueryString {
@@ -8614,6 +9745,17 @@ export interface SitePagePluginCreatorPluginOptionsApiTokenQueryString {
   glob?: string | null;
   in?: (string | null)[] | null;
   nin?: (string | null)[] | null;
+}
+
+export interface SitePagePluginCreatorPluginOptionsMaxWidthQueryInteger {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
 }
 
 export interface SitePagePluginCreatorPluginOptionsNameQueryString {
@@ -9065,9 +10207,11 @@ export interface SitePluginVersionQueryString_2 {
 }
 
 export interface SitePluginPluginOptionsInputObject_2 {
+  plugins?: SitePluginPluginOptionsPluginsQueryList_2 | null;
   endpoint?: SitePluginPluginOptionsEndpointQueryString_2 | null;
   query?: SitePluginPluginOptionsQueryQueryString_2 | null;
   apiToken?: SitePluginPluginOptionsApiTokenQueryString_2 | null;
+  maxWidth?: SitePluginPluginOptionsMaxWidthQueryInteger_2 | null;
   name?: SitePluginPluginOptionsNameQueryString_2 | null;
   short_name?: SitePluginPluginOptionsShortNameQueryString_2 | null;
   start_url?: SitePluginPluginOptionsStartUrlQueryString_2 | null;
@@ -9077,6 +10221,79 @@ export interface SitePluginPluginOptionsInputObject_2 {
   icons?: SitePluginPluginOptionsIconsQueryList_2 | null;
   path?: SitePluginPluginOptionsPathQueryString_2 | null;
   pathCheck?: SitePluginPluginOptionsPathCheckQueryBoolean_2 | null;
+}
+
+export interface SitePluginPluginOptionsPluginsQueryList_2 {
+  elemMatch?: SitePluginPluginOptionsPluginsInputObject_2 | null;
+}
+
+export interface SitePluginPluginOptionsPluginsInputObject_2 {
+  resolve?: SitePluginPluginOptionsPluginsResolveQueryString_2 | null;
+  id?: SitePluginPluginOptionsPluginsIdQueryString_2 | null;
+  name?: SitePluginPluginOptionsPluginsNameQueryString_2 | null;
+  version?: SitePluginPluginOptionsPluginsVersionQueryString_2 | null;
+  pluginOptions?: SitePluginPluginOptionsPluginsPluginOptionsInputObject_2 | null;
+  pluginFilepath?: SitePluginPluginOptionsPluginsPluginFilepathQueryString_2 | null;
+}
+
+export interface SitePluginPluginOptionsPluginsResolveQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface SitePluginPluginOptionsPluginsIdQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface SitePluginPluginOptionsPluginsNameQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface SitePluginPluginOptionsPluginsVersionQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface SitePluginPluginOptionsPluginsPluginOptionsInputObject_2 {
+  maxWidth?: SitePluginPluginOptionsPluginsPluginOptionsMaxWidthQueryInteger_2 | null;
+}
+
+export interface SitePluginPluginOptionsPluginsPluginOptionsMaxWidthQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface SitePluginPluginOptionsPluginsPluginFilepathQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
 }
 
 export interface SitePluginPluginOptionsEndpointQueryString_2 {
@@ -9104,6 +10321,17 @@ export interface SitePluginPluginOptionsApiTokenQueryString_2 {
   glob?: string | null;
   in?: (string | null)[] | null;
   nin?: (string | null)[] | null;
+}
+
+export interface SitePluginPluginOptionsMaxWidthQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
 }
 
 export interface SitePluginPluginOptionsNameQueryString_2 {
@@ -11053,6 +12281,374 @@ export interface DatoCmsSeoMetaTagsInternalOwnerQueryString_2 {
   nin?: (string | null)[] | null;
 }
 
+export interface DatoCmsAssetIdQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsAssetInternalInputObject_2 {
+  type?: DatoCmsAssetInternalTypeQueryString_2 | null;
+  contentDigest?: DatoCmsAssetInternalContentDigestQueryString_2 | null;
+  owner?: DatoCmsAssetInternalOwnerQueryString_2 | null;
+}
+
+export interface DatoCmsAssetInternalTypeQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsAssetInternalContentDigestQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsAssetInternalOwnerQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsAssetFormatQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsAssetSizeQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsAssetWidthQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsAssetHeightQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsAssetTitleQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsAssetAltQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsAssetUrlQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface ResolutionsTypeName_3 {
+  base64?: ResolutionsBase64QueryString_3 | null;
+  aspectRatio?: ResolutionsAspectRatioQueryFloat_3 | null;
+  width?: ResolutionsWidthQueryFloat_3 | null;
+  height?: ResolutionsHeightQueryFloat_3 | null;
+  src?: ResolutionsSrcQueryString_3 | null;
+  srcSet?: ResolutionsSrcSetQueryString_3 | null;
+}
+
+export interface ResolutionsBase64QueryString_3 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface ResolutionsAspectRatioQueryFloat_3 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface ResolutionsWidthQueryFloat_3 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface ResolutionsHeightQueryFloat_3 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface ResolutionsSrcQueryString_3 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface ResolutionsSrcSetQueryString_3 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface SizesTypeName_3 {
+  base64?: SizesBase64QueryString_3 | null;
+  aspectRatio?: SizesAspectRatioQueryFloat_3 | null;
+  src?: SizesSrcQueryString_3 | null;
+  srcSet?: SizesSrcSetQueryString_3 | null;
+  sizes?: SizesSizesQueryString_3 | null;
+}
+
+export interface SizesBase64QueryString_3 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface SizesAspectRatioQueryFloat_3 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface SizesSrcQueryString_3 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface SizesSrcSetQueryString_3 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface SizesSizesQueryString_3 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface InlineSvgQueryString_3 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface FluidTypeName_3 {
+  base64?: FluidBase64QueryString_3 | null;
+  aspectRatio?: FluidAspectRatioQueryFloat_3 | null;
+  src?: FluidSrcQueryString_3 | null;
+  srcSet?: FluidSrcSetQueryString_3 | null;
+  sizes?: FluidSizesQueryString_3 | null;
+}
+
+export interface FluidBase64QueryString_3 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface FluidAspectRatioQueryFloat_3 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface FluidSrcQueryString_3 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface FluidSrcSetQueryString_3 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface FluidSizesQueryString_3 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface FixedTypeName_3 {
+  base64?: FixedBase64QueryString_3 | null;
+  aspectRatio?: FixedAspectRatioQueryFloat_3 | null;
+  width?: FixedWidthQueryFloat_3 | null;
+  height?: FixedHeightQueryFloat_3 | null;
+  src?: FixedSrcQueryString_3 | null;
+  srcSet?: FixedSrcSetQueryString_3 | null;
+}
+
+export interface FixedBase64QueryString_3 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface FixedAspectRatioQueryFloat_3 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface FixedWidthQueryFloat_3 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface FixedHeightQueryFloat_3 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface FixedSrcQueryString_3 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface FixedSrcSetQueryString_3 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
 export interface DatoCmsOneColumnSectionContentTextNodeIdQueryString_2 {
   eq?: string | null;
   ne?: string | null;
@@ -11116,6 +12712,148 @@ export interface DatoCmsOneColumnSectionContentTextNodeInternalContentDigestQuer
 }
 
 export interface DatoCmsOneColumnSectionContentTextNodeInternalOwnerQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeIdQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeFirstColumnContentQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalInputObject_2 {
+  type?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalTypeQueryString_2 | null;
+  mediaType?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalMediaTypeQueryString_2 | null;
+  content?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalContentQueryString_2 | null;
+  contentDigest?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalContentDigestQueryString_2 | null;
+  owner?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalOwnerQueryString_2 | null;
+}
+
+export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalTypeQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalMediaTypeQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalContentQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalContentDigestQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalOwnerQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeIdQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeSecondColumnContentQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalInputObject_2 {
+  type?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalTypeQueryString_2 | null;
+  mediaType?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalMediaTypeQueryString_2 | null;
+  content?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalContentQueryString_2 | null;
+  contentDigest?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalContentDigestQueryString_2 | null;
+  owner?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalOwnerQueryString_2 | null;
+}
+
+export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalTypeQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalMediaTypeQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalContentQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalContentDigestQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalOwnerQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -12223,6 +13961,8 @@ export interface DatoCmsHomepageHeaderImageInputObject_2 {
   size?: DatoCmsHomepageHeaderImageSizeQueryInteger_2 | null;
   width?: DatoCmsHomepageHeaderImageWidthQueryInteger_2 | null;
   height?: DatoCmsHomepageHeaderImageHeightQueryInteger_2 | null;
+  title?: DatoCmsHomepageHeaderImageTitleQueryString_2 | null;
+  alt?: DatoCmsHomepageHeaderImageAltQueryString_2 | null;
   url?: DatoCmsHomepageHeaderImageUrlQueryString_2 | null;
 }
 
@@ -12317,6 +14057,24 @@ export interface DatoCmsHomepageHeaderImageHeightQueryInteger_2 {
   lte?: number | null;
   in?: (number | null)[] | null;
   nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsHomepageHeaderImageTitleQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsHomepageHeaderImageAltQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
 }
 
 export interface DatoCmsHomepageHeaderImageUrlQueryString_2 {
@@ -12778,6 +14536,8 @@ export interface DatoCmsFullWidthImageImageInputObject_2 {
   size?: DatoCmsFullWidthImageImageSizeQueryInteger_2 | null;
   width?: DatoCmsFullWidthImageImageWidthQueryInteger_2 | null;
   height?: DatoCmsFullWidthImageImageHeightQueryInteger_2 | null;
+  title?: DatoCmsFullWidthImageImageTitleQueryString_2 | null;
+  alt?: DatoCmsFullWidthImageImageAltQueryString_2 | null;
   url?: DatoCmsFullWidthImageImageUrlQueryString_2 | null;
 }
 
@@ -12872,6 +14632,24 @@ export interface DatoCmsFullWidthImageImageHeightQueryInteger_2 {
   lte?: number | null;
   in?: (number | null)[] | null;
   nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsFullWidthImageImageTitleQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsFullWidthImageImageAltQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
 }
 
 export interface DatoCmsFullWidthImageImageUrlQueryString_2 {
@@ -13465,6 +15243,8 @@ export interface DatoCmsOneColumnSectionHeaderImageInputObject_2 {
   size?: DatoCmsOneColumnSectionHeaderImageSizeQueryInteger_2 | null;
   width?: DatoCmsOneColumnSectionHeaderImageWidthQueryInteger_2 | null;
   height?: DatoCmsOneColumnSectionHeaderImageHeightQueryInteger_2 | null;
+  title?: DatoCmsOneColumnSectionHeaderImageTitleQueryString_2 | null;
+  alt?: DatoCmsOneColumnSectionHeaderImageAltQueryString_2 | null;
   url?: DatoCmsOneColumnSectionHeaderImageUrlQueryString_2 | null;
 }
 
@@ -13561,6 +15341,24 @@ export interface DatoCmsOneColumnSectionHeaderImageHeightQueryInteger_2 {
   nin?: (number | null)[] | null;
 }
 
+export interface DatoCmsOneColumnSectionHeaderImageTitleQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsOneColumnSectionHeaderImageAltQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
 export interface DatoCmsOneColumnSectionHeaderImageUrlQueryString_2 {
   eq?: string | null;
   ne?: string | null;
@@ -13570,7 +15368,7 @@ export interface DatoCmsOneColumnSectionHeaderImageUrlQueryString_2 {
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsSiteIdQueryString_2 {
+export interface DatoCmsPageIdQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -13579,7 +15377,7 @@ export interface DatoCmsSiteIdQueryString_2 {
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsSiteNameQueryString_2 {
+export interface DatoCmsPageOriginalIdQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -13588,7 +15386,13 @@ export interface DatoCmsSiteNameQueryString_2 {
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsSiteLocalesQueryList_2 {
+export interface DatoCmsPageInternalInputObject_2 {
+  type?: DatoCmsPageInternalTypeQueryString_2 | null;
+  contentDigest?: DatoCmsPageInternalContentDigestQueryString_2 | null;
+  owner?: DatoCmsPageInternalOwnerQueryString_2 | null;
+}
+
+export interface DatoCmsPageInternalTypeQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -13597,218 +15401,7 @@ export interface DatoCmsSiteLocalesQueryList_2 {
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsSiteThemeInputObject_2 {
-  primaryColor?: DatoCmsSiteThemePrimaryColorInputObject_2 | null;
-  lightColor?: DatoCmsSiteThemeLightColorInputObject_2 | null;
-  darkColor?: DatoCmsSiteThemeDarkColorInputObject_2 | null;
-  accentColor?: DatoCmsSiteThemeAccentColorInputObject_2 | null;
-}
-
-export interface DatoCmsSiteThemePrimaryColorInputObject_2 {
-  red?: DatoCmsSiteThemePrimaryColorRedQueryInteger_2 | null;
-  blue?: DatoCmsSiteThemePrimaryColorBlueQueryInteger_2 | null;
-  alpha?: DatoCmsSiteThemePrimaryColorAlphaQueryInteger_2 | null;
-  green?: DatoCmsSiteThemePrimaryColorGreenQueryInteger_2 | null;
-}
-
-export interface DatoCmsSiteThemePrimaryColorRedQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteThemePrimaryColorBlueQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteThemePrimaryColorAlphaQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteThemePrimaryColorGreenQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteThemeLightColorInputObject_2 {
-  red?: DatoCmsSiteThemeLightColorRedQueryInteger_2 | null;
-  blue?: DatoCmsSiteThemeLightColorBlueQueryInteger_2 | null;
-  alpha?: DatoCmsSiteThemeLightColorAlphaQueryInteger_2 | null;
-  green?: DatoCmsSiteThemeLightColorGreenQueryInteger_2 | null;
-}
-
-export interface DatoCmsSiteThemeLightColorRedQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteThemeLightColorBlueQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteThemeLightColorAlphaQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteThemeLightColorGreenQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteThemeDarkColorInputObject_2 {
-  red?: DatoCmsSiteThemeDarkColorRedQueryInteger_2 | null;
-  blue?: DatoCmsSiteThemeDarkColorBlueQueryInteger_2 | null;
-  alpha?: DatoCmsSiteThemeDarkColorAlphaQueryInteger_2 | null;
-  green?: DatoCmsSiteThemeDarkColorGreenQueryInteger_2 | null;
-}
-
-export interface DatoCmsSiteThemeDarkColorRedQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteThemeDarkColorBlueQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteThemeDarkColorAlphaQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteThemeDarkColorGreenQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteThemeAccentColorInputObject_2 {
-  red?: DatoCmsSiteThemeAccentColorRedQueryInteger_2 | null;
-  blue?: DatoCmsSiteThemeAccentColorBlueQueryInteger_2 | null;
-  alpha?: DatoCmsSiteThemeAccentColorAlphaQueryInteger_2 | null;
-  green?: DatoCmsSiteThemeAccentColorGreenQueryInteger_2 | null;
-}
-
-export interface DatoCmsSiteThemeAccentColorRedQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteThemeAccentColorBlueQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteThemeAccentColorAlphaQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteThemeAccentColorGreenQueryInteger_2 {
-  eq?: number | null;
-  ne?: number | null;
-  gt?: number | null;
-  gte?: number | null;
-  lt?: number | null;
-  lte?: number | null;
-  in?: (number | null)[] | null;
-  nin?: (number | null)[] | null;
-}
-
-export interface DatoCmsSiteInternalDomainQueryString_2 {
+export interface DatoCmsPageInternalContentDigestQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -13817,14 +15410,115 @@ export interface DatoCmsSiteInternalDomainQueryString_2 {
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsSiteNoIndexQueryBoolean_2 {
+export interface DatoCmsPageInternalOwnerQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageLocaleQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageModelInputObject_2 {
+  id?: DatoCmsPageModelIdQueryString_2 | null;
+  originalId?: DatoCmsPageModelOriginalIdQueryString_2 | null;
+  internal?: DatoCmsPageModelInternalInputObject_2 | null;
+  name?: DatoCmsPageModelNameQueryString_2 | null;
+  singleton?: DatoCmsPageModelSingletonQueryBoolean_2 | null;
+  sortable?: DatoCmsPageModelSortableQueryBoolean_2 | null;
+  apiKey?: DatoCmsPageModelApiKeyQueryString_2 | null;
+  tree?: DatoCmsPageModelTreeQueryBoolean_2 | null;
+  modularBlock?: DatoCmsPageModelModularBlockQueryBoolean_2 | null;
+  draftModeActive?: DatoCmsPageModelDraftModeActiveQueryBoolean_2 | null;
+  allLocalesRequired?: DatoCmsPageModelAllLocalesRequiredQueryBoolean_2 | null;
+  collectionAppeareance?: DatoCmsPageModelCollectionAppeareanceQueryString_2 | null;
+  hasSingletonItem?: DatoCmsPageModelHasSingletonItemQueryBoolean_2 | null;
+}
+
+export interface DatoCmsPageModelIdQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageModelOriginalIdQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageModelInternalInputObject_2 {
+  type?: DatoCmsPageModelInternalTypeQueryString_2 | null;
+  contentDigest?: DatoCmsPageModelInternalContentDigestQueryString_2 | null;
+  owner?: DatoCmsPageModelInternalOwnerQueryString_2 | null;
+}
+
+export interface DatoCmsPageModelInternalTypeQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageModelInternalContentDigestQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageModelInternalOwnerQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageModelNameQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageModelSingletonQueryBoolean_2 {
   eq?: boolean | null;
   ne?: boolean | null;
   in?: (boolean | null)[] | null;
   nin?: (boolean | null)[] | null;
 }
 
-export interface DatoCmsSiteOriginalIdQueryString_2 {
+export interface DatoCmsPageModelSortableQueryBoolean_2 {
+  eq?: boolean | null;
+  ne?: boolean | null;
+  in?: (boolean | null)[] | null;
+  nin?: (boolean | null)[] | null;
+}
+
+export interface DatoCmsPageModelApiKeyQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -13833,13 +15527,35 @@ export interface DatoCmsSiteOriginalIdQueryString_2 {
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsSiteInternalInputObject_2 {
-  type?: DatoCmsSiteInternalTypeQueryString_2 | null;
-  contentDigest?: DatoCmsSiteInternalContentDigestQueryString_2 | null;
-  owner?: DatoCmsSiteInternalOwnerQueryString_2 | null;
+export interface DatoCmsPageModelTreeQueryBoolean_2 {
+  eq?: boolean | null;
+  ne?: boolean | null;
+  in?: (boolean | null)[] | null;
+  nin?: (boolean | null)[] | null;
 }
 
-export interface DatoCmsSiteInternalTypeQueryString_2 {
+export interface DatoCmsPageModelModularBlockQueryBoolean_2 {
+  eq?: boolean | null;
+  ne?: boolean | null;
+  in?: (boolean | null)[] | null;
+  nin?: (boolean | null)[] | null;
+}
+
+export interface DatoCmsPageModelDraftModeActiveQueryBoolean_2 {
+  eq?: boolean | null;
+  ne?: boolean | null;
+  in?: (boolean | null)[] | null;
+  nin?: (boolean | null)[] | null;
+}
+
+export interface DatoCmsPageModelAllLocalesRequiredQueryBoolean_2 {
+  eq?: boolean | null;
+  ne?: boolean | null;
+  in?: (boolean | null)[] | null;
+  nin?: (boolean | null)[] | null;
+}
+
+export interface DatoCmsPageModelCollectionAppeareanceQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -13848,7 +15564,14 @@ export interface DatoCmsSiteInternalTypeQueryString_2 {
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsSiteInternalContentDigestQueryString_2 {
+export interface DatoCmsPageModelHasSingletonItemQueryBoolean_2 {
+  eq?: boolean | null;
+  ne?: boolean | null;
+  in?: (boolean | null)[] | null;
+  nin?: (boolean | null)[] | null;
+}
+
+export interface DatoCmsPageTitleQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -13857,7 +15580,7 @@ export interface DatoCmsSiteInternalContentDigestQueryString_2 {
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsSiteInternalOwnerQueryString_2 {
+export interface DatoCmsPageSlugQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -13866,7 +15589,20 @@ export interface DatoCmsSiteInternalOwnerQueryString_2 {
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsSiteLocaleQueryString_2 {
+export interface DatoCmsPageHeaderImageInputObject_2 {
+  id?: DatoCmsPageHeaderImageIdQueryString_2 | null;
+  parent?: DatoCmsPageHeaderImageParentQueryString_2 | null;
+  internal?: DatoCmsPageHeaderImageInternalInputObject_2 | null;
+  format?: DatoCmsPageHeaderImageFormatQueryString_2 | null;
+  size?: DatoCmsPageHeaderImageSizeQueryInteger_2 | null;
+  width?: DatoCmsPageHeaderImageWidthQueryInteger_2 | null;
+  height?: DatoCmsPageHeaderImageHeightQueryInteger_2 | null;
+  title?: DatoCmsPageHeaderImageTitleQueryString_2 | null;
+  alt?: DatoCmsPageHeaderImageAltQueryString_2 | null;
+  url?: DatoCmsPageHeaderImageUrlQueryString_2 | null;
+}
+
+export interface DatoCmsPageHeaderImageIdQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -13875,7 +15611,7 @@ export interface DatoCmsSiteLocaleQueryString_2 {
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeIdQueryString_2 {
+export interface DatoCmsPageHeaderImageParentQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -13884,7 +15620,13 @@ export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeIdQueryString_
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeFirstColumnContentQueryString_2 {
+export interface DatoCmsPageHeaderImageInternalInputObject_2 {
+  type?: DatoCmsPageHeaderImageInternalTypeQueryString_2 | null;
+  contentDigest?: DatoCmsPageHeaderImageInternalContentDigestQueryString_2 | null;
+  owner?: DatoCmsPageHeaderImageInternalOwnerQueryString_2 | null;
+}
+
+export interface DatoCmsPageHeaderImageInternalTypeQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -13893,15 +15635,7 @@ export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeFirstColumnCon
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalInputObject_2 {
-  type?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalTypeQueryString_2 | null;
-  mediaType?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalMediaTypeQueryString_2 | null;
-  content?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalContentQueryString_2 | null;
-  contentDigest?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalContentDigestQueryString_2 | null;
-  owner?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalOwnerQueryString_2 | null;
-}
-
-export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalTypeQueryString_2 {
+export interface DatoCmsPageHeaderImageInternalContentDigestQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -13910,7 +15644,7 @@ export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalTypeQu
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalMediaTypeQueryString_2 {
+export interface DatoCmsPageHeaderImageInternalOwnerQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -13919,7 +15653,7 @@ export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalMediaT
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalContentQueryString_2 {
+export interface DatoCmsPageHeaderImageFormatQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -13928,7 +15662,40 @@ export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalConten
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalContentDigestQueryString_2 {
+export interface DatoCmsPageHeaderImageSizeQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsPageHeaderImageWidthQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsPageHeaderImageHeightQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsPageHeaderImageTitleQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -13937,7 +15704,7 @@ export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalConten
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalOwnerQueryString_2 {
+export interface DatoCmsPageHeaderImageAltQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -13946,7 +15713,7 @@ export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalOwnerQ
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeIdQueryString_2 {
+export interface DatoCmsPageHeaderImageUrlQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -13955,7 +15722,20 @@ export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeIdQueryString
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeSecondColumnContentQueryString_2 {
+export interface DatoCmsPageContenuDeLaPageQueryList_2 {
+  elemMatch?: DatoCmsPageContenuDeLaPageInputObject_2 | null;
+}
+
+export interface DatoCmsPageContenuDeLaPageInputObject_2 {
+  id?: DatoCmsPageContenuDeLaPageIdQueryString_2 | null;
+  originalId?: DatoCmsPageContenuDeLaPageOriginalIdQueryString_2 | null;
+  children?: DatoCmsPageContenuDeLaPageChildrenQueryList_2 | null;
+  internal?: DatoCmsPageContenuDeLaPageInternalInputObject_2 | null;
+  locale?: DatoCmsPageContenuDeLaPageLocaleQueryString_2 | null;
+  updatedAt?: DatoCmsPageContenuDeLaPageUpdatedAtQueryString_2 | null;
+}
+
+export interface DatoCmsPageContenuDeLaPageIdQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -13964,15 +15744,7 @@ export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeSecondColumnC
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalInputObject_2 {
-  type?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalTypeQueryString_2 | null;
-  mediaType?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalMediaTypeQueryString_2 | null;
-  content?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalContentQueryString_2 | null;
-  contentDigest?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalContentDigestQueryString_2 | null;
-  owner?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalOwnerQueryString_2 | null;
-}
-
-export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalTypeQueryString_2 {
+export interface DatoCmsPageContenuDeLaPageOriginalIdQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -13981,7 +15753,7 @@ export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalTypeQ
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalMediaTypeQueryString_2 {
+export interface DatoCmsPageContenuDeLaPageChildrenQueryList_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -13990,7 +15762,13 @@ export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalMedia
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalContentQueryString_2 {
+export interface DatoCmsPageContenuDeLaPageInternalInputObject_2 {
+  type?: DatoCmsPageContenuDeLaPageInternalTypeQueryString_2 | null;
+  contentDigest?: DatoCmsPageContenuDeLaPageInternalContentDigestQueryString_2 | null;
+  owner?: DatoCmsPageContenuDeLaPageInternalOwnerQueryString_2 | null;
+}
+
+export interface DatoCmsPageContenuDeLaPageInternalTypeQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -13999,7 +15777,7 @@ export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalConte
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalContentDigestQueryString_2 {
+export interface DatoCmsPageContenuDeLaPageInternalContentDigestQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -14008,7 +15786,153 @@ export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalConte
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalOwnerQueryString_2 {
+export interface DatoCmsPageContenuDeLaPageInternalOwnerQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageContenuDeLaPageLocaleQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageContenuDeLaPageUpdatedAtQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageSeoMetaTagsInputObject_2 {
+  id?: DatoCmsPageSeoMetaTagsIdQueryString_2 | null;
+  parent?: DatoCmsPageSeoMetaTagsParentQueryString_2 | null;
+  tags?: DatoCmsPageSeoMetaTagsTagsQueryList_2 | null;
+  internal?: DatoCmsPageSeoMetaTagsInternalInputObject_2 | null;
+}
+
+export interface DatoCmsPageSeoMetaTagsIdQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageSeoMetaTagsParentQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageSeoMetaTagsTagsQueryList_2 {
+  elemMatch?: DatoCmsPageSeoMetaTagsTagsInputObject_2 | null;
+}
+
+export interface DatoCmsPageSeoMetaTagsTagsInputObject_2 {
+  tagName?: DatoCmsPageSeoMetaTagsTagsTagNameQueryString_2 | null;
+  content?: DatoCmsPageSeoMetaTagsTagsContentQueryString_2 | null;
+  attributes?: DatoCmsPageSeoMetaTagsTagsAttributesInputObject_2 | null;
+}
+
+export interface DatoCmsPageSeoMetaTagsTagsTagNameQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageSeoMetaTagsTagsContentQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageSeoMetaTagsTagsAttributesInputObject_2 {
+  property?: DatoCmsPageSeoMetaTagsTagsAttributesPropertyQueryString_2 | null;
+  content?: DatoCmsPageSeoMetaTagsTagsAttributesContentQueryString_2 | null;
+  name?: DatoCmsPageSeoMetaTagsTagsAttributesNameQueryString_2 | null;
+}
+
+export interface DatoCmsPageSeoMetaTagsTagsAttributesPropertyQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageSeoMetaTagsTagsAttributesContentQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageSeoMetaTagsTagsAttributesNameQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageSeoMetaTagsInternalInputObject_2 {
+  type?: DatoCmsPageSeoMetaTagsInternalTypeQueryString_2 | null;
+  contentDigest?: DatoCmsPageSeoMetaTagsInternalContentDigestQueryString_2 | null;
+  owner?: DatoCmsPageSeoMetaTagsInternalOwnerQueryString_2 | null;
+}
+
+export interface DatoCmsPageSeoMetaTagsInternalTypeQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageSeoMetaTagsInternalContentDigestQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageSeoMetaTagsInternalOwnerQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsPageUpdatedAtQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -14221,6 +16145,139 @@ export interface DatoCmsTwoColumnSectionModelHasSingletonItemQueryBoolean_2 {
 }
 
 export interface DatoCmsTwoColumnSectionTitleQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionHeaderImageInputObject_2 {
+  id?: DatoCmsTwoColumnSectionHeaderImageIdQueryString_2 | null;
+  parent?: DatoCmsTwoColumnSectionHeaderImageParentQueryString_2 | null;
+  internal?: DatoCmsTwoColumnSectionHeaderImageInternalInputObject_2 | null;
+  format?: DatoCmsTwoColumnSectionHeaderImageFormatQueryString_2 | null;
+  size?: DatoCmsTwoColumnSectionHeaderImageSizeQueryInteger_2 | null;
+  width?: DatoCmsTwoColumnSectionHeaderImageWidthQueryInteger_2 | null;
+  height?: DatoCmsTwoColumnSectionHeaderImageHeightQueryInteger_2 | null;
+  title?: DatoCmsTwoColumnSectionHeaderImageTitleQueryString_2 | null;
+  alt?: DatoCmsTwoColumnSectionHeaderImageAltQueryString_2 | null;
+  url?: DatoCmsTwoColumnSectionHeaderImageUrlQueryString_2 | null;
+}
+
+export interface DatoCmsTwoColumnSectionHeaderImageIdQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionHeaderImageParentQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionHeaderImageInternalInputObject_2 {
+  type?: DatoCmsTwoColumnSectionHeaderImageInternalTypeQueryString_2 | null;
+  contentDigest?: DatoCmsTwoColumnSectionHeaderImageInternalContentDigestQueryString_2 | null;
+  owner?: DatoCmsTwoColumnSectionHeaderImageInternalOwnerQueryString_2 | null;
+}
+
+export interface DatoCmsTwoColumnSectionHeaderImageInternalTypeQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionHeaderImageInternalContentDigestQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionHeaderImageInternalOwnerQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionHeaderImageFormatQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionHeaderImageSizeQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionHeaderImageWidthQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionHeaderImageHeightQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionHeaderImageTitleQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionHeaderImageAltQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsTwoColumnSectionHeaderImageUrlQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -14569,7 +16626,7 @@ export interface DatoCmsTwoColumnSectionUpdatedAtQueryString_2 {
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsAssetIdQueryString_2 {
+export interface DatoCmsSiteIdQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -14578,13 +16635,7 @@ export interface DatoCmsAssetIdQueryString_2 {
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsAssetInternalInputObject_2 {
-  type?: DatoCmsAssetInternalTypeQueryString_2 | null;
-  contentDigest?: DatoCmsAssetInternalContentDigestQueryString_2 | null;
-  owner?: DatoCmsAssetInternalOwnerQueryString_2 | null;
-}
-
-export interface DatoCmsAssetInternalTypeQueryString_2 {
+export interface DatoCmsSiteNameQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -14593,7 +16644,7 @@ export interface DatoCmsAssetInternalTypeQueryString_2 {
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsAssetInternalContentDigestQueryString_2 {
+export interface DatoCmsSiteLocalesQueryList_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -14602,25 +16653,21 @@ export interface DatoCmsAssetInternalContentDigestQueryString_2 {
   nin?: (string | null)[] | null;
 }
 
-export interface DatoCmsAssetInternalOwnerQueryString_2 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
+export interface DatoCmsSiteThemeInputObject_2 {
+  primaryColor?: DatoCmsSiteThemePrimaryColorInputObject_2 | null;
+  lightColor?: DatoCmsSiteThemeLightColorInputObject_2 | null;
+  darkColor?: DatoCmsSiteThemeDarkColorInputObject_2 | null;
+  accentColor?: DatoCmsSiteThemeAccentColorInputObject_2 | null;
 }
 
-export interface DatoCmsAssetFormatQueryString_2 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
+export interface DatoCmsSiteThemePrimaryColorInputObject_2 {
+  red?: DatoCmsSiteThemePrimaryColorRedQueryInteger_2 | null;
+  blue?: DatoCmsSiteThemePrimaryColorBlueQueryInteger_2 | null;
+  alpha?: DatoCmsSiteThemePrimaryColorAlphaQueryInteger_2 | null;
+  green?: DatoCmsSiteThemePrimaryColorGreenQueryInteger_2 | null;
 }
 
-export interface DatoCmsAssetSizeQueryInteger_2 {
+export interface DatoCmsSiteThemePrimaryColorRedQueryInteger_2 {
   eq?: number | null;
   ne?: number | null;
   gt?: number | null;
@@ -14631,7 +16678,7 @@ export interface DatoCmsAssetSizeQueryInteger_2 {
   nin?: (number | null)[] | null;
 }
 
-export interface DatoCmsAssetWidthQueryInteger_2 {
+export interface DatoCmsSiteThemePrimaryColorBlueQueryInteger_2 {
   eq?: number | null;
   ne?: number | null;
   gt?: number | null;
@@ -14642,7 +16689,7 @@ export interface DatoCmsAssetWidthQueryInteger_2 {
   nin?: (number | null)[] | null;
 }
 
-export interface DatoCmsAssetHeightQueryInteger_2 {
+export interface DatoCmsSiteThemePrimaryColorAlphaQueryInteger_2 {
   eq?: number | null;
   ne?: number | null;
   gt?: number | null;
@@ -14653,34 +16700,7 @@ export interface DatoCmsAssetHeightQueryInteger_2 {
   nin?: (number | null)[] | null;
 }
 
-export interface DatoCmsAssetUrlQueryString_2 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
-}
-
-export interface ResolutionsTypeName_3 {
-  base64?: ResolutionsBase64QueryString_3 | null;
-  aspectRatio?: ResolutionsAspectRatioQueryFloat_3 | null;
-  width?: ResolutionsWidthQueryFloat_3 | null;
-  height?: ResolutionsHeightQueryFloat_3 | null;
-  src?: ResolutionsSrcQueryString_3 | null;
-  srcSet?: ResolutionsSrcSetQueryString_3 | null;
-}
-
-export interface ResolutionsBase64QueryString_3 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
-}
-
-export interface ResolutionsAspectRatioQueryFloat_3 {
+export interface DatoCmsSiteThemePrimaryColorGreenQueryInteger_2 {
   eq?: number | null;
   ne?: number | null;
   gt?: number | null;
@@ -14691,7 +16711,14 @@ export interface ResolutionsAspectRatioQueryFloat_3 {
   nin?: (number | null)[] | null;
 }
 
-export interface ResolutionsWidthQueryFloat_3 {
+export interface DatoCmsSiteThemeLightColorInputObject_2 {
+  red?: DatoCmsSiteThemeLightColorRedQueryInteger_2 | null;
+  blue?: DatoCmsSiteThemeLightColorBlueQueryInteger_2 | null;
+  alpha?: DatoCmsSiteThemeLightColorAlphaQueryInteger_2 | null;
+  green?: DatoCmsSiteThemeLightColorGreenQueryInteger_2 | null;
+}
+
+export interface DatoCmsSiteThemeLightColorRedQueryInteger_2 {
   eq?: number | null;
   ne?: number | null;
   gt?: number | null;
@@ -14702,7 +16729,7 @@ export interface ResolutionsWidthQueryFloat_3 {
   nin?: (number | null)[] | null;
 }
 
-export interface ResolutionsHeightQueryFloat_3 {
+export interface DatoCmsSiteThemeLightColorBlueQueryInteger_2 {
   eq?: number | null;
   ne?: number | null;
   gt?: number | null;
@@ -14713,42 +16740,7 @@ export interface ResolutionsHeightQueryFloat_3 {
   nin?: (number | null)[] | null;
 }
 
-export interface ResolutionsSrcQueryString_3 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
-}
-
-export interface ResolutionsSrcSetQueryString_3 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
-}
-
-export interface SizesTypeName_3 {
-  base64?: SizesBase64QueryString_3 | null;
-  aspectRatio?: SizesAspectRatioQueryFloat_3 | null;
-  src?: SizesSrcQueryString_3 | null;
-  srcSet?: SizesSrcSetQueryString_3 | null;
-  sizes?: SizesSizesQueryString_3 | null;
-}
-
-export interface SizesBase64QueryString_3 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
-}
-
-export interface SizesAspectRatioQueryFloat_3 {
+export interface DatoCmsSiteThemeLightColorAlphaQueryInteger_2 {
   eq?: number | null;
   ne?: number | null;
   gt?: number | null;
@@ -14759,60 +16751,7 @@ export interface SizesAspectRatioQueryFloat_3 {
   nin?: (number | null)[] | null;
 }
 
-export interface SizesSrcQueryString_3 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
-}
-
-export interface SizesSrcSetQueryString_3 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
-}
-
-export interface SizesSizesQueryString_3 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
-}
-
-export interface InlineSvgQueryString_3 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
-}
-
-export interface FluidTypeName_3 {
-  base64?: FluidBase64QueryString_3 | null;
-  aspectRatio?: FluidAspectRatioQueryFloat_3 | null;
-  src?: FluidSrcQueryString_3 | null;
-  srcSet?: FluidSrcSetQueryString_3 | null;
-  sizes?: FluidSizesQueryString_3 | null;
-}
-
-export interface FluidBase64QueryString_3 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
-}
-
-export interface FluidAspectRatioQueryFloat_3 {
+export interface DatoCmsSiteThemeLightColorGreenQueryInteger_2 {
   eq?: number | null;
   ne?: number | null;
   gt?: number | null;
@@ -14823,52 +16762,14 @@ export interface FluidAspectRatioQueryFloat_3 {
   nin?: (number | null)[] | null;
 }
 
-export interface FluidSrcQueryString_3 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
+export interface DatoCmsSiteThemeDarkColorInputObject_2 {
+  red?: DatoCmsSiteThemeDarkColorRedQueryInteger_2 | null;
+  blue?: DatoCmsSiteThemeDarkColorBlueQueryInteger_2 | null;
+  alpha?: DatoCmsSiteThemeDarkColorAlphaQueryInteger_2 | null;
+  green?: DatoCmsSiteThemeDarkColorGreenQueryInteger_2 | null;
 }
 
-export interface FluidSrcSetQueryString_3 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
-}
-
-export interface FluidSizesQueryString_3 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
-}
-
-export interface FixedTypeName_3 {
-  base64?: FixedBase64QueryString_3 | null;
-  aspectRatio?: FixedAspectRatioQueryFloat_3 | null;
-  width?: FixedWidthQueryFloat_3 | null;
-  height?: FixedHeightQueryFloat_3 | null;
-  src?: FixedSrcQueryString_3 | null;
-  srcSet?: FixedSrcSetQueryString_3 | null;
-}
-
-export interface FixedBase64QueryString_3 {
-  eq?: string | null;
-  ne?: string | null;
-  regex?: string | null;
-  glob?: string | null;
-  in?: (string | null)[] | null;
-  nin?: (string | null)[] | null;
-}
-
-export interface FixedAspectRatioQueryFloat_3 {
+export interface DatoCmsSiteThemeDarkColorRedQueryInteger_2 {
   eq?: number | null;
   ne?: number | null;
   gt?: number | null;
@@ -14879,7 +16780,7 @@ export interface FixedAspectRatioQueryFloat_3 {
   nin?: (number | null)[] | null;
 }
 
-export interface FixedWidthQueryFloat_3 {
+export interface DatoCmsSiteThemeDarkColorBlueQueryInteger_2 {
   eq?: number | null;
   ne?: number | null;
   gt?: number | null;
@@ -14890,7 +16791,7 @@ export interface FixedWidthQueryFloat_3 {
   nin?: (number | null)[] | null;
 }
 
-export interface FixedHeightQueryFloat_3 {
+export interface DatoCmsSiteThemeDarkColorAlphaQueryInteger_2 {
   eq?: number | null;
   ne?: number | null;
   gt?: number | null;
@@ -14901,7 +16802,69 @@ export interface FixedHeightQueryFloat_3 {
   nin?: (number | null)[] | null;
 }
 
-export interface FixedSrcQueryString_3 {
+export interface DatoCmsSiteThemeDarkColorGreenQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsSiteThemeAccentColorInputObject_2 {
+  red?: DatoCmsSiteThemeAccentColorRedQueryInteger_2 | null;
+  blue?: DatoCmsSiteThemeAccentColorBlueQueryInteger_2 | null;
+  alpha?: DatoCmsSiteThemeAccentColorAlphaQueryInteger_2 | null;
+  green?: DatoCmsSiteThemeAccentColorGreenQueryInteger_2 | null;
+}
+
+export interface DatoCmsSiteThemeAccentColorRedQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsSiteThemeAccentColorBlueQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsSiteThemeAccentColorAlphaQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsSiteThemeAccentColorGreenQueryInteger_2 {
+  eq?: number | null;
+  ne?: number | null;
+  gt?: number | null;
+  gte?: number | null;
+  lt?: number | null;
+  lte?: number | null;
+  in?: (number | null)[] | null;
+  nin?: (number | null)[] | null;
+}
+
+export interface DatoCmsSiteInternalDomainQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -14910,7 +16873,56 @@ export interface FixedSrcQueryString_3 {
   nin?: (string | null)[] | null;
 }
 
-export interface FixedSrcSetQueryString_3 {
+export interface DatoCmsSiteNoIndexQueryBoolean_2 {
+  eq?: boolean | null;
+  ne?: boolean | null;
+  in?: (boolean | null)[] | null;
+  nin?: (boolean | null)[] | null;
+}
+
+export interface DatoCmsSiteOriginalIdQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsSiteInternalInputObject_2 {
+  type?: DatoCmsSiteInternalTypeQueryString_2 | null;
+  contentDigest?: DatoCmsSiteInternalContentDigestQueryString_2 | null;
+  owner?: DatoCmsSiteInternalOwnerQueryString_2 | null;
+}
+
+export interface DatoCmsSiteInternalTypeQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsSiteInternalContentDigestQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsSiteInternalOwnerQueryString_2 {
+  eq?: string | null;
+  ne?: string | null;
+  regex?: string | null;
+  glob?: string | null;
+  in?: (string | null)[] | null;
+  nin?: (string | null)[] | null;
+}
+
+export interface DatoCmsSiteLocaleQueryString_2 {
   eq?: string | null;
   ne?: string | null;
   regex?: string | null;
@@ -14978,11 +16990,29 @@ export interface AllDatoCmsSeoMetaTagsQueryArgs {
   sort?: DatoCmsSeoMetaTagsConnectionSort | null;
   filter?: FilterDatoCmsSeoMetaTags | null;
 }
+export interface AllDatoCmsAssetQueryArgs {
+  skip?: number | null;
+  limit?: number | null;
+  sort?: DatoCmsAssetConnectionSort | null;
+  filter?: FilterDatoCmsAsset | null;
+}
 export interface AllDatoCmsOneColumnSectionContentTextNodeQueryArgs {
   skip?: number | null;
   limit?: number | null;
   sort?: DatoCmsOneColumnSectionContentTextNodeConnectionSort | null;
   filter?: FilterDatoCmsOneColumnSectionContentTextNode | null;
+}
+export interface AllDatoCmsTwoColumnSectionFirstColumnContentTextNodeQueryArgs {
+  skip?: number | null;
+  limit?: number | null;
+  sort?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionSort | null;
+  filter?: FilterDatoCmsTwoColumnSectionFirstColumnContentTextNode | null;
+}
+export interface AllDatoCmsTwoColumnSectionSecondColumnContentTextNodeQueryArgs {
+  skip?: number | null;
+  limit?: number | null;
+  sort?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionSort | null;
+  filter?: FilterDatoCmsTwoColumnSectionSecondColumnContentTextNode | null;
 }
 export interface AllDatoCmsPriceQueryArgs {
   skip?: number | null;
@@ -15014,23 +17044,11 @@ export interface AllDatoCmsOneColumnSectionQueryArgs {
   sort?: DatoCmsOneColumnSectionConnectionSort | null;
   filter?: FilterDatoCmsOneColumnSection | null;
 }
-export interface AllDatoCmsSiteQueryArgs {
+export interface AllDatoCmsPageQueryArgs {
   skip?: number | null;
   limit?: number | null;
-  sort?: DatoCmsSiteConnectionSort | null;
-  filter?: FilterDatoCmsSite | null;
-}
-export interface AllDatoCmsTwoColumnSectionFirstColumnContentTextNodeQueryArgs {
-  skip?: number | null;
-  limit?: number | null;
-  sort?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionSort | null;
-  filter?: FilterDatoCmsTwoColumnSectionFirstColumnContentTextNode | null;
-}
-export interface AllDatoCmsTwoColumnSectionSecondColumnContentTextNodeQueryArgs {
-  skip?: number | null;
-  limit?: number | null;
-  sort?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionSort | null;
-  filter?: FilterDatoCmsTwoColumnSectionSecondColumnContentTextNode | null;
+  sort?: DatoCmsPageConnectionSort | null;
+  filter?: FilterDatoCmsPage | null;
 }
 export interface AllDatoCmsTwoColumnSectionQueryArgs {
   skip?: number | null;
@@ -15038,11 +17056,11 @@ export interface AllDatoCmsTwoColumnSectionQueryArgs {
   sort?: DatoCmsTwoColumnSectionConnectionSort | null;
   filter?: FilterDatoCmsTwoColumnSection | null;
 }
-export interface AllDatoCmsAssetQueryArgs {
+export interface AllDatoCmsSiteQueryArgs {
   skip?: number | null;
   limit?: number | null;
-  sort?: DatoCmsAssetConnectionSort | null;
-  filter?: FilterDatoCmsAsset | null;
+  sort?: DatoCmsSiteConnectionSort | null;
+  filter?: FilterDatoCmsSite | null;
 }
 export interface SitePageQueryArgs {
   jsonName?: SitePageJsonNameQueryString | null;
@@ -15160,10 +17178,36 @@ export interface DatoCmsSeoMetaTagsQueryArgs {
   tags?: DatoCmsSeoMetaTagsTagsQueryList_2 | null;
   internal?: DatoCmsSeoMetaTagsInternalInputObject_2 | null;
 }
+export interface DatoCmsAssetQueryArgs {
+  id?: DatoCmsAssetIdQueryString_2 | null;
+  internal?: DatoCmsAssetInternalInputObject_2 | null;
+  format?: DatoCmsAssetFormatQueryString_2 | null;
+  size?: DatoCmsAssetSizeQueryInteger_2 | null;
+  width?: DatoCmsAssetWidthQueryInteger_2 | null;
+  height?: DatoCmsAssetHeightQueryInteger_2 | null;
+  title?: DatoCmsAssetTitleQueryString_2 | null;
+  alt?: DatoCmsAssetAltQueryString_2 | null;
+  url?: DatoCmsAssetUrlQueryString_2 | null;
+  resolutions?: ResolutionsTypeName_3 | null;
+  sizes?: SizesTypeName_3 | null;
+  inlineSvg?: InlineSvgQueryString_3 | null;
+  fluid?: FluidTypeName_3 | null;
+  fixed?: FixedTypeName_3 | null;
+}
 export interface DatoCmsOneColumnSectionContentTextNodeQueryArgs {
   id?: DatoCmsOneColumnSectionContentTextNodeIdQueryString_2 | null;
   content?: DatoCmsOneColumnSectionContentTextNodeContentQueryString_2 | null;
   internal?: DatoCmsOneColumnSectionContentTextNodeInternalInputObject_2 | null;
+}
+export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeQueryArgs {
+  id?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeIdQueryString_2 | null;
+  firstColumnContent?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeFirstColumnContentQueryString_2 | null;
+  internal?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalInputObject_2 | null;
+}
+export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeQueryArgs {
+  id?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeIdQueryString_2 | null;
+  secondColumnContent?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeSecondColumnContentQueryString_2 | null;
+  internal?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalInputObject_2 | null;
 }
 export interface DatoCmsPriceQueryArgs {
   id?: DatoCmsPriceIdQueryString_2 | null;
@@ -15227,6 +17271,34 @@ export interface DatoCmsOneColumnSectionQueryArgs {
   updatedAt?: DatoCmsOneColumnSectionUpdatedAtQueryString_2 | null;
   headerImage?: DatoCmsOneColumnSectionHeaderImageInputObject_2 | null;
 }
+export interface DatoCmsPageQueryArgs {
+  id?: DatoCmsPageIdQueryString_2 | null;
+  originalId?: DatoCmsPageOriginalIdQueryString_2 | null;
+  internal?: DatoCmsPageInternalInputObject_2 | null;
+  locale?: DatoCmsPageLocaleQueryString_2 | null;
+  model?: DatoCmsPageModelInputObject_2 | null;
+  title?: DatoCmsPageTitleQueryString_2 | null;
+  slug?: DatoCmsPageSlugQueryString_2 | null;
+  headerImage?: DatoCmsPageHeaderImageInputObject_2 | null;
+  contenuDeLaPage?: DatoCmsPageContenuDeLaPageQueryList_2 | null;
+  seoMetaTags?: DatoCmsPageSeoMetaTagsInputObject_2 | null;
+  updatedAt?: DatoCmsPageUpdatedAtQueryString_2 | null;
+}
+export interface DatoCmsTwoColumnSectionQueryArgs {
+  id?: DatoCmsTwoColumnSectionIdQueryString_2 | null;
+  originalId?: DatoCmsTwoColumnSectionOriginalIdQueryString_2 | null;
+  internal?: DatoCmsTwoColumnSectionInternalInputObject_2 | null;
+  locale?: DatoCmsTwoColumnSectionLocaleQueryString_2 | null;
+  model?: DatoCmsTwoColumnSectionModelInputObject_2 | null;
+  title?: DatoCmsTwoColumnSectionTitleQueryString_2 | null;
+  headerImage?: DatoCmsTwoColumnSectionHeaderImageInputObject_2 | null;
+  firstColumnContentNode?: DatoCmsTwoColumnSectionFirstColumnContentNodeInputObject_2 | null;
+  firstColumnContent?: DatoCmsTwoColumnSectionFirstColumnContentQueryString_2 | null;
+  secondColumnContentNode?: DatoCmsTwoColumnSectionSecondColumnContentNodeInputObject_2 | null;
+  secondColumnContent?: DatoCmsTwoColumnSectionSecondColumnContentQueryString_2 | null;
+  seoMetaTags?: DatoCmsTwoColumnSectionSeoMetaTagsInputObject_2 | null;
+  updatedAt?: DatoCmsTwoColumnSectionUpdatedAtQueryString_2 | null;
+}
 export interface DatoCmsSiteQueryArgs {
   id?: DatoCmsSiteIdQueryString_2 | null;
   name?: DatoCmsSiteNameQueryString_2 | null;
@@ -15237,44 +17309,6 @@ export interface DatoCmsSiteQueryArgs {
   originalId?: DatoCmsSiteOriginalIdQueryString_2 | null;
   internal?: DatoCmsSiteInternalInputObject_2 | null;
   locale?: DatoCmsSiteLocaleQueryString_2 | null;
-}
-export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeQueryArgs {
-  id?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeIdQueryString_2 | null;
-  firstColumnContent?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeFirstColumnContentQueryString_2 | null;
-  internal?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalInputObject_2 | null;
-}
-export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeQueryArgs {
-  id?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeIdQueryString_2 | null;
-  secondColumnContent?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeSecondColumnContentQueryString_2 | null;
-  internal?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalInputObject_2 | null;
-}
-export interface DatoCmsTwoColumnSectionQueryArgs {
-  id?: DatoCmsTwoColumnSectionIdQueryString_2 | null;
-  originalId?: DatoCmsTwoColumnSectionOriginalIdQueryString_2 | null;
-  internal?: DatoCmsTwoColumnSectionInternalInputObject_2 | null;
-  locale?: DatoCmsTwoColumnSectionLocaleQueryString_2 | null;
-  model?: DatoCmsTwoColumnSectionModelInputObject_2 | null;
-  title?: DatoCmsTwoColumnSectionTitleQueryString_2 | null;
-  firstColumnContentNode?: DatoCmsTwoColumnSectionFirstColumnContentNodeInputObject_2 | null;
-  firstColumnContent?: DatoCmsTwoColumnSectionFirstColumnContentQueryString_2 | null;
-  secondColumnContentNode?: DatoCmsTwoColumnSectionSecondColumnContentNodeInputObject_2 | null;
-  secondColumnContent?: DatoCmsTwoColumnSectionSecondColumnContentQueryString_2 | null;
-  seoMetaTags?: DatoCmsTwoColumnSectionSeoMetaTagsInputObject_2 | null;
-  updatedAt?: DatoCmsTwoColumnSectionUpdatedAtQueryString_2 | null;
-}
-export interface DatoCmsAssetQueryArgs {
-  id?: DatoCmsAssetIdQueryString_2 | null;
-  internal?: DatoCmsAssetInternalInputObject_2 | null;
-  format?: DatoCmsAssetFormatQueryString_2 | null;
-  size?: DatoCmsAssetSizeQueryInteger_2 | null;
-  width?: DatoCmsAssetWidthQueryInteger_2 | null;
-  height?: DatoCmsAssetHeightQueryInteger_2 | null;
-  url?: DatoCmsAssetUrlQueryString_2 | null;
-  resolutions?: ResolutionsTypeName_3 | null;
-  sizes?: SizesTypeName_3 | null;
-  inlineSvg?: InlineSvgQueryString_3 | null;
-  fluid?: FluidTypeName_3 | null;
-  fixed?: FixedTypeName_3 | null;
 }
 export interface DistinctSitePageConnectionArgs {
   field?: SitePageDistinctEnum | null;
@@ -15394,6 +17428,36 @@ export interface GroupDatoCmsSeoMetaTagsConnectionArgs {
   limit?: number | null;
   field?: DatoCmsSeoMetaTagsGroupEnum | null;
 }
+export interface DistinctDatoCmsAssetConnectionArgs {
+  field?: DatoCmsAssetDistinctEnum | null;
+}
+export interface GroupDatoCmsAssetConnectionArgs {
+  skip?: number | null;
+  limit?: number | null;
+  field?: DatoCmsAssetGroupEnum | null;
+}
+export interface ResolutionsDatoCmsAssetArgs {
+  width?: number | null;
+  height?: number | null;
+  imgixParams?: DatoCmsImgixParams | null;
+}
+export interface SizesDatoCmsAssetArgs {
+  maxWidth?: number | null;
+  maxHeight?: number | null;
+  sizes?: string | null;
+  imgixParams?: DatoCmsImgixParams | null;
+}
+export interface FluidDatoCmsAssetArgs {
+  maxWidth?: number | null;
+  maxHeight?: number | null;
+  sizes?: string | null;
+  imgixParams?: DatoCmsImgixParams | null;
+}
+export interface FixedDatoCmsAssetArgs {
+  width?: number | null;
+  height?: number | null;
+  imgixParams?: DatoCmsImgixParams | null;
+}
 export interface DistinctDatoCmsOneColumnSectionContentTextNodeConnectionArgs {
   field?: DatoCmsOneColumnSectionContentTextNodeDistinctEnum | null;
 }
@@ -15401,6 +17465,22 @@ export interface GroupDatoCmsOneColumnSectionContentTextNodeConnectionArgs {
   skip?: number | null;
   limit?: number | null;
   field?: DatoCmsOneColumnSectionContentTextNodeGroupEnum | null;
+}
+export interface DistinctDatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionArgs {
+  field?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeDistinctEnum | null;
+}
+export interface GroupDatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionArgs {
+  skip?: number | null;
+  limit?: number | null;
+  field?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeGroupEnum | null;
+}
+export interface DistinctDatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionArgs {
+  field?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeDistinctEnum | null;
+}
+export interface GroupDatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionArgs {
+  skip?: number | null;
+  limit?: number | null;
+  field?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeGroupEnum | null;
 }
 export interface DistinctDatoCmsPriceConnectionArgs {
   field?: DatoCmsPriceDistinctEnum | null;
@@ -15496,29 +17576,21 @@ export interface UpdatedAtDatoCmsHomepageArgs {
     | string
     | null /** Configures the locale Moment.js will use to format the date. */;
 }
-export interface ResolutionsDatoCmsAssetArgs {
-  width?: number | null;
-  height?: number | null;
-  imgixParams?: DatoCmsImgixParams | null;
-}
-export interface SizesDatoCmsAssetArgs {
-  maxWidth?: number | null;
-  maxHeight?: number | null;
-  sizes?: string | null;
-  imgixParams?: DatoCmsImgixParams | null;
-}
-export interface FluidDatoCmsAssetArgs {
-  maxWidth?: number | null;
-  maxHeight?: number | null;
-  sizes?: string | null;
-  imgixParams?: DatoCmsImgixParams | null;
-}
-export interface FixedDatoCmsAssetArgs {
-  width?: number | null;
-  height?: number | null;
-  imgixParams?: DatoCmsImgixParams | null;
-}
 export interface UpdatedAtDatoCmsOneColumnSectionArgs {
+  formatString?:
+    | string
+    | null /** Format the date using Moment.js' date tokens e.g. "date(formatString: "YYYY MMMM DD)" See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens */;
+  fromNow?:
+    | boolean
+    | null /** Returns a string generated with Moment.js' fromNow function */;
+  difference?:
+    | string
+    | null /** Returns the difference between this date and the current time. Defaults to miliseconds but you can also pass in as the measurement years, months, weeks, days, hours, minutes, and seconds. */;
+  locale?:
+    | string
+    | null /** Configures the locale Moment.js will use to format the date. */;
+}
+export interface UpdatedAtDatoCmsFullWidthImageArgs {
   formatString?:
     | string
     | null /** Format the date using Moment.js' date tokens e.g. "date(formatString: "YYYY MMMM DD)" See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens */;
@@ -15554,7 +17626,23 @@ export interface GroupDatoCmsFullWidthImageConnectionArgs {
   limit?: number | null;
   field?: DatoCmsFullWidthImageGroupEnum | null;
 }
-export interface UpdatedAtDatoCmsFullWidthImageArgs {
+export interface DistinctDatoCmsOneColumnSectionConnectionArgs {
+  field?: DatoCmsOneColumnSectionDistinctEnum | null;
+}
+export interface GroupDatoCmsOneColumnSectionConnectionArgs {
+  skip?: number | null;
+  limit?: number | null;
+  field?: DatoCmsOneColumnSectionGroupEnum | null;
+}
+export interface DistinctDatoCmsPageConnectionArgs {
+  field?: DatoCmsPageDistinctEnum | null;
+}
+export interface GroupDatoCmsPageConnectionArgs {
+  skip?: number | null;
+  limit?: number | null;
+  field?: DatoCmsPageGroupEnum | null;
+}
+export interface UpdatedAtDatoCmsPageArgs {
   formatString?:
     | string
     | null /** Format the date using Moment.js' date tokens e.g. "date(formatString: "YYYY MMMM DD)" See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens */;
@@ -15568,13 +17656,13 @@ export interface UpdatedAtDatoCmsFullWidthImageArgs {
     | string
     | null /** Configures the locale Moment.js will use to format the date. */;
 }
-export interface DistinctDatoCmsOneColumnSectionConnectionArgs {
-  field?: DatoCmsOneColumnSectionDistinctEnum | null;
+export interface DistinctDatoCmsTwoColumnSectionConnectionArgs {
+  field?: DatoCmsTwoColumnSectionDistinctEnum | null;
 }
-export interface GroupDatoCmsOneColumnSectionConnectionArgs {
+export interface GroupDatoCmsTwoColumnSectionConnectionArgs {
   skip?: number | null;
   limit?: number | null;
-  field?: DatoCmsOneColumnSectionGroupEnum | null;
+  field?: DatoCmsTwoColumnSectionGroupEnum | null;
 }
 export interface DistinctDatoCmsSiteConnectionArgs {
   field?: DatoCmsSiteDistinctEnum | null;
@@ -15597,38 +17685,6 @@ export interface OriginalIdDatoCmsSiteArgs {
   locale?:
     | string
     | null /** Configures the locale Moment.js will use to format the date. */;
-}
-export interface DistinctDatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionArgs {
-  field?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeDistinctEnum | null;
-}
-export interface GroupDatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionArgs {
-  skip?: number | null;
-  limit?: number | null;
-  field?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeGroupEnum | null;
-}
-export interface DistinctDatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionArgs {
-  field?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeDistinctEnum | null;
-}
-export interface GroupDatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionArgs {
-  skip?: number | null;
-  limit?: number | null;
-  field?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeGroupEnum | null;
-}
-export interface DistinctDatoCmsTwoColumnSectionConnectionArgs {
-  field?: DatoCmsTwoColumnSectionDistinctEnum | null;
-}
-export interface GroupDatoCmsTwoColumnSectionConnectionArgs {
-  skip?: number | null;
-  limit?: number | null;
-  field?: DatoCmsTwoColumnSectionGroupEnum | null;
-}
-export interface DistinctDatoCmsAssetConnectionArgs {
-  field?: DatoCmsAssetDistinctEnum | null;
-}
-export interface GroupDatoCmsAssetConnectionArgs {
-  skip?: number | null;
-  limit?: number | null;
-  field?: DatoCmsAssetGroupEnum | null;
 }
 export interface PortSiteArgs {
   formatString?:
@@ -15726,9 +17782,11 @@ export enum SitePluginConnectionSortByFieldsEnum {
   id = "id",
   name = "name",
   version = "version",
+  pluginOptions___plugins = "pluginOptions___plugins",
   pluginOptions___endpoint = "pluginOptions___endpoint",
   pluginOptions___query = "pluginOptions___query",
   pluginOptions___apiToken = "pluginOptions___apiToken",
+  pluginOptions___maxWidth = "pluginOptions___maxWidth",
   pluginOptions___name = "pluginOptions___name",
   pluginOptions___short_name = "pluginOptions___short_name",
   pluginOptions___start_url = "pluginOptions___start_url",
@@ -15768,9 +17826,11 @@ export enum SitePluginDistinctEnum {
   id = "id",
   name = "name",
   version = "version",
+  pluginOptions___plugins = "pluginOptions___plugins",
   pluginOptions___endpoint = "pluginOptions___endpoint",
   pluginOptions___query = "pluginOptions___query",
   pluginOptions___apiToken = "pluginOptions___apiToken",
+  pluginOptions___maxWidth = "pluginOptions___maxWidth",
   pluginOptions___name = "pluginOptions___name",
   pluginOptions___short_name = "pluginOptions___short_name",
   pluginOptions___start_url = "pluginOptions___start_url",
@@ -15805,9 +17865,11 @@ export enum SitePluginGroupEnum {
   id = "id",
   name = "name",
   version = "version",
+  pluginOptions___plugins = "pluginOptions___plugins",
   pluginOptions___endpoint = "pluginOptions___endpoint",
   pluginOptions___query = "pluginOptions___query",
   pluginOptions___apiToken = "pluginOptions___apiToken",
+  pluginOptions___maxWidth = "pluginOptions___maxWidth",
   pluginOptions___name = "pluginOptions___name",
   pluginOptions___short_name = "pluginOptions___short_name",
   pluginOptions___start_url = "pluginOptions___start_url",
@@ -16283,6 +18345,79 @@ export enum DatoCmsSeoMetaTagsGroupEnum {
   internal___owner = "internal___owner"
 }
 
+export enum DatoCmsAssetConnectionSortByFieldsEnum {
+  id = "id",
+  parent = "parent",
+  internal___type = "internal___type",
+  internal___contentDigest = "internal___contentDigest",
+  internal___owner = "internal___owner",
+  format = "format",
+  size = "size",
+  width = "width",
+  height = "height",
+  title = "title",
+  alt = "alt",
+  url = "url",
+  resolutions___base64 = "resolutions___base64",
+  resolutions___aspectRatio = "resolutions___aspectRatio",
+  resolutions___width = "resolutions___width",
+  resolutions___height = "resolutions___height",
+  resolutions___src = "resolutions___src",
+  resolutions___srcSet = "resolutions___srcSet",
+  sizes___base64 = "sizes___base64",
+  sizes___aspectRatio = "sizes___aspectRatio",
+  sizes___src = "sizes___src",
+  sizes___srcSet = "sizes___srcSet",
+  sizes___sizes = "sizes___sizes",
+  inlineSvg = "inlineSvg",
+  fluid___base64 = "fluid___base64",
+  fluid___aspectRatio = "fluid___aspectRatio",
+  fluid___src = "fluid___src",
+  fluid___srcSet = "fluid___srcSet",
+  fluid___sizes = "fluid___sizes",
+  fixed___base64 = "fixed___base64",
+  fixed___aspectRatio = "fixed___aspectRatio",
+  fixed___width = "fixed___width",
+  fixed___height = "fixed___height",
+  fixed___src = "fixed___src",
+  fixed___srcSet = "fixed___srcSet"
+}
+
+export enum DatoCmsAssetConnectionSortOrderValues {
+  ASC = "ASC",
+  DESC = "DESC"
+}
+
+export enum DatoCmsAssetDistinctEnum {
+  id = "id",
+  parent = "parent",
+  internal___type = "internal___type",
+  internal___contentDigest = "internal___contentDigest",
+  internal___owner = "internal___owner",
+  format = "format",
+  size = "size",
+  width = "width",
+  height = "height",
+  title = "title",
+  alt = "alt",
+  url = "url"
+}
+
+export enum DatoCmsAssetGroupEnum {
+  id = "id",
+  parent = "parent",
+  internal___type = "internal___type",
+  internal___contentDigest = "internal___contentDigest",
+  internal___owner = "internal___owner",
+  format = "format",
+  size = "size",
+  width = "width",
+  height = "height",
+  title = "title",
+  alt = "alt",
+  url = "url"
+}
+
 export enum DatoCmsOneColumnSectionContentTextNodeConnectionSortByFieldsEnum {
   id = "id",
   parent = "parent",
@@ -16317,6 +18452,88 @@ export enum DatoCmsOneColumnSectionContentTextNodeGroupEnum {
   parent = "parent",
   children = "children",
   content = "content",
+  internal___type = "internal___type",
+  internal___mediaType = "internal___mediaType",
+  internal___content = "internal___content",
+  internal___contentDigest = "internal___contentDigest",
+  internal___owner = "internal___owner"
+}
+
+export enum DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionSortByFieldsEnum {
+  id = "id",
+  parent = "parent",
+  children = "children",
+  firstColumnContent = "firstColumnContent",
+  internal___type = "internal___type",
+  internal___mediaType = "internal___mediaType",
+  internal___content = "internal___content",
+  internal___contentDigest = "internal___contentDigest",
+  internal___owner = "internal___owner"
+}
+
+export enum DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionSortOrderValues {
+  ASC = "ASC",
+  DESC = "DESC"
+}
+
+export enum DatoCmsTwoColumnSectionFirstColumnContentTextNodeDistinctEnum {
+  id = "id",
+  parent = "parent",
+  children = "children",
+  firstColumnContent = "firstColumnContent",
+  internal___type = "internal___type",
+  internal___mediaType = "internal___mediaType",
+  internal___content = "internal___content",
+  internal___contentDigest = "internal___contentDigest",
+  internal___owner = "internal___owner"
+}
+
+export enum DatoCmsTwoColumnSectionFirstColumnContentTextNodeGroupEnum {
+  id = "id",
+  parent = "parent",
+  children = "children",
+  firstColumnContent = "firstColumnContent",
+  internal___type = "internal___type",
+  internal___mediaType = "internal___mediaType",
+  internal___content = "internal___content",
+  internal___contentDigest = "internal___contentDigest",
+  internal___owner = "internal___owner"
+}
+
+export enum DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionSortByFieldsEnum {
+  id = "id",
+  parent = "parent",
+  children = "children",
+  secondColumnContent = "secondColumnContent",
+  internal___type = "internal___type",
+  internal___mediaType = "internal___mediaType",
+  internal___content = "internal___content",
+  internal___contentDigest = "internal___contentDigest",
+  internal___owner = "internal___owner"
+}
+
+export enum DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionSortOrderValues {
+  ASC = "ASC",
+  DESC = "DESC"
+}
+
+export enum DatoCmsTwoColumnSectionSecondColumnContentTextNodeDistinctEnum {
+  id = "id",
+  parent = "parent",
+  children = "children",
+  secondColumnContent = "secondColumnContent",
+  internal___type = "internal___type",
+  internal___mediaType = "internal___mediaType",
+  internal___content = "internal___content",
+  internal___contentDigest = "internal___contentDigest",
+  internal___owner = "internal___owner"
+}
+
+export enum DatoCmsTwoColumnSectionSecondColumnContentTextNodeGroupEnum {
+  id = "id",
+  parent = "parent",
+  children = "children",
+  secondColumnContent = "secondColumnContent",
   internal___type = "internal___type",
   internal___mediaType = "internal___mediaType",
   internal___content = "internal___content",
@@ -16595,6 +18812,124 @@ export enum DatoCmsOneColumnSectionGroupEnum {
   headerImage___NODE = "headerImage___NODE"
 }
 
+export enum DatoCmsPageConnectionSortByFieldsEnum {
+  id = "id",
+  originalId = "originalId",
+  children = "children",
+  internal___type = "internal___type",
+  internal___contentDigest = "internal___contentDigest",
+  internal___owner = "internal___owner",
+  locale = "locale",
+  model___NODE = "model___NODE",
+  title = "title",
+  slug = "slug",
+  headerImage___NODE = "headerImage___NODE",
+  contenuDeLaPage___NODE = "contenuDeLaPage___NODE",
+  seoMetaTags___NODE = "seoMetaTags___NODE",
+  updatedAt = "updatedAt"
+}
+
+export enum DatoCmsPageConnectionSortOrderValues {
+  ASC = "ASC",
+  DESC = "DESC"
+}
+
+export enum DatoCmsPageDistinctEnum {
+  id = "id",
+  originalId = "originalId",
+  children = "children",
+  internal___type = "internal___type",
+  internal___contentDigest = "internal___contentDigest",
+  internal___owner = "internal___owner",
+  locale = "locale",
+  model___NODE = "model___NODE",
+  title = "title",
+  slug = "slug",
+  headerImage___NODE = "headerImage___NODE",
+  contenuDeLaPage___NODE = "contenuDeLaPage___NODE",
+  seoMetaTags___NODE = "seoMetaTags___NODE",
+  updatedAt = "updatedAt"
+}
+
+export enum DatoCmsPageGroupEnum {
+  id = "id",
+  originalId = "originalId",
+  children = "children",
+  internal___type = "internal___type",
+  internal___contentDigest = "internal___contentDigest",
+  internal___owner = "internal___owner",
+  locale = "locale",
+  model___NODE = "model___NODE",
+  title = "title",
+  slug = "slug",
+  headerImage___NODE = "headerImage___NODE",
+  contenuDeLaPage___NODE = "contenuDeLaPage___NODE",
+  seoMetaTags___NODE = "seoMetaTags___NODE",
+  updatedAt = "updatedAt"
+}
+
+export enum DatoCmsTwoColumnSectionConnectionSortByFieldsEnum {
+  id = "id",
+  originalId = "originalId",
+  children = "children",
+  internal___type = "internal___type",
+  internal___contentDigest = "internal___contentDigest",
+  internal___owner = "internal___owner",
+  locale = "locale",
+  model___NODE = "model___NODE",
+  title = "title",
+  headerImage___NODE = "headerImage___NODE",
+  firstColumnContentNode___NODE = "firstColumnContentNode___NODE",
+  firstColumnContent = "firstColumnContent",
+  secondColumnContentNode___NODE = "secondColumnContentNode___NODE",
+  secondColumnContent = "secondColumnContent",
+  seoMetaTags___NODE = "seoMetaTags___NODE",
+  updatedAt = "updatedAt"
+}
+
+export enum DatoCmsTwoColumnSectionConnectionSortOrderValues {
+  ASC = "ASC",
+  DESC = "DESC"
+}
+
+export enum DatoCmsTwoColumnSectionDistinctEnum {
+  id = "id",
+  originalId = "originalId",
+  children = "children",
+  internal___type = "internal___type",
+  internal___contentDigest = "internal___contentDigest",
+  internal___owner = "internal___owner",
+  locale = "locale",
+  model___NODE = "model___NODE",
+  title = "title",
+  headerImage___NODE = "headerImage___NODE",
+  firstColumnContentNode___NODE = "firstColumnContentNode___NODE",
+  firstColumnContent = "firstColumnContent",
+  secondColumnContentNode___NODE = "secondColumnContentNode___NODE",
+  secondColumnContent = "secondColumnContent",
+  seoMetaTags___NODE = "seoMetaTags___NODE",
+  updatedAt = "updatedAt"
+}
+
+export enum DatoCmsTwoColumnSectionGroupEnum {
+  id = "id",
+  originalId = "originalId",
+  children = "children",
+  internal___type = "internal___type",
+  internal___contentDigest = "internal___contentDigest",
+  internal___owner = "internal___owner",
+  locale = "locale",
+  model___NODE = "model___NODE",
+  title = "title",
+  headerImage___NODE = "headerImage___NODE",
+  firstColumnContentNode___NODE = "firstColumnContentNode___NODE",
+  firstColumnContent = "firstColumnContent",
+  secondColumnContentNode___NODE = "secondColumnContentNode___NODE",
+  secondColumnContent = "secondColumnContent",
+  seoMetaTags___NODE = "seoMetaTags___NODE",
+  updatedAt = "updatedAt"
+}
+
 export enum DatoCmsSiteConnectionSortByFieldsEnum {
   id = "id",
   name = "name",
@@ -16686,218 +19021,16 @@ export enum DatoCmsSiteGroupEnum {
   internal___owner = "internal___owner",
   locale = "locale"
 }
-
-export enum DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionSortByFieldsEnum {
-  id = "id",
-  parent = "parent",
-  children = "children",
-  firstColumnContent = "firstColumnContent",
-  internal___type = "internal___type",
-  internal___mediaType = "internal___mediaType",
-  internal___content = "internal___content",
-  internal___contentDigest = "internal___contentDigest",
-  internal___owner = "internal___owner"
-}
-
-export enum DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionSortOrderValues {
-  ASC = "ASC",
-  DESC = "DESC"
-}
-
-export enum DatoCmsTwoColumnSectionFirstColumnContentTextNodeDistinctEnum {
-  id = "id",
-  parent = "parent",
-  children = "children",
-  firstColumnContent = "firstColumnContent",
-  internal___type = "internal___type",
-  internal___mediaType = "internal___mediaType",
-  internal___content = "internal___content",
-  internal___contentDigest = "internal___contentDigest",
-  internal___owner = "internal___owner"
-}
-
-export enum DatoCmsTwoColumnSectionFirstColumnContentTextNodeGroupEnum {
-  id = "id",
-  parent = "parent",
-  children = "children",
-  firstColumnContent = "firstColumnContent",
-  internal___type = "internal___type",
-  internal___mediaType = "internal___mediaType",
-  internal___content = "internal___content",
-  internal___contentDigest = "internal___contentDigest",
-  internal___owner = "internal___owner"
-}
-
-export enum DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionSortByFieldsEnum {
-  id = "id",
-  parent = "parent",
-  children = "children",
-  secondColumnContent = "secondColumnContent",
-  internal___type = "internal___type",
-  internal___mediaType = "internal___mediaType",
-  internal___content = "internal___content",
-  internal___contentDigest = "internal___contentDigest",
-  internal___owner = "internal___owner"
-}
-
-export enum DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionSortOrderValues {
-  ASC = "ASC",
-  DESC = "DESC"
-}
-
-export enum DatoCmsTwoColumnSectionSecondColumnContentTextNodeDistinctEnum {
-  id = "id",
-  parent = "parent",
-  children = "children",
-  secondColumnContent = "secondColumnContent",
-  internal___type = "internal___type",
-  internal___mediaType = "internal___mediaType",
-  internal___content = "internal___content",
-  internal___contentDigest = "internal___contentDigest",
-  internal___owner = "internal___owner"
-}
-
-export enum DatoCmsTwoColumnSectionSecondColumnContentTextNodeGroupEnum {
-  id = "id",
-  parent = "parent",
-  children = "children",
-  secondColumnContent = "secondColumnContent",
-  internal___type = "internal___type",
-  internal___mediaType = "internal___mediaType",
-  internal___content = "internal___content",
-  internal___contentDigest = "internal___contentDigest",
-  internal___owner = "internal___owner"
-}
-
-export enum DatoCmsTwoColumnSectionConnectionSortByFieldsEnum {
-  id = "id",
-  originalId = "originalId",
-  children = "children",
-  internal___type = "internal___type",
-  internal___contentDigest = "internal___contentDigest",
-  internal___owner = "internal___owner",
-  locale = "locale",
-  model___NODE = "model___NODE",
-  title = "title",
-  firstColumnContentNode___NODE = "firstColumnContentNode___NODE",
-  firstColumnContent = "firstColumnContent",
-  secondColumnContentNode___NODE = "secondColumnContentNode___NODE",
-  secondColumnContent = "secondColumnContent",
-  seoMetaTags___NODE = "seoMetaTags___NODE",
-  updatedAt = "updatedAt"
-}
-
-export enum DatoCmsTwoColumnSectionConnectionSortOrderValues {
-  ASC = "ASC",
-  DESC = "DESC"
-}
-
-export enum DatoCmsTwoColumnSectionDistinctEnum {
-  id = "id",
-  originalId = "originalId",
-  children = "children",
-  internal___type = "internal___type",
-  internal___contentDigest = "internal___contentDigest",
-  internal___owner = "internal___owner",
-  locale = "locale",
-  model___NODE = "model___NODE",
-  title = "title",
-  firstColumnContentNode___NODE = "firstColumnContentNode___NODE",
-  firstColumnContent = "firstColumnContent",
-  secondColumnContentNode___NODE = "secondColumnContentNode___NODE",
-  secondColumnContent = "secondColumnContent",
-  seoMetaTags___NODE = "seoMetaTags___NODE",
-  updatedAt = "updatedAt"
-}
-
-export enum DatoCmsTwoColumnSectionGroupEnum {
-  id = "id",
-  originalId = "originalId",
-  children = "children",
-  internal___type = "internal___type",
-  internal___contentDigest = "internal___contentDigest",
-  internal___owner = "internal___owner",
-  locale = "locale",
-  model___NODE = "model___NODE",
-  title = "title",
-  firstColumnContentNode___NODE = "firstColumnContentNode___NODE",
-  firstColumnContent = "firstColumnContent",
-  secondColumnContentNode___NODE = "secondColumnContentNode___NODE",
-  secondColumnContent = "secondColumnContent",
-  seoMetaTags___NODE = "seoMetaTags___NODE",
-  updatedAt = "updatedAt"
-}
-
-export enum DatoCmsAssetConnectionSortByFieldsEnum {
-  id = "id",
-  parent = "parent",
-  internal___type = "internal___type",
-  internal___contentDigest = "internal___contentDigest",
-  internal___owner = "internal___owner",
-  format = "format",
-  size = "size",
-  width = "width",
-  height = "height",
-  url = "url",
-  resolutions___base64 = "resolutions___base64",
-  resolutions___aspectRatio = "resolutions___aspectRatio",
-  resolutions___width = "resolutions___width",
-  resolutions___height = "resolutions___height",
-  resolutions___src = "resolutions___src",
-  resolutions___srcSet = "resolutions___srcSet",
-  sizes___base64 = "sizes___base64",
-  sizes___aspectRatio = "sizes___aspectRatio",
-  sizes___src = "sizes___src",
-  sizes___srcSet = "sizes___srcSet",
-  sizes___sizes = "sizes___sizes",
-  inlineSvg = "inlineSvg",
-  fluid___base64 = "fluid___base64",
-  fluid___aspectRatio = "fluid___aspectRatio",
-  fluid___src = "fluid___src",
-  fluid___srcSet = "fluid___srcSet",
-  fluid___sizes = "fluid___sizes",
-  fixed___base64 = "fixed___base64",
-  fixed___aspectRatio = "fixed___aspectRatio",
-  fixed___width = "fixed___width",
-  fixed___height = "fixed___height",
-  fixed___src = "fixed___src",
-  fixed___srcSet = "fixed___srcSet"
-}
-
-export enum DatoCmsAssetConnectionSortOrderValues {
-  ASC = "ASC",
-  DESC = "DESC"
-}
-
-export enum DatoCmsAssetDistinctEnum {
-  id = "id",
-  parent = "parent",
-  internal___type = "internal___type",
-  internal___contentDigest = "internal___contentDigest",
-  internal___owner = "internal___owner",
-  format = "format",
-  size = "size",
-  width = "width",
-  height = "height",
-  url = "url"
-}
-
-export enum DatoCmsAssetGroupEnum {
-  id = "id",
-  parent = "parent",
-  internal___type = "internal___type",
-  internal___contentDigest = "internal___contentDigest",
-  internal___owner = "internal___owner",
-  format = "format",
-  size = "size",
-  width = "width",
-  height = "height",
-  url = "url"
-}
-/** Union interface for the field "content___NODE" for types [DatoCmsOneColumnSection, DatoCmsTwoColumnSection] */
+/** Union interface for the field "content___NODE" for types [DatoCmsFullWidthImage, DatoCmsOneColumnSection, DatoCmsTwoColumnSection] */
 export type UnionContentNode_2 =
   | DatoCmsOneColumnSection
+  | DatoCmsFullWidthImage
   | DatoCmsTwoColumnSection;
+
+/** Union interface for the field "contenuDeLaPage___NODE" for types [DatoCmsFullWidthImage, DatoCmsOneColumnSection] */
+export type UnionContenuDeLaPageNode_2 =
+  | DatoCmsFullWidthImage
+  | DatoCmsOneColumnSection;
 
 export namespace QueryResolvers {
   export interface Resolvers<Context = any> {
@@ -16951,11 +19084,26 @@ export namespace QueryResolvers {
       any,
       Context
     > /** Connection to all DatoCmsSeoMetaTags nodes */;
+    allDatoCmsAsset?: AllDatoCmsAssetResolver<
+      DatoCmsAssetConnection | null,
+      any,
+      Context
+    > /** Connection to all DatoCmsAsset nodes */;
     allDatoCmsOneColumnSectionContentTextNode?: AllDatoCmsOneColumnSectionContentTextNodeResolver<
       DatoCmsOneColumnSectionContentTextNodeConnection | null,
       any,
       Context
     > /** Connection to all DatoCmsOneColumnSectionContentTextNode nodes */;
+    allDatoCmsTwoColumnSectionFirstColumnContentTextNode?: AllDatoCmsTwoColumnSectionFirstColumnContentTextNodeResolver<
+      DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnection | null,
+      any,
+      Context
+    > /** Connection to all DatoCmsTwoColumnSectionFirstColumnContentTextNode nodes */;
+    allDatoCmsTwoColumnSectionSecondColumnContentTextNode?: AllDatoCmsTwoColumnSectionSecondColumnContentTextNodeResolver<
+      DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnection | null,
+      any,
+      Context
+    > /** Connection to all DatoCmsTwoColumnSectionSecondColumnContentTextNode nodes */;
     allDatoCmsPrice?: AllDatoCmsPriceResolver<
       DatoCmsPriceConnection | null,
       any,
@@ -16981,31 +19129,21 @@ export namespace QueryResolvers {
       any,
       Context
     > /** Connection to all DatoCmsOneColumnSection nodes */;
-    allDatoCmsSite?: AllDatoCmsSiteResolver<
-      DatoCmsSiteConnection | null,
+    allDatoCmsPage?: AllDatoCmsPageResolver<
+      DatoCmsPageConnection | null,
       any,
       Context
-    > /** Connection to all DatoCmsSite nodes */;
-    allDatoCmsTwoColumnSectionFirstColumnContentTextNode?: AllDatoCmsTwoColumnSectionFirstColumnContentTextNodeResolver<
-      DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnection | null,
-      any,
-      Context
-    > /** Connection to all DatoCmsTwoColumnSectionFirstColumnContentTextNode nodes */;
-    allDatoCmsTwoColumnSectionSecondColumnContentTextNode?: AllDatoCmsTwoColumnSectionSecondColumnContentTextNodeResolver<
-      DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnection | null,
-      any,
-      Context
-    > /** Connection to all DatoCmsTwoColumnSectionSecondColumnContentTextNode nodes */;
+    > /** Connection to all DatoCmsPage nodes */;
     allDatoCmsTwoColumnSection?: AllDatoCmsTwoColumnSectionResolver<
       DatoCmsTwoColumnSectionConnection | null,
       any,
       Context
     > /** Connection to all DatoCmsTwoColumnSection nodes */;
-    allDatoCmsAsset?: AllDatoCmsAssetResolver<
-      DatoCmsAssetConnection | null,
+    allDatoCmsSite?: AllDatoCmsSiteResolver<
+      DatoCmsSiteConnection | null,
       any,
       Context
-    > /** Connection to all DatoCmsAsset nodes */;
+    > /** Connection to all DatoCmsSite nodes */;
     sitePage?: SitePageResolver<SitePage | null, any, Context>;
     sitePlugin?: SitePluginResolver<SitePlugin | null, any, Context>;
     site?: SiteResolver<Site | null, any, Context>;
@@ -17029,8 +19167,19 @@ export namespace QueryResolvers {
       any,
       Context
     >;
+    datoCmsAsset?: DatoCmsAssetResolver<DatoCmsAsset | null, any, Context>;
     datoCmsOneColumnSectionContentTextNode?: DatoCmsOneColumnSectionContentTextNodeResolver<
       DatoCmsOneColumnSectionContentTextNode | null,
+      any,
+      Context
+    >;
+    datoCmsTwoColumnSectionFirstColumnContentTextNode?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeResolver<
+      DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
+      any,
+      Context
+    >;
+    datoCmsTwoColumnSectionSecondColumnContentTextNode?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeResolver<
+      DatoCmsTwoColumnSectionSecondColumnContentTextNode | null,
       any,
       Context
     >;
@@ -17051,23 +19200,13 @@ export namespace QueryResolvers {
       any,
       Context
     >;
-    datoCmsSite?: DatoCmsSiteResolver<DatoCmsSite | null, any, Context>;
-    datoCmsTwoColumnSectionFirstColumnContentTextNode?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeResolver<
-      DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
-      any,
-      Context
-    >;
-    datoCmsTwoColumnSectionSecondColumnContentTextNode?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeResolver<
-      DatoCmsTwoColumnSectionSecondColumnContentTextNode | null,
-      any,
-      Context
-    >;
+    datoCmsPage?: DatoCmsPageResolver<DatoCmsPage | null, any, Context>;
     datoCmsTwoColumnSection?: DatoCmsTwoColumnSectionResolver<
       DatoCmsTwoColumnSection | null,
       any,
       Context
     >;
-    datoCmsAsset?: DatoCmsAssetResolver<DatoCmsAsset | null, any, Context>;
+    datoCmsSite?: DatoCmsSiteResolver<DatoCmsSite | null, any, Context>;
   }
 
   export type AllSitePageResolver<
@@ -17190,6 +19329,18 @@ export namespace QueryResolvers {
     filter?: FilterDatoCmsSeoMetaTags | null;
   }
 
+  export type AllDatoCmsAssetResolver<
+    R = DatoCmsAssetConnection | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context, AllDatoCmsAssetArgs>;
+  export interface AllDatoCmsAssetArgs {
+    skip?: number | null;
+    limit?: number | null;
+    sort?: DatoCmsAssetConnectionSort | null;
+    filter?: FilterDatoCmsAsset | null;
+  }
+
   export type AllDatoCmsOneColumnSectionContentTextNodeResolver<
     R = DatoCmsOneColumnSectionContentTextNodeConnection | null,
     Parent = any,
@@ -17205,6 +19356,40 @@ export namespace QueryResolvers {
     limit?: number | null;
     sort?: DatoCmsOneColumnSectionContentTextNodeConnectionSort | null;
     filter?: FilterDatoCmsOneColumnSectionContentTextNode | null;
+  }
+
+  export type AllDatoCmsTwoColumnSectionFirstColumnContentTextNodeResolver<
+    R = DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnection | null,
+    Parent = any,
+    Context = any
+  > = Resolver<
+    R,
+    Parent,
+    Context,
+    AllDatoCmsTwoColumnSectionFirstColumnContentTextNodeArgs
+  >;
+  export interface AllDatoCmsTwoColumnSectionFirstColumnContentTextNodeArgs {
+    skip?: number | null;
+    limit?: number | null;
+    sort?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionSort | null;
+    filter?: FilterDatoCmsTwoColumnSectionFirstColumnContentTextNode | null;
+  }
+
+  export type AllDatoCmsTwoColumnSectionSecondColumnContentTextNodeResolver<
+    R = DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnection | null,
+    Parent = any,
+    Context = any
+  > = Resolver<
+    R,
+    Parent,
+    Context,
+    AllDatoCmsTwoColumnSectionSecondColumnContentTextNodeArgs
+  >;
+  export interface AllDatoCmsTwoColumnSectionSecondColumnContentTextNodeArgs {
+    skip?: number | null;
+    limit?: number | null;
+    sort?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionSort | null;
+    filter?: FilterDatoCmsTwoColumnSectionSecondColumnContentTextNode | null;
   }
 
   export type AllDatoCmsPriceResolver<
@@ -17267,50 +19452,16 @@ export namespace QueryResolvers {
     filter?: FilterDatoCmsOneColumnSection | null;
   }
 
-  export type AllDatoCmsSiteResolver<
-    R = DatoCmsSiteConnection | null,
+  export type AllDatoCmsPageResolver<
+    R = DatoCmsPageConnection | null,
     Parent = any,
     Context = any
-  > = Resolver<R, Parent, Context, AllDatoCmsSiteArgs>;
-  export interface AllDatoCmsSiteArgs {
+  > = Resolver<R, Parent, Context, AllDatoCmsPageArgs>;
+  export interface AllDatoCmsPageArgs {
     skip?: number | null;
     limit?: number | null;
-    sort?: DatoCmsSiteConnectionSort | null;
-    filter?: FilterDatoCmsSite | null;
-  }
-
-  export type AllDatoCmsTwoColumnSectionFirstColumnContentTextNodeResolver<
-    R = DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnection | null,
-    Parent = any,
-    Context = any
-  > = Resolver<
-    R,
-    Parent,
-    Context,
-    AllDatoCmsTwoColumnSectionFirstColumnContentTextNodeArgs
-  >;
-  export interface AllDatoCmsTwoColumnSectionFirstColumnContentTextNodeArgs {
-    skip?: number | null;
-    limit?: number | null;
-    sort?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionSort | null;
-    filter?: FilterDatoCmsTwoColumnSectionFirstColumnContentTextNode | null;
-  }
-
-  export type AllDatoCmsTwoColumnSectionSecondColumnContentTextNodeResolver<
-    R = DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnection | null,
-    Parent = any,
-    Context = any
-  > = Resolver<
-    R,
-    Parent,
-    Context,
-    AllDatoCmsTwoColumnSectionSecondColumnContentTextNodeArgs
-  >;
-  export interface AllDatoCmsTwoColumnSectionSecondColumnContentTextNodeArgs {
-    skip?: number | null;
-    limit?: number | null;
-    sort?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionSort | null;
-    filter?: FilterDatoCmsTwoColumnSectionSecondColumnContentTextNode | null;
+    sort?: DatoCmsPageConnectionSort | null;
+    filter?: FilterDatoCmsPage | null;
   }
 
   export type AllDatoCmsTwoColumnSectionResolver<
@@ -17325,16 +19476,16 @@ export namespace QueryResolvers {
     filter?: FilterDatoCmsTwoColumnSection | null;
   }
 
-  export type AllDatoCmsAssetResolver<
-    R = DatoCmsAssetConnection | null,
+  export type AllDatoCmsSiteResolver<
+    R = DatoCmsSiteConnection | null,
     Parent = any,
     Context = any
-  > = Resolver<R, Parent, Context, AllDatoCmsAssetArgs>;
-  export interface AllDatoCmsAssetArgs {
+  > = Resolver<R, Parent, Context, AllDatoCmsSiteArgs>;
+  export interface AllDatoCmsSiteArgs {
     skip?: number | null;
     limit?: number | null;
-    sort?: DatoCmsAssetConnectionSort | null;
-    filter?: FilterDatoCmsAsset | null;
+    sort?: DatoCmsSiteConnectionSort | null;
+    filter?: FilterDatoCmsSite | null;
   }
 
   export type SitePageResolver<
@@ -17519,6 +19670,28 @@ export namespace QueryResolvers {
     internal?: DatoCmsSeoMetaTagsInternalInputObject_2 | null;
   }
 
+  export type DatoCmsAssetResolver<
+    R = DatoCmsAsset | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context, DatoCmsAssetArgs>;
+  export interface DatoCmsAssetArgs {
+    id?: DatoCmsAssetIdQueryString_2 | null;
+    internal?: DatoCmsAssetInternalInputObject_2 | null;
+    format?: DatoCmsAssetFormatQueryString_2 | null;
+    size?: DatoCmsAssetSizeQueryInteger_2 | null;
+    width?: DatoCmsAssetWidthQueryInteger_2 | null;
+    height?: DatoCmsAssetHeightQueryInteger_2 | null;
+    title?: DatoCmsAssetTitleQueryString_2 | null;
+    alt?: DatoCmsAssetAltQueryString_2 | null;
+    url?: DatoCmsAssetUrlQueryString_2 | null;
+    resolutions?: ResolutionsTypeName_3 | null;
+    sizes?: SizesTypeName_3 | null;
+    inlineSvg?: InlineSvgQueryString_3 | null;
+    fluid?: FluidTypeName_3 | null;
+    fixed?: FixedTypeName_3 | null;
+  }
+
   export type DatoCmsOneColumnSectionContentTextNodeResolver<
     R = DatoCmsOneColumnSectionContentTextNode | null,
     Parent = any,
@@ -17528,6 +19701,38 @@ export namespace QueryResolvers {
     id?: DatoCmsOneColumnSectionContentTextNodeIdQueryString_2 | null;
     content?: DatoCmsOneColumnSectionContentTextNodeContentQueryString_2 | null;
     internal?: DatoCmsOneColumnSectionContentTextNodeInternalInputObject_2 | null;
+  }
+
+  export type DatoCmsTwoColumnSectionFirstColumnContentTextNodeResolver<
+    R = DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
+    Parent = any,
+    Context = any
+  > = Resolver<
+    R,
+    Parent,
+    Context,
+    DatoCmsTwoColumnSectionFirstColumnContentTextNodeArgs
+  >;
+  export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeArgs {
+    id?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeIdQueryString_2 | null;
+    firstColumnContent?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeFirstColumnContentQueryString_2 | null;
+    internal?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalInputObject_2 | null;
+  }
+
+  export type DatoCmsTwoColumnSectionSecondColumnContentTextNodeResolver<
+    R = DatoCmsTwoColumnSectionSecondColumnContentTextNode | null,
+    Parent = any,
+    Context = any
+  > = Resolver<
+    R,
+    Parent,
+    Context,
+    DatoCmsTwoColumnSectionSecondColumnContentTextNodeArgs
+  >;
+  export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeArgs {
+    id?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeIdQueryString_2 | null;
+    secondColumnContent?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeSecondColumnContentQueryString_2 | null;
+    internal?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalInputObject_2 | null;
   }
 
   export type DatoCmsPriceResolver<
@@ -17622,6 +19827,46 @@ export namespace QueryResolvers {
     headerImage?: DatoCmsOneColumnSectionHeaderImageInputObject_2 | null;
   }
 
+  export type DatoCmsPageResolver<
+    R = DatoCmsPage | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context, DatoCmsPageArgs>;
+  export interface DatoCmsPageArgs {
+    id?: DatoCmsPageIdQueryString_2 | null;
+    originalId?: DatoCmsPageOriginalIdQueryString_2 | null;
+    internal?: DatoCmsPageInternalInputObject_2 | null;
+    locale?: DatoCmsPageLocaleQueryString_2 | null;
+    model?: DatoCmsPageModelInputObject_2 | null;
+    title?: DatoCmsPageTitleQueryString_2 | null;
+    slug?: DatoCmsPageSlugQueryString_2 | null;
+    headerImage?: DatoCmsPageHeaderImageInputObject_2 | null;
+    contenuDeLaPage?: DatoCmsPageContenuDeLaPageQueryList_2 | null;
+    seoMetaTags?: DatoCmsPageSeoMetaTagsInputObject_2 | null;
+    updatedAt?: DatoCmsPageUpdatedAtQueryString_2 | null;
+  }
+
+  export type DatoCmsTwoColumnSectionResolver<
+    R = DatoCmsTwoColumnSection | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context, DatoCmsTwoColumnSectionArgs>;
+  export interface DatoCmsTwoColumnSectionArgs {
+    id?: DatoCmsTwoColumnSectionIdQueryString_2 | null;
+    originalId?: DatoCmsTwoColumnSectionOriginalIdQueryString_2 | null;
+    internal?: DatoCmsTwoColumnSectionInternalInputObject_2 | null;
+    locale?: DatoCmsTwoColumnSectionLocaleQueryString_2 | null;
+    model?: DatoCmsTwoColumnSectionModelInputObject_2 | null;
+    title?: DatoCmsTwoColumnSectionTitleQueryString_2 | null;
+    headerImage?: DatoCmsTwoColumnSectionHeaderImageInputObject_2 | null;
+    firstColumnContentNode?: DatoCmsTwoColumnSectionFirstColumnContentNodeInputObject_2 | null;
+    firstColumnContent?: DatoCmsTwoColumnSectionFirstColumnContentQueryString_2 | null;
+    secondColumnContentNode?: DatoCmsTwoColumnSectionSecondColumnContentNodeInputObject_2 | null;
+    secondColumnContent?: DatoCmsTwoColumnSectionSecondColumnContentQueryString_2 | null;
+    seoMetaTags?: DatoCmsTwoColumnSectionSeoMetaTagsInputObject_2 | null;
+    updatedAt?: DatoCmsTwoColumnSectionUpdatedAtQueryString_2 | null;
+  }
+
   export type DatoCmsSiteResolver<
     R = DatoCmsSite | null,
     Parent = any,
@@ -17637,78 +19882,6 @@ export namespace QueryResolvers {
     originalId?: DatoCmsSiteOriginalIdQueryString_2 | null;
     internal?: DatoCmsSiteInternalInputObject_2 | null;
     locale?: DatoCmsSiteLocaleQueryString_2 | null;
-  }
-
-  export type DatoCmsTwoColumnSectionFirstColumnContentTextNodeResolver<
-    R = DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
-    Parent = any,
-    Context = any
-  > = Resolver<
-    R,
-    Parent,
-    Context,
-    DatoCmsTwoColumnSectionFirstColumnContentTextNodeArgs
-  >;
-  export interface DatoCmsTwoColumnSectionFirstColumnContentTextNodeArgs {
-    id?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeIdQueryString_2 | null;
-    firstColumnContent?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeFirstColumnContentQueryString_2 | null;
-    internal?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeInternalInputObject_2 | null;
-  }
-
-  export type DatoCmsTwoColumnSectionSecondColumnContentTextNodeResolver<
-    R = DatoCmsTwoColumnSectionSecondColumnContentTextNode | null,
-    Parent = any,
-    Context = any
-  > = Resolver<
-    R,
-    Parent,
-    Context,
-    DatoCmsTwoColumnSectionSecondColumnContentTextNodeArgs
-  >;
-  export interface DatoCmsTwoColumnSectionSecondColumnContentTextNodeArgs {
-    id?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeIdQueryString_2 | null;
-    secondColumnContent?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeSecondColumnContentQueryString_2 | null;
-    internal?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeInternalInputObject_2 | null;
-  }
-
-  export type DatoCmsTwoColumnSectionResolver<
-    R = DatoCmsTwoColumnSection | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context, DatoCmsTwoColumnSectionArgs>;
-  export interface DatoCmsTwoColumnSectionArgs {
-    id?: DatoCmsTwoColumnSectionIdQueryString_2 | null;
-    originalId?: DatoCmsTwoColumnSectionOriginalIdQueryString_2 | null;
-    internal?: DatoCmsTwoColumnSectionInternalInputObject_2 | null;
-    locale?: DatoCmsTwoColumnSectionLocaleQueryString_2 | null;
-    model?: DatoCmsTwoColumnSectionModelInputObject_2 | null;
-    title?: DatoCmsTwoColumnSectionTitleQueryString_2 | null;
-    firstColumnContentNode?: DatoCmsTwoColumnSectionFirstColumnContentNodeInputObject_2 | null;
-    firstColumnContent?: DatoCmsTwoColumnSectionFirstColumnContentQueryString_2 | null;
-    secondColumnContentNode?: DatoCmsTwoColumnSectionSecondColumnContentNodeInputObject_2 | null;
-    secondColumnContent?: DatoCmsTwoColumnSectionSecondColumnContentQueryString_2 | null;
-    seoMetaTags?: DatoCmsTwoColumnSectionSeoMetaTagsInputObject_2 | null;
-    updatedAt?: DatoCmsTwoColumnSectionUpdatedAtQueryString_2 | null;
-  }
-
-  export type DatoCmsAssetResolver<
-    R = DatoCmsAsset | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context, DatoCmsAssetArgs>;
-  export interface DatoCmsAssetArgs {
-    id?: DatoCmsAssetIdQueryString_2 | null;
-    internal?: DatoCmsAssetInternalInputObject_2 | null;
-    format?: DatoCmsAssetFormatQueryString_2 | null;
-    size?: DatoCmsAssetSizeQueryInteger_2 | null;
-    width?: DatoCmsAssetWidthQueryInteger_2 | null;
-    height?: DatoCmsAssetHeightQueryInteger_2 | null;
-    url?: DatoCmsAssetUrlQueryString_2 | null;
-    resolutions?: ResolutionsTypeName_3 | null;
-    sizes?: SizesTypeName_3 | null;
-    inlineSvg?: InlineSvgQueryString_3 | null;
-    fluid?: FluidTypeName_3 | null;
-    fixed?: FixedTypeName_3 | null;
   }
 }
 /** A connection to a list of items. */
@@ -17851,7 +20024,7 @@ export namespace SitePageResolvers {
     pluginCreator?: PluginCreatorResolver<SitePlugin | null, any, Context>;
     pluginCreatorId?: PluginCreatorIdResolver<string | null, any, Context>;
     componentPath?: ComponentPathResolver<string | null, any, Context>;
-    internal?: InternalResolver<Internal_23 | null, any, Context>;
+    internal?: InternalResolver<Internal_24 | null, any, Context>;
   }
 
   export type IdResolver<R = string, Parent = any, Context = any> = Resolver<
@@ -17915,7 +20088,7 @@ export namespace SitePageResolvers {
     Context = any
   > = Resolver<R, Parent, Context>;
   export type InternalResolver<
-    R = Internal_23 | null,
+    R = Internal_24 | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
@@ -17955,13 +20128,13 @@ export namespace SitePluginResolvers {
     resolve?: ResolveResolver<string | null, any, Context>;
     name?: NameResolver<string | null, any, Context>;
     version?: VersionResolver<string | null, any, Context>;
-    pluginOptions?: PluginOptionsResolver<PluginOptions_2 | null, any, Context>;
+    pluginOptions?: PluginOptionsResolver<PluginOptions_3 | null, any, Context>;
     nodeAPIs?: NodeApIsResolver<(string | null)[] | null, any, Context>;
     browserAPIs?: BrowserApIsResolver<(string | null)[] | null, any, Context>;
     ssrAPIs?: SsrApIsResolver<(string | null)[] | null, any, Context>;
     pluginFilepath?: PluginFilepathResolver<string | null, any, Context>;
     packageJson?: PackageJsonResolver<PackageJson_2 | null, any, Context>;
-    internal?: InternalResolver<Internal_24 | null, any, Context>;
+    internal?: InternalResolver<Internal_25 | null, any, Context>;
   }
 
   export type IdResolver<R = string, Parent = any, Context = any> = Resolver<
@@ -17995,7 +20168,7 @@ export namespace SitePluginResolvers {
     Context = any
   > = Resolver<R, Parent, Context>;
   export type PluginOptionsResolver<
-    R = PluginOptions_2 | null,
+    R = PluginOptions_3 | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
@@ -18025,17 +20198,19 @@ export namespace SitePluginResolvers {
     Context = any
   > = Resolver<R, Parent, Context>;
   export type InternalResolver<
-    R = Internal_24 | null,
+    R = Internal_25 | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
 }
 
-export namespace PluginOptions_2Resolvers {
+export namespace PluginOptions_3Resolvers {
   export interface Resolvers<Context = any> {
+    plugins?: PluginsResolver<(Plugins_2 | null)[] | null, any, Context>;
     endpoint?: EndpointResolver<string | null, any, Context>;
     query?: QueryResolver<string | null, any, Context>;
     apiToken?: ApiTokenResolver<string | null, any, Context>;
+    maxWidth?: MaxWidthResolver<number | null, any, Context>;
     name?: NameResolver<string | null, any, Context>;
     short_name?: ShortNameResolver<string | null, any, Context>;
     start_url?: StartUrlResolver<string | null, any, Context>;
@@ -18047,6 +20222,11 @@ export namespace PluginOptions_2Resolvers {
     pathCheck?: PathCheckResolver<boolean | null, any, Context>;
   }
 
+  export type PluginsResolver<
+    R = (Plugins_2 | null)[] | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
   export type EndpointResolver<
     R = string | null,
     Parent = any,
@@ -18059,6 +20239,11 @@ export namespace PluginOptions_2Resolvers {
   > = Resolver<R, Parent, Context>;
   export type ApiTokenResolver<
     R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type MaxWidthResolver<
+    R = number | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
@@ -18104,6 +20289,60 @@ export namespace PluginOptions_2Resolvers {
   > = Resolver<R, Parent, Context>;
   export type PathCheckResolver<
     R = boolean | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+
+export namespace Plugins_2Resolvers {
+  export interface Resolvers<Context = any> {
+    resolve?: ResolveResolver<string | null, any, Context>;
+    id?: IdResolver<string | null, any, Context>;
+    name?: NameResolver<string | null, any, Context>;
+    version?: VersionResolver<string | null, any, Context>;
+    pluginOptions?: PluginOptionsResolver<PluginOptions_4 | null, any, Context>;
+    pluginFilepath?: PluginFilepathResolver<string | null, any, Context>;
+  }
+
+  export type ResolveResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type IdResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type NameResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type VersionResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type PluginOptionsResolver<
+    R = PluginOptions_4 | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type PluginFilepathResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+
+export namespace PluginOptions_4Resolvers {
+  export interface Resolvers<Context = any> {
+    maxWidth?: MaxWidthResolver<number | null, any, Context>;
+  }
+
+  export type MaxWidthResolver<
+    R = number | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
@@ -18265,7 +20504,7 @@ export namespace PeerDependencies_2Resolvers {
   > = Resolver<R, Parent, Context>;
 }
 
-export namespace Internal_24Resolvers {
+export namespace Internal_25Resolvers {
   export interface Resolvers<Context = any> {
     contentDigest?: ContentDigestResolver<string | null, any, Context>;
     type?: TypeResolver<string | null, any, Context>;
@@ -18289,7 +20528,7 @@ export namespace Internal_24Resolvers {
   > = Resolver<R, Parent, Context>;
 }
 
-export namespace Internal_23Resolvers {
+export namespace Internal_24Resolvers {
   export interface Resolvers<Context = any> {
     type?: TypeResolver<string | null, any, Context>;
     contentDigest?: ContentDigestResolver<string | null, any, Context>;
@@ -18682,7 +20921,7 @@ export namespace ArtistResolvers {
     slug?: SlugResolver<string | null, any, Context>;
     picture?: PictureResolver<Picture_2 | null, any, Context>;
     records?: RecordsResolver<(Records_2 | null)[] | null, any, Context>;
-    internal?: InternalResolver<Internal_25 | null, any, Context>;
+    internal?: InternalResolver<Internal_26 | null, any, Context>;
   }
 
   export type IdResolver<R = string, Parent = any, Context = any> = Resolver<
@@ -18721,7 +20960,7 @@ export namespace ArtistResolvers {
     Context = any
   > = Resolver<R, Parent, Context>;
   export type InternalResolver<
-    R = Internal_25 | null,
+    R = Internal_26 | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
@@ -18781,7 +21020,7 @@ export namespace Records_2Resolvers {
   > = Resolver<R, Parent, Context>;
 }
 
-export namespace Internal_25Resolvers {
+export namespace Internal_26Resolvers {
   export interface Resolvers<Context = any> {
     type?: TypeResolver<string | null, any, Context>;
     content?: ContentResolver<string | null, any, Context>;
@@ -19004,7 +21243,7 @@ export namespace RecordResolvers {
     reviews?: ReviewsResolver<(Reviews_2 | null)[] | null, any, Context>;
     createdAt?: CreatedAtResolver<Date | null, any, Context>;
     title?: TitleResolver<string | null, any, Context>;
-    internal?: InternalResolver<Internal_26 | null, any, Context>;
+    internal?: InternalResolver<Internal_27 | null, any, Context>;
   }
 
   export type IdResolver<R = string, Parent = any, Context = any> = Resolver<
@@ -19073,7 +21312,7 @@ export namespace RecordResolvers {
     Context = any
   > = Resolver<R, Parent, Context>;
   export type InternalResolver<
-    R = Internal_26 | null,
+    R = Internal_27 | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
@@ -19163,7 +21402,7 @@ export namespace Reviews_2Resolvers {
   > = Resolver<R, Parent, Context>;
 }
 
-export namespace Internal_26Resolvers {
+export namespace Internal_27Resolvers {
   export interface Resolvers<Context = any> {
     type?: TypeResolver<string | null, any, Context>;
     content?: ContentResolver<string | null, any, Context>;
@@ -19386,7 +21625,7 @@ export namespace ReviewResolvers {
     title?: TitleResolver<string | null, any, Context>;
     record?: RecordResolver<Record_2 | null, any, Context>;
     comments?: CommentsResolver<(Comments_2 | null)[] | null, any, Context>;
-    internal?: InternalResolver<Internal_27 | null, any, Context>;
+    internal?: InternalResolver<Internal_28 | null, any, Context>;
   }
 
   export type IdResolver<R = string, Parent = any, Context = any> = Resolver<
@@ -19455,7 +21694,7 @@ export namespace ReviewResolvers {
     Context = any
   > = Resolver<R, Parent, Context>;
   export type InternalResolver<
-    R = Internal_27 | null,
+    R = Internal_28 | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
@@ -19515,7 +21754,7 @@ export namespace Comments_2Resolvers {
   > = Resolver<R, Parent, Context>;
 }
 
-export namespace Internal_27Resolvers {
+export namespace Internal_28Resolvers {
   export interface Resolvers<Context = any> {
     type?: TypeResolver<string | null, any, Context>;
     content?: ContentResolver<string | null, any, Context>;
@@ -19736,7 +21975,7 @@ export namespace ReviewMarkdownResolvers {
       any,
       Context
     > /** The child of this node of type markdownRemark */;
-    internal?: InternalResolver<Internal_28 | null, any, Context>;
+    internal?: InternalResolver<Internal_29 | null, any, Context>;
   }
 
   export type IdResolver<R = string, Parent = any, Context = any> = Resolver<
@@ -19760,7 +21999,7 @@ export namespace ReviewMarkdownResolvers {
     Context = any
   > = Resolver<R, Parent, Context>;
   export type InternalResolver<
-    R = Internal_28 | null,
+    R = Internal_29 | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
@@ -19779,7 +22018,7 @@ export namespace MarkdownRemarkResolvers {
       any,
       Context
     > /** The children of this node. */;
-    internal?: InternalResolver<Internal_29 | null, any, Context>;
+    internal?: InternalResolver<Internal_30 | null, any, Context>;
     frontmatter?: FrontmatterResolver<Frontmatter_2 | null, any, Context>;
     rawMarkdownBody?: RawMarkdownBodyResolver<string | null, any, Context>;
     html?: HtmlResolver<string | null, any, Context>;
@@ -19811,7 +22050,7 @@ export namespace MarkdownRemarkResolvers {
     Context = any
   > = Resolver<R, Parent, Context>;
   export type InternalResolver<
-    R = Internal_29 | null,
+    R = Internal_30 | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
@@ -19875,7 +22114,7 @@ export namespace MarkdownRemarkResolvers {
   > = Resolver<R, Parent, Context>;
 }
 
-export namespace Internal_29Resolvers {
+export namespace Internal_30Resolvers {
   export interface Resolvers<Context = any> {
     content?: ContentResolver<string | null, any, Context>;
     type?: TypeResolver<string | null, any, Context>;
@@ -19965,7 +22204,7 @@ export namespace WordCountResolvers {
   > = Resolver<R, Parent, Context>;
 }
 
-export namespace Internal_28Resolvers {
+export namespace Internal_29Resolvers {
   export interface Resolvers<Context = any> {
     type?: TypeResolver<string | null, any, Context>;
     mediaType?: MediaTypeResolver<string | null, any, Context>;
@@ -20361,7 +22600,7 @@ export namespace DatoCmsFieldResolvers {
       Context
     > /** The children of this node. */;
     originalId?: OriginalIdResolver<string | null, any, Context>;
-    internal?: InternalResolver<Internal_30 | null, any, Context>;
+    internal?: InternalResolver<Internal_31 | null, any, Context>;
     label?: LabelResolver<string | null, any, Context>;
     fieldType?: FieldTypeResolver<string | null, any, Context>;
     apiKey?: ApiKeyResolver<string | null, any, Context>;
@@ -20393,7 +22632,7 @@ export namespace DatoCmsFieldResolvers {
     Context = any
   > = Resolver<R, Parent, Context>;
   export type InternalResolver<
-    R = Internal_30 | null,
+    R = Internal_31 | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
@@ -20439,7 +22678,7 @@ export namespace DatoCmsFieldResolvers {
   > = Resolver<R, Parent, Context>;
 }
 
-export namespace Internal_30Resolvers {
+export namespace Internal_31Resolvers {
   export interface Resolvers<Context = any> {
     type?: TypeResolver<string | null, any, Context>;
     contentDigest?: ContentDigestResolver<string | null, any, Context>;
@@ -20816,7 +23055,7 @@ export namespace DatoCmsModelResolvers {
       Context
     > /** The children of this node. */;
     originalId?: OriginalIdResolver<string | null, any, Context>;
-    internal?: InternalResolver<Internal_31 | null, any, Context>;
+    internal?: InternalResolver<Internal_32 | null, any, Context>;
     name?: NameResolver<string | null, any, Context>;
     singleton?: SingletonResolver<boolean | null, any, Context>;
     sortable?: SortableResolver<boolean | null, any, Context>;
@@ -20859,7 +23098,7 @@ export namespace DatoCmsModelResolvers {
     Context = any
   > = Resolver<R, Parent, Context>;
   export type InternalResolver<
-    R = Internal_31 | null,
+    R = Internal_32 | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
@@ -20920,7 +23159,7 @@ export namespace DatoCmsModelResolvers {
   > = Resolver<R, Parent, Context>;
 }
 
-export namespace Internal_31Resolvers {
+export namespace Internal_32Resolvers {
   export interface Resolvers<Context = any> {
     type?: TypeResolver<string | null, any, Context>;
     contentDigest?: ContentDigestResolver<string | null, any, Context>;
@@ -21131,7 +23370,7 @@ export namespace DatoCmsSeoMetaTagsResolvers {
       Context
     > /** The children of this node. */;
     tags?: TagsResolver<(Tags_2 | null)[] | null, any, Context>;
-    internal?: InternalResolver<Internal_32 | null, any, Context>;
+    internal?: InternalResolver<Internal_33 | null, any, Context>;
   }
 
   export type IdResolver<R = string, Parent = any, Context = any> = Resolver<
@@ -21155,7 +23394,7 @@ export namespace DatoCmsSeoMetaTagsResolvers {
     Context = any
   > = Resolver<R, Parent, Context>;
   export type InternalResolver<
-    R = Internal_32 | null,
+    R = Internal_33 | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
@@ -21209,7 +23448,7 @@ export namespace Attributes_2Resolvers {
   > = Resolver<R, Parent, Context>;
 }
 
-export namespace Internal_32Resolvers {
+export namespace Internal_33Resolvers {
   export interface Resolvers<Context = any> {
     type?: TypeResolver<string | null, any, Context>;
     contentDigest?: ContentDigestResolver<string | null, any, Context>;
@@ -21308,6 +23547,416 @@ export namespace DatoCmsSeoMetaTagsGroupConnectionEdgeResolvers {
   > = Resolver<R, Parent, Context>;
   export type PreviousResolver<
     R = DatoCmsSeoMetaTags | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+/** A connection to a list of items. */
+export namespace DatoCmsAssetConnectionResolvers {
+  export interface Resolvers<Context = any> {
+    pageInfo?: PageInfoResolver<
+      PageInfo,
+      any,
+      Context
+    > /** Information to aid in pagination. */;
+    edges?: EdgesResolver<
+      (DatoCmsAssetEdge | null)[] | null,
+      any,
+      Context
+    > /** A list of edges. */;
+    totalCount?: TotalCountResolver<number | null, any, Context>;
+    distinct?: DistinctResolver<(string | null)[] | null, any, Context>;
+    group?: GroupResolver<
+      (DatoCmsAssetGroupConnectionConnection | null)[] | null,
+      any,
+      Context
+    >;
+  }
+
+  export type PageInfoResolver<
+    R = PageInfo,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type EdgesResolver<
+    R = (DatoCmsAssetEdge | null)[] | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type TotalCountResolver<
+    R = number | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type DistinctResolver<
+    R = (string | null)[] | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context, DistinctArgs>;
+  export interface DistinctArgs {
+    field?: DatoCmsAssetDistinctEnum | null;
+  }
+
+  export type GroupResolver<
+    R = (DatoCmsAssetGroupConnectionConnection | null)[] | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context, GroupArgs>;
+  export interface GroupArgs {
+    skip?: number | null;
+    limit?: number | null;
+    field?: DatoCmsAssetGroupEnum | null;
+  }
+}
+/** An edge in a connection. */
+export namespace DatoCmsAssetEdgeResolvers {
+  export interface Resolvers<Context = any> {
+    node?: NodeResolver<
+      DatoCmsAsset | null,
+      any,
+      Context
+    > /** The item at the end of the edge */;
+    next?: NextResolver<
+      DatoCmsAsset | null,
+      any,
+      Context
+    > /** The next edge in the connection */;
+    previous?: PreviousResolver<
+      DatoCmsAsset | null,
+      any,
+      Context
+    > /** The previous edge in the connection */;
+  }
+
+  export type NodeResolver<
+    R = DatoCmsAsset | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type NextResolver<
+    R = DatoCmsAsset | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type PreviousResolver<
+    R = DatoCmsAsset | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+/** Node of type DatoCmsAsset */
+export namespace DatoCmsAssetResolvers {
+  export interface Resolvers<Context = any> {
+    id?: IdResolver<string, any, Context> /** The id of this node. */;
+    parent?: ParentResolver<
+      Node | null,
+      any,
+      Context
+    > /** The parent of this node. */;
+    children?: ChildrenResolver<
+      (Node | null)[] | null,
+      any,
+      Context
+    > /** The children of this node. */;
+    internal?: InternalResolver<Internal_34 | null, any, Context>;
+    format?: FormatResolver<string | null, any, Context>;
+    size?: SizeResolver<number | null, any, Context>;
+    width?: WidthResolver<number | null, any, Context>;
+    height?: HeightResolver<number | null, any, Context>;
+    title?: TitleResolver<string | null, any, Context>;
+    alt?: AltResolver<string | null, any, Context>;
+    url?: UrlResolver<string | null, any, Context>;
+    resolutions?: ResolutionsResolver<DatoCmsFixed | null, any, Context>;
+    sizes?: SizesResolver<DatoCmsFluid | null, any, Context>;
+    inlineSvg?: InlineSvgResolver<string | null, any, Context>;
+    fluid?: FluidResolver<DatoCmsFluid | null, any, Context>;
+    fixed?: FixedResolver<DatoCmsFixed | null, any, Context>;
+  }
+
+  export type IdResolver<R = string, Parent = any, Context = any> = Resolver<
+    R,
+    Parent,
+    Context
+  >;
+  export type ParentResolver<
+    R = Node | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type ChildrenResolver<
+    R = (Node | null)[] | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type InternalResolver<
+    R = Internal_34 | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type FormatResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type SizeResolver<
+    R = number | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type WidthResolver<
+    R = number | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type HeightResolver<
+    R = number | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type TitleResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type AltResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type UrlResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type ResolutionsResolver<
+    R = DatoCmsFixed | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context, ResolutionsArgs>;
+  export interface ResolutionsArgs {
+    width?: number | null;
+    height?: number | null;
+    imgixParams?: DatoCmsImgixParams | null;
+  }
+
+  export type SizesResolver<
+    R = DatoCmsFluid | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context, SizesArgs>;
+  export interface SizesArgs {
+    maxWidth?: number | null;
+    maxHeight?: number | null;
+    sizes?: string | null;
+    imgixParams?: DatoCmsImgixParams | null;
+  }
+
+  export type InlineSvgResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type FluidResolver<
+    R = DatoCmsFluid | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context, FluidArgs>;
+  export interface FluidArgs {
+    maxWidth?: number | null;
+    maxHeight?: number | null;
+    sizes?: string | null;
+    imgixParams?: DatoCmsImgixParams | null;
+  }
+
+  export type FixedResolver<
+    R = DatoCmsFixed | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context, FixedArgs>;
+  export interface FixedArgs {
+    width?: number | null;
+    height?: number | null;
+    imgixParams?: DatoCmsImgixParams | null;
+  }
+}
+
+export namespace Internal_34Resolvers {
+  export interface Resolvers<Context = any> {
+    type?: TypeResolver<string | null, any, Context>;
+    contentDigest?: ContentDigestResolver<string | null, any, Context>;
+    owner?: OwnerResolver<string | null, any, Context>;
+  }
+
+  export type TypeResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type ContentDigestResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type OwnerResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+
+export namespace DatoCmsFixedResolvers {
+  export interface Resolvers<Context = any> {
+    base64?: Base64Resolver<string | null, any, Context>;
+    aspectRatio?: AspectRatioResolver<number | null, any, Context>;
+    width?: WidthResolver<number | null, any, Context>;
+    height?: HeightResolver<number | null, any, Context>;
+    src?: SrcResolver<string | null, any, Context>;
+    srcSet?: SrcSetResolver<string | null, any, Context>;
+  }
+
+  export type Base64Resolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type AspectRatioResolver<
+    R = number | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type WidthResolver<
+    R = number | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type HeightResolver<
+    R = number | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type SrcResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type SrcSetResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+
+export namespace DatoCmsFluidResolvers {
+  export interface Resolvers<Context = any> {
+    base64?: Base64Resolver<string | null, any, Context>;
+    aspectRatio?: AspectRatioResolver<number | null, any, Context>;
+    src?: SrcResolver<string | null, any, Context>;
+    srcSet?: SrcSetResolver<string | null, any, Context>;
+    sizes?: SizesResolver<string | null, any, Context>;
+  }
+
+  export type Base64Resolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type AspectRatioResolver<
+    R = number | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type SrcResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type SrcSetResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type SizesResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+/** A connection to a list of items. */
+export namespace DatoCmsAssetGroupConnectionConnectionResolvers {
+  export interface Resolvers<Context = any> {
+    pageInfo?: PageInfoResolver<
+      PageInfo,
+      any,
+      Context
+    > /** Information to aid in pagination. */;
+    edges?: EdgesResolver<
+      (DatoCmsAssetGroupConnectionEdge | null)[] | null,
+      any,
+      Context
+    > /** A list of edges. */;
+    field?: FieldResolver<string | null, any, Context>;
+    fieldValue?: FieldValueResolver<string | null, any, Context>;
+    totalCount?: TotalCountResolver<number | null, any, Context>;
+  }
+
+  export type PageInfoResolver<
+    R = PageInfo,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type EdgesResolver<
+    R = (DatoCmsAssetGroupConnectionEdge | null)[] | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type FieldResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type FieldValueResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type TotalCountResolver<
+    R = number | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+/** An edge in a connection. */
+export namespace DatoCmsAssetGroupConnectionEdgeResolvers {
+  export interface Resolvers<Context = any> {
+    node?: NodeResolver<
+      DatoCmsAsset | null,
+      any,
+      Context
+    > /** The item at the end of the edge */;
+    next?: NextResolver<
+      DatoCmsAsset | null,
+      any,
+      Context
+    > /** The next edge in the connection */;
+    previous?: PreviousResolver<
+      DatoCmsAsset | null,
+      any,
+      Context
+    > /** The previous edge in the connection */;
+  }
+
+  export type NodeResolver<
+    R = DatoCmsAsset | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type NextResolver<
+    R = DatoCmsAsset | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type PreviousResolver<
+    R = DatoCmsAsset | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
@@ -21428,7 +24077,7 @@ export namespace DatoCmsOneColumnSectionContentTextNodeResolvers {
       Context
     > /** The child of this node of type markdownRemark */;
     content?: ContentResolver<string | null, any, Context>;
-    internal?: InternalResolver<Internal_33 | null, any, Context>;
+    internal?: InternalResolver<Internal_35 | null, any, Context>;
   }
 
   export type IdResolver<R = string, Parent = any, Context = any> = Resolver<
@@ -21457,13 +24106,13 @@ export namespace DatoCmsOneColumnSectionContentTextNodeResolvers {
     Context = any
   > = Resolver<R, Parent, Context>;
   export type InternalResolver<
-    R = Internal_33 | null,
+    R = Internal_35 | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
 }
 
-export namespace Internal_33Resolvers {
+export namespace Internal_35Resolvers {
   export interface Resolvers<Context = any> {
     type?: TypeResolver<string | null, any, Context>;
     mediaType?: MediaTypeResolver<string | null, any, Context>;
@@ -21582,6 +24231,554 @@ export namespace DatoCmsOneColumnSectionContentTextNodeGroupConnectionEdgeResolv
   > = Resolver<R, Parent, Context>;
 }
 /** A connection to a list of items. */
+export namespace DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionResolvers {
+  export interface Resolvers<Context = any> {
+    pageInfo?: PageInfoResolver<
+      PageInfo,
+      any,
+      Context
+    > /** Information to aid in pagination. */;
+    edges?: EdgesResolver<
+      (DatoCmsTwoColumnSectionFirstColumnContentTextNodeEdge | null)[] | null,
+      any,
+      Context
+    > /** A list of edges. */;
+    totalCount?: TotalCountResolver<number | null, any, Context>;
+    distinct?: DistinctResolver<(string | null)[] | null, any, Context>;
+    group?: GroupResolver<
+      | (DatoCmsTwoColumnSectionFirstColumnContentTextNodeGroupConnectionConnection | null)[]
+      | null,
+      any,
+      Context
+    >;
+  }
+
+  export type PageInfoResolver<
+    R = PageInfo,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type EdgesResolver<
+    R = (DatoCmsTwoColumnSectionFirstColumnContentTextNodeEdge | null)[] | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type TotalCountResolver<
+    R = number | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type DistinctResolver<
+    R = (string | null)[] | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context, DistinctArgs>;
+  export interface DistinctArgs {
+    field?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeDistinctEnum | null;
+  }
+
+  export type GroupResolver<
+    R =
+      | (DatoCmsTwoColumnSectionFirstColumnContentTextNodeGroupConnectionConnection | null)[]
+      | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context, GroupArgs>;
+  export interface GroupArgs {
+    skip?: number | null;
+    limit?: number | null;
+    field?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeGroupEnum | null;
+  }
+}
+/** An edge in a connection. */
+export namespace DatoCmsTwoColumnSectionFirstColumnContentTextNodeEdgeResolvers {
+  export interface Resolvers<Context = any> {
+    node?: NodeResolver<
+      DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
+      any,
+      Context
+    > /** The item at the end of the edge */;
+    next?: NextResolver<
+      DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
+      any,
+      Context
+    > /** The next edge in the connection */;
+    previous?: PreviousResolver<
+      DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
+      any,
+      Context
+    > /** The previous edge in the connection */;
+  }
+
+  export type NodeResolver<
+    R = DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type NextResolver<
+    R = DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type PreviousResolver<
+    R = DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+/** Node of type DatoCmsTwoColumnSectionFirstColumnContentTextNode */
+export namespace DatoCmsTwoColumnSectionFirstColumnContentTextNodeResolvers {
+  export interface Resolvers<Context = any> {
+    id?: IdResolver<string, any, Context> /** The id of this node. */;
+    parent?: ParentResolver<
+      Node | null,
+      any,
+      Context
+    > /** The parent of this node. */;
+    children?: ChildrenResolver<
+      (Node | null)[] | null,
+      any,
+      Context
+    > /** The children of this node. */;
+    childMarkdownRemark?: ChildMarkdownRemarkResolver<
+      MarkdownRemark | null,
+      any,
+      Context
+    > /** The child of this node of type markdownRemark */;
+    firstColumnContent?: FirstColumnContentResolver<
+      string | null,
+      any,
+      Context
+    >;
+    internal?: InternalResolver<Internal_36 | null, any, Context>;
+  }
+
+  export type IdResolver<R = string, Parent = any, Context = any> = Resolver<
+    R,
+    Parent,
+    Context
+  >;
+  export type ParentResolver<
+    R = Node | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type ChildrenResolver<
+    R = (Node | null)[] | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type ChildMarkdownRemarkResolver<
+    R = MarkdownRemark | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type FirstColumnContentResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type InternalResolver<
+    R = Internal_36 | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+
+export namespace Internal_36Resolvers {
+  export interface Resolvers<Context = any> {
+    type?: TypeResolver<string | null, any, Context>;
+    mediaType?: MediaTypeResolver<string | null, any, Context>;
+    content?: ContentResolver<string | null, any, Context>;
+    contentDigest?: ContentDigestResolver<string | null, any, Context>;
+    owner?: OwnerResolver<string | null, any, Context>;
+  }
+
+  export type TypeResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type MediaTypeResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type ContentResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type ContentDigestResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type OwnerResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+/** A connection to a list of items. */
+export namespace DatoCmsTwoColumnSectionFirstColumnContentTextNodeGroupConnectionConnectionResolvers {
+  export interface Resolvers<Context = any> {
+    pageInfo?: PageInfoResolver<
+      PageInfo,
+      any,
+      Context
+    > /** Information to aid in pagination. */;
+    edges?: EdgesResolver<
+      | (DatoCmsTwoColumnSectionFirstColumnContentTextNodeGroupConnectionEdge | null)[]
+      | null,
+      any,
+      Context
+    > /** A list of edges. */;
+    field?: FieldResolver<string | null, any, Context>;
+    fieldValue?: FieldValueResolver<string | null, any, Context>;
+    totalCount?: TotalCountResolver<number | null, any, Context>;
+  }
+
+  export type PageInfoResolver<
+    R = PageInfo,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type EdgesResolver<
+    R =
+      | (DatoCmsTwoColumnSectionFirstColumnContentTextNodeGroupConnectionEdge | null)[]
+      | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type FieldResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type FieldValueResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type TotalCountResolver<
+    R = number | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+/** An edge in a connection. */
+export namespace DatoCmsTwoColumnSectionFirstColumnContentTextNodeGroupConnectionEdgeResolvers {
+  export interface Resolvers<Context = any> {
+    node?: NodeResolver<
+      DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
+      any,
+      Context
+    > /** The item at the end of the edge */;
+    next?: NextResolver<
+      DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
+      any,
+      Context
+    > /** The next edge in the connection */;
+    previous?: PreviousResolver<
+      DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
+      any,
+      Context
+    > /** The previous edge in the connection */;
+  }
+
+  export type NodeResolver<
+    R = DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type NextResolver<
+    R = DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type PreviousResolver<
+    R = DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+/** A connection to a list of items. */
+export namespace DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionResolvers {
+  export interface Resolvers<Context = any> {
+    pageInfo?: PageInfoResolver<
+      PageInfo,
+      any,
+      Context
+    > /** Information to aid in pagination. */;
+    edges?: EdgesResolver<
+      (DatoCmsTwoColumnSectionSecondColumnContentTextNodeEdge | null)[] | null,
+      any,
+      Context
+    > /** A list of edges. */;
+    totalCount?: TotalCountResolver<number | null, any, Context>;
+    distinct?: DistinctResolver<(string | null)[] | null, any, Context>;
+    group?: GroupResolver<
+      | (DatoCmsTwoColumnSectionSecondColumnContentTextNodeGroupConnectionConnection | null)[]
+      | null,
+      any,
+      Context
+    >;
+  }
+
+  export type PageInfoResolver<
+    R = PageInfo,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type EdgesResolver<
+    R =
+      | (DatoCmsTwoColumnSectionSecondColumnContentTextNodeEdge | null)[]
+      | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type TotalCountResolver<
+    R = number | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type DistinctResolver<
+    R = (string | null)[] | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context, DistinctArgs>;
+  export interface DistinctArgs {
+    field?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeDistinctEnum | null;
+  }
+
+  export type GroupResolver<
+    R =
+      | (DatoCmsTwoColumnSectionSecondColumnContentTextNodeGroupConnectionConnection | null)[]
+      | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context, GroupArgs>;
+  export interface GroupArgs {
+    skip?: number | null;
+    limit?: number | null;
+    field?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeGroupEnum | null;
+  }
+}
+/** An edge in a connection. */
+export namespace DatoCmsTwoColumnSectionSecondColumnContentTextNodeEdgeResolvers {
+  export interface Resolvers<Context = any> {
+    node?: NodeResolver<
+      DatoCmsTwoColumnSectionSecondColumnContentTextNode | null,
+      any,
+      Context
+    > /** The item at the end of the edge */;
+    next?: NextResolver<
+      DatoCmsTwoColumnSectionSecondColumnContentTextNode | null,
+      any,
+      Context
+    > /** The next edge in the connection */;
+    previous?: PreviousResolver<
+      DatoCmsTwoColumnSectionSecondColumnContentTextNode | null,
+      any,
+      Context
+    > /** The previous edge in the connection */;
+  }
+
+  export type NodeResolver<
+    R = DatoCmsTwoColumnSectionSecondColumnContentTextNode | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type NextResolver<
+    R = DatoCmsTwoColumnSectionSecondColumnContentTextNode | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type PreviousResolver<
+    R = DatoCmsTwoColumnSectionSecondColumnContentTextNode | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+/** Node of type DatoCmsTwoColumnSectionSecondColumnContentTextNode */
+export namespace DatoCmsTwoColumnSectionSecondColumnContentTextNodeResolvers {
+  export interface Resolvers<Context = any> {
+    id?: IdResolver<string, any, Context> /** The id of this node. */;
+    parent?: ParentResolver<
+      Node | null,
+      any,
+      Context
+    > /** The parent of this node. */;
+    children?: ChildrenResolver<
+      (Node | null)[] | null,
+      any,
+      Context
+    > /** The children of this node. */;
+    childMarkdownRemark?: ChildMarkdownRemarkResolver<
+      MarkdownRemark | null,
+      any,
+      Context
+    > /** The child of this node of type markdownRemark */;
+    secondColumnContent?: SecondColumnContentResolver<
+      string | null,
+      any,
+      Context
+    >;
+    internal?: InternalResolver<Internal_37 | null, any, Context>;
+  }
+
+  export type IdResolver<R = string, Parent = any, Context = any> = Resolver<
+    R,
+    Parent,
+    Context
+  >;
+  export type ParentResolver<
+    R = Node | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type ChildrenResolver<
+    R = (Node | null)[] | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type ChildMarkdownRemarkResolver<
+    R = MarkdownRemark | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type SecondColumnContentResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type InternalResolver<
+    R = Internal_37 | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+
+export namespace Internal_37Resolvers {
+  export interface Resolvers<Context = any> {
+    type?: TypeResolver<string | null, any, Context>;
+    mediaType?: MediaTypeResolver<string | null, any, Context>;
+    content?: ContentResolver<string | null, any, Context>;
+    contentDigest?: ContentDigestResolver<string | null, any, Context>;
+    owner?: OwnerResolver<string | null, any, Context>;
+  }
+
+  export type TypeResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type MediaTypeResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type ContentResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type ContentDigestResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type OwnerResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+/** A connection to a list of items. */
+export namespace DatoCmsTwoColumnSectionSecondColumnContentTextNodeGroupConnectionConnectionResolvers {
+  export interface Resolvers<Context = any> {
+    pageInfo?: PageInfoResolver<
+      PageInfo,
+      any,
+      Context
+    > /** Information to aid in pagination. */;
+    edges?: EdgesResolver<
+      | (DatoCmsTwoColumnSectionSecondColumnContentTextNodeGroupConnectionEdge | null)[]
+      | null,
+      any,
+      Context
+    > /** A list of edges. */;
+    field?: FieldResolver<string | null, any, Context>;
+    fieldValue?: FieldValueResolver<string | null, any, Context>;
+    totalCount?: TotalCountResolver<number | null, any, Context>;
+  }
+
+  export type PageInfoResolver<
+    R = PageInfo,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type EdgesResolver<
+    R =
+      | (DatoCmsTwoColumnSectionSecondColumnContentTextNodeGroupConnectionEdge | null)[]
+      | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type FieldResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type FieldValueResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type TotalCountResolver<
+    R = number | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+/** An edge in a connection. */
+export namespace DatoCmsTwoColumnSectionSecondColumnContentTextNodeGroupConnectionEdgeResolvers {
+  export interface Resolvers<Context = any> {
+    node?: NodeResolver<
+      DatoCmsTwoColumnSectionSecondColumnContentTextNode | null,
+      any,
+      Context
+    > /** The item at the end of the edge */;
+    next?: NextResolver<
+      DatoCmsTwoColumnSectionSecondColumnContentTextNode | null,
+      any,
+      Context
+    > /** The next edge in the connection */;
+    previous?: PreviousResolver<
+      DatoCmsTwoColumnSectionSecondColumnContentTextNode | null,
+      any,
+      Context
+    > /** The previous edge in the connection */;
+  }
+
+  export type NodeResolver<
+    R = DatoCmsTwoColumnSectionSecondColumnContentTextNode | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type NextResolver<
+    R = DatoCmsTwoColumnSectionSecondColumnContentTextNode | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type PreviousResolver<
+    R = DatoCmsTwoColumnSectionSecondColumnContentTextNode | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+/** A connection to a list of items. */
 export namespace DatoCmsPriceConnectionResolvers {
   export interface Resolvers<Context = any> {
     pageInfo?: PageInfoResolver<
@@ -21694,7 +24891,7 @@ export namespace DatoCmsPriceResolvers {
       Context
     > /** The child of this node of type datoCmsSeoMetaTags */;
     originalId?: OriginalIdResolver<string | null, any, Context>;
-    internal?: InternalResolver<Internal_34 | null, any, Context>;
+    internal?: InternalResolver<Internal_38 | null, any, Context>;
     locale?: LocaleResolver<string | null, any, Context>;
     model?: ModelResolver<DatoCmsModel | null, any, Context>;
     title?: TitleResolver<string | null, any, Context>;
@@ -21732,7 +24929,7 @@ export namespace DatoCmsPriceResolvers {
     Context = any
   > = Resolver<R, Parent, Context>;
   export type InternalResolver<
-    R = Internal_34 | null,
+    R = Internal_38 | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
@@ -21797,7 +24994,7 @@ export namespace DatoCmsPriceResolvers {
   }
 }
 
-export namespace Internal_34Resolvers {
+export namespace Internal_38Resolvers {
   export interface Resolvers<Context = any> {
     type?: TypeResolver<string | null, any, Context>;
     contentDigest?: ContentDigestResolver<string | null, any, Context>;
@@ -22013,7 +25210,7 @@ export namespace DatoCmsWeekResolvers {
       Context
     > /** The child of this node of type datoCmsSeoMetaTags */;
     originalId?: OriginalIdResolver<string | null, any, Context>;
-    internal?: InternalResolver<Internal_35 | null, any, Context>;
+    internal?: InternalResolver<Internal_39 | null, any, Context>;
     locale?: LocaleResolver<string | null, any, Context>;
     model?: ModelResolver<DatoCmsModel | null, any, Context>;
     title?: TitleResolver<string | null, any, Context>;
@@ -22050,7 +25247,7 @@ export namespace DatoCmsWeekResolvers {
     Context = any
   > = Resolver<R, Parent, Context>;
   export type InternalResolver<
-    R = Internal_35 | null,
+    R = Internal_39 | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
@@ -22140,7 +25337,7 @@ export namespace DatoCmsWeekResolvers {
   }
 }
 
-export namespace Internal_35Resolvers {
+export namespace Internal_39Resolvers {
   export interface Resolvers<Context = any> {
     type?: TypeResolver<string | null, any, Context>;
     contentDigest?: ContentDigestResolver<string | null, any, Context>;
@@ -22361,7 +25558,7 @@ export namespace DatoCmsHomepageResolvers {
       Context
     > /** The child of this node of type datoCmsSeoMetaTags */;
     originalId?: OriginalIdResolver<string | null, any, Context>;
-    internal?: InternalResolver<Internal_36 | null, any, Context>;
+    internal?: InternalResolver<Internal_40 | null, any, Context>;
     locale?: LocaleResolver<string | null, any, Context>;
     model?: ModelResolver<DatoCmsModel | null, any, Context>;
     title?: TitleResolver<string | null, any, Context>;
@@ -22406,7 +25603,7 @@ export namespace DatoCmsHomepageResolvers {
     Context = any
   > = Resolver<R, Parent, Context>;
   export type InternalResolver<
-    R = Internal_36 | null,
+    R = Internal_40 | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
@@ -22460,233 +25657,8 @@ export namespace DatoCmsHomepageResolvers {
       | null /** Configures the locale Moment.js will use to format the date. */;
   }
 }
-/** Node of type DatoCmsAsset */
-export namespace DatoCmsAssetResolvers {
-  export interface Resolvers<Context = any> {
-    id?: IdResolver<string, any, Context> /** The id of this node. */;
-    parent?: ParentResolver<
-      Node | null,
-      any,
-      Context
-    > /** The parent of this node. */;
-    children?: ChildrenResolver<
-      (Node | null)[] | null,
-      any,
-      Context
-    > /** The children of this node. */;
-    internal?: InternalResolver<Internal_37 | null, any, Context>;
-    format?: FormatResolver<string | null, any, Context>;
-    size?: SizeResolver<number | null, any, Context>;
-    width?: WidthResolver<number | null, any, Context>;
-    height?: HeightResolver<number | null, any, Context>;
-    url?: UrlResolver<string | null, any, Context>;
-    resolutions?: ResolutionsResolver<DatoCmsFixed | null, any, Context>;
-    sizes?: SizesResolver<DatoCmsFluid | null, any, Context>;
-    inlineSvg?: InlineSvgResolver<string | null, any, Context>;
-    fluid?: FluidResolver<DatoCmsFluid | null, any, Context>;
-    fixed?: FixedResolver<DatoCmsFixed | null, any, Context>;
-  }
 
-  export type IdResolver<R = string, Parent = any, Context = any> = Resolver<
-    R,
-    Parent,
-    Context
-  >;
-  export type ParentResolver<
-    R = Node | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type ChildrenResolver<
-    R = (Node | null)[] | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type InternalResolver<
-    R = Internal_37 | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type FormatResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type SizeResolver<
-    R = number | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type WidthResolver<
-    R = number | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type HeightResolver<
-    R = number | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type UrlResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type ResolutionsResolver<
-    R = DatoCmsFixed | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context, ResolutionsArgs>;
-  export interface ResolutionsArgs {
-    width?: number | null;
-    height?: number | null;
-    imgixParams?: DatoCmsImgixParams | null;
-  }
-
-  export type SizesResolver<
-    R = DatoCmsFluid | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context, SizesArgs>;
-  export interface SizesArgs {
-    maxWidth?: number | null;
-    maxHeight?: number | null;
-    sizes?: string | null;
-    imgixParams?: DatoCmsImgixParams | null;
-  }
-
-  export type InlineSvgResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type FluidResolver<
-    R = DatoCmsFluid | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context, FluidArgs>;
-  export interface FluidArgs {
-    maxWidth?: number | null;
-    maxHeight?: number | null;
-    sizes?: string | null;
-    imgixParams?: DatoCmsImgixParams | null;
-  }
-
-  export type FixedResolver<
-    R = DatoCmsFixed | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context, FixedArgs>;
-  export interface FixedArgs {
-    width?: number | null;
-    height?: number | null;
-    imgixParams?: DatoCmsImgixParams | null;
-  }
-}
-
-export namespace Internal_37Resolvers {
-  export interface Resolvers<Context = any> {
-    type?: TypeResolver<string | null, any, Context>;
-    contentDigest?: ContentDigestResolver<string | null, any, Context>;
-    owner?: OwnerResolver<string | null, any, Context>;
-  }
-
-  export type TypeResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type ContentDigestResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type OwnerResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-}
-
-export namespace DatoCmsFixedResolvers {
-  export interface Resolvers<Context = any> {
-    base64?: Base64Resolver<string | null, any, Context>;
-    aspectRatio?: AspectRatioResolver<number | null, any, Context>;
-    width?: WidthResolver<number | null, any, Context>;
-    height?: HeightResolver<number | null, any, Context>;
-    src?: SrcResolver<string | null, any, Context>;
-    srcSet?: SrcSetResolver<string | null, any, Context>;
-  }
-
-  export type Base64Resolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type AspectRatioResolver<
-    R = number | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type WidthResolver<
-    R = number | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type HeightResolver<
-    R = number | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type SrcResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type SrcSetResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-}
-
-export namespace DatoCmsFluidResolvers {
-  export interface Resolvers<Context = any> {
-    base64?: Base64Resolver<string | null, any, Context>;
-    aspectRatio?: AspectRatioResolver<number | null, any, Context>;
-    src?: SrcResolver<string | null, any, Context>;
-    srcSet?: SrcSetResolver<string | null, any, Context>;
-    sizes?: SizesResolver<string | null, any, Context>;
-  }
-
-  export type Base64Resolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type AspectRatioResolver<
-    R = number | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type SrcResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type SrcSetResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type SizesResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-}
-
-export namespace Internal_36Resolvers {
+export namespace Internal_40Resolvers {
   export interface Resolvers<Context = any> {
     type?: TypeResolver<string | null, any, Context>;
     contentDigest?: ContentDigestResolver<string | null, any, Context>;
@@ -22733,13 +25705,13 @@ export namespace DatoCmsOneColumnSectionResolvers {
       any,
       Context
     > /** The child of this node of type datoCmsSeoMetaTags */;
-    childDatoCmsAsset?: ChildDatoCmsAssetResolver<
-      DatoCmsAsset | null,
+    childrenDatoCmsAsset?: ChildrenDatoCmsAssetResolver<
+      (DatoCmsAsset | null)[] | null,
       any,
       Context
-    > /** The child of this node of type datoCmsAsset */;
+    > /** The children of this node of type datoCmsAsset */;
     originalId?: OriginalIdResolver<string | null, any, Context>;
-    internal?: InternalResolver<Internal_38 | null, any, Context>;
+    internal?: InternalResolver<Internal_41 | null, any, Context>;
     locale?: LocaleResolver<string | null, any, Context>;
     model?: ModelResolver<DatoCmsModel | null, any, Context>;
     title?: TitleResolver<string | null, any, Context>;
@@ -22779,8 +25751,8 @@ export namespace DatoCmsOneColumnSectionResolvers {
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
-  export type ChildDatoCmsAssetResolver<
-    R = DatoCmsAsset | null,
+  export type ChildrenDatoCmsAssetResolver<
+    R = (DatoCmsAsset | null)[] | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
@@ -22790,7 +25762,7 @@ export namespace DatoCmsOneColumnSectionResolvers {
     Context = any
   > = Resolver<R, Parent, Context>;
   export type InternalResolver<
-    R = Internal_38 | null,
+    R = Internal_41 | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
@@ -22851,7 +25823,139 @@ export namespace DatoCmsOneColumnSectionResolvers {
   > = Resolver<R, Parent, Context>;
 }
 
-export namespace Internal_38Resolvers {
+export namespace Internal_41Resolvers {
+  export interface Resolvers<Context = any> {
+    type?: TypeResolver<string | null, any, Context>;
+    contentDigest?: ContentDigestResolver<string | null, any, Context>;
+    owner?: OwnerResolver<string | null, any, Context>;
+  }
+
+  export type TypeResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type ContentDigestResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type OwnerResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+/** Node of type DatoCmsFullWidthImage */
+export namespace DatoCmsFullWidthImageResolvers {
+  export interface Resolvers<Context = any> {
+    id?: IdResolver<string, any, Context> /** The id of this node. */;
+    parent?: ParentResolver<
+      Node | null,
+      any,
+      Context
+    > /** The parent of this node. */;
+    children?: ChildrenResolver<
+      (Node | null)[] | null,
+      any,
+      Context
+    > /** The children of this node. */;
+    childrenDatoCmsAsset?: ChildrenDatoCmsAssetResolver<
+      (DatoCmsAsset | null)[] | null,
+      any,
+      Context
+    > /** The children of this node of type datoCmsAsset */;
+    childDatoCmsSeoMetaTags?: ChildDatoCmsSeoMetaTagsResolver<
+      DatoCmsSeoMetaTags | null,
+      any,
+      Context
+    > /** The child of this node of type datoCmsSeoMetaTags */;
+    originalId?: OriginalIdResolver<string | null, any, Context>;
+    internal?: InternalResolver<Internal_42 | null, any, Context>;
+    locale?: LocaleResolver<string | null, any, Context>;
+    model?: ModelResolver<DatoCmsModel | null, any, Context>;
+    image?: ImageResolver<DatoCmsAsset | null, any, Context>;
+    seoMetaTags?: SeoMetaTagsResolver<DatoCmsSeoMetaTags | null, any, Context>;
+    updatedAt?: UpdatedAtResolver<Date | null, any, Context>;
+  }
+
+  export type IdResolver<R = string, Parent = any, Context = any> = Resolver<
+    R,
+    Parent,
+    Context
+  >;
+  export type ParentResolver<
+    R = Node | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type ChildrenResolver<
+    R = (Node | null)[] | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type ChildrenDatoCmsAssetResolver<
+    R = (DatoCmsAsset | null)[] | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type ChildDatoCmsSeoMetaTagsResolver<
+    R = DatoCmsSeoMetaTags | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type OriginalIdResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type InternalResolver<
+    R = Internal_42 | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type LocaleResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type ModelResolver<
+    R = DatoCmsModel | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type ImageResolver<
+    R = DatoCmsAsset | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type SeoMetaTagsResolver<
+    R = DatoCmsSeoMetaTags | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type UpdatedAtResolver<
+    R = Date | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context, UpdatedAtArgs>;
+  export interface UpdatedAtArgs {
+    formatString?:
+      | string
+      | null /** Format the date using Moment.js' date tokens e.g. "date(formatString: "YYYY MMMM DD)" See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens */;
+    fromNow?:
+      | boolean
+      | null /** Returns a string generated with Moment.js' fromNow function */;
+    difference?:
+      | string
+      | null /** Returns the difference between this date and the current time. Defaults to miliseconds but you can also pass in as the measurement years, months, weeks, days, hours, minutes, and seconds. */;
+    locale?:
+      | string
+      | null /** Configures the locale Moment.js will use to format the date. */;
+  }
+}
+
+export namespace Internal_42Resolvers {
   export interface Resolvers<Context = any> {
     type?: TypeResolver<string | null, any, Context>;
     contentDigest?: ContentDigestResolver<string | null, any, Context>;
@@ -22888,6 +25992,11 @@ export namespace DatoCmsTwoColumnSectionResolvers {
       any,
       Context
     > /** The children of this node. */;
+    childDatoCmsAsset?: ChildDatoCmsAssetResolver<
+      DatoCmsAsset | null,
+      any,
+      Context
+    > /** The child of this node of type datoCmsAsset */;
     childDatoCmsTwoColumnSectionFirstColumnContentTextNode?: ChildDatoCmsTwoColumnSectionFirstColumnContentTextNodeResolver<
       DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
       any,
@@ -22904,10 +26013,11 @@ export namespace DatoCmsTwoColumnSectionResolvers {
       Context
     > /** The child of this node of type datoCmsSeoMetaTags */;
     originalId?: OriginalIdResolver<string | null, any, Context>;
-    internal?: InternalResolver<Internal_39 | null, any, Context>;
+    internal?: InternalResolver<Internal_43 | null, any, Context>;
     locale?: LocaleResolver<string | null, any, Context>;
     model?: ModelResolver<DatoCmsModel | null, any, Context>;
     title?: TitleResolver<string | null, any, Context>;
+    headerImage?: HeaderImageResolver<DatoCmsAsset | null, any, Context>;
     firstColumnContentNode?: FirstColumnContentNodeResolver<
       DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
       any,
@@ -22947,6 +26057,11 @@ export namespace DatoCmsTwoColumnSectionResolvers {
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
+  export type ChildDatoCmsAssetResolver<
+    R = DatoCmsAsset | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
   export type ChildDatoCmsTwoColumnSectionFirstColumnContentTextNodeResolver<
     R = DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
     Parent = any,
@@ -22968,7 +26083,7 @@ export namespace DatoCmsTwoColumnSectionResolvers {
     Context = any
   > = Resolver<R, Parent, Context>;
   export type InternalResolver<
-    R = Internal_39 | null,
+    R = Internal_43 | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
@@ -22984,6 +26099,11 @@ export namespace DatoCmsTwoColumnSectionResolvers {
   > = Resolver<R, Parent, Context>;
   export type TitleResolver<
     R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type HeaderImageResolver<
+    R = DatoCmsAsset | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
@@ -23032,196 +26152,8 @@ export namespace DatoCmsTwoColumnSectionResolvers {
       | null /** Configures the locale Moment.js will use to format the date. */;
   }
 }
-/** Node of type DatoCmsTwoColumnSectionFirstColumnContentTextNode */
-export namespace DatoCmsTwoColumnSectionFirstColumnContentTextNodeResolvers {
-  export interface Resolvers<Context = any> {
-    id?: IdResolver<string, any, Context> /** The id of this node. */;
-    parent?: ParentResolver<
-      Node | null,
-      any,
-      Context
-    > /** The parent of this node. */;
-    children?: ChildrenResolver<
-      (Node | null)[] | null,
-      any,
-      Context
-    > /** The children of this node. */;
-    childMarkdownRemark?: ChildMarkdownRemarkResolver<
-      MarkdownRemark | null,
-      any,
-      Context
-    > /** The child of this node of type markdownRemark */;
-    firstColumnContent?: FirstColumnContentResolver<
-      string | null,
-      any,
-      Context
-    >;
-    internal?: InternalResolver<Internal_40 | null, any, Context>;
-  }
 
-  export type IdResolver<R = string, Parent = any, Context = any> = Resolver<
-    R,
-    Parent,
-    Context
-  >;
-  export type ParentResolver<
-    R = Node | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type ChildrenResolver<
-    R = (Node | null)[] | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type ChildMarkdownRemarkResolver<
-    R = MarkdownRemark | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type FirstColumnContentResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type InternalResolver<
-    R = Internal_40 | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-}
-
-export namespace Internal_40Resolvers {
-  export interface Resolvers<Context = any> {
-    type?: TypeResolver<string | null, any, Context>;
-    mediaType?: MediaTypeResolver<string | null, any, Context>;
-    content?: ContentResolver<string | null, any, Context>;
-    contentDigest?: ContentDigestResolver<string | null, any, Context>;
-    owner?: OwnerResolver<string | null, any, Context>;
-  }
-
-  export type TypeResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type MediaTypeResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type ContentResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type ContentDigestResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type OwnerResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-}
-/** Node of type DatoCmsTwoColumnSectionSecondColumnContentTextNode */
-export namespace DatoCmsTwoColumnSectionSecondColumnContentTextNodeResolvers {
-  export interface Resolvers<Context = any> {
-    id?: IdResolver<string, any, Context> /** The id of this node. */;
-    parent?: ParentResolver<
-      Node | null,
-      any,
-      Context
-    > /** The parent of this node. */;
-    children?: ChildrenResolver<
-      (Node | null)[] | null,
-      any,
-      Context
-    > /** The children of this node. */;
-    childMarkdownRemark?: ChildMarkdownRemarkResolver<
-      MarkdownRemark | null,
-      any,
-      Context
-    > /** The child of this node of type markdownRemark */;
-    secondColumnContent?: SecondColumnContentResolver<
-      string | null,
-      any,
-      Context
-    >;
-    internal?: InternalResolver<Internal_41 | null, any, Context>;
-  }
-
-  export type IdResolver<R = string, Parent = any, Context = any> = Resolver<
-    R,
-    Parent,
-    Context
-  >;
-  export type ParentResolver<
-    R = Node | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type ChildrenResolver<
-    R = (Node | null)[] | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type ChildMarkdownRemarkResolver<
-    R = MarkdownRemark | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type SecondColumnContentResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type InternalResolver<
-    R = Internal_41 | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-}
-
-export namespace Internal_41Resolvers {
-  export interface Resolvers<Context = any> {
-    type?: TypeResolver<string | null, any, Context>;
-    mediaType?: MediaTypeResolver<string | null, any, Context>;
-    content?: ContentResolver<string | null, any, Context>;
-    contentDigest?: ContentDigestResolver<string | null, any, Context>;
-    owner?: OwnerResolver<string | null, any, Context>;
-  }
-
-  export type TypeResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type MediaTypeResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type ContentResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type ContentDigestResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type OwnerResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-}
-
-export namespace Internal_39Resolvers {
+export namespace Internal_43Resolvers {
   export interface Resolvers<Context = any> {
     type?: TypeResolver<string | null, any, Context>;
     contentDigest?: ContentDigestResolver<string | null, any, Context>;
@@ -23413,138 +26345,6 @@ export namespace DatoCmsFullWidthImageEdgeResolvers {
   > = Resolver<R, Parent, Context>;
   export type PreviousResolver<
     R = DatoCmsFullWidthImage | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-}
-/** Node of type DatoCmsFullWidthImage */
-export namespace DatoCmsFullWidthImageResolvers {
-  export interface Resolvers<Context = any> {
-    id?: IdResolver<string, any, Context> /** The id of this node. */;
-    parent?: ParentResolver<
-      Node | null,
-      any,
-      Context
-    > /** The parent of this node. */;
-    children?: ChildrenResolver<
-      (Node | null)[] | null,
-      any,
-      Context
-    > /** The children of this node. */;
-    childDatoCmsAsset?: ChildDatoCmsAssetResolver<
-      DatoCmsAsset | null,
-      any,
-      Context
-    > /** The child of this node of type datoCmsAsset */;
-    childDatoCmsSeoMetaTags?: ChildDatoCmsSeoMetaTagsResolver<
-      DatoCmsSeoMetaTags | null,
-      any,
-      Context
-    > /** The child of this node of type datoCmsSeoMetaTags */;
-    originalId?: OriginalIdResolver<string | null, any, Context>;
-    internal?: InternalResolver<Internal_42 | null, any, Context>;
-    locale?: LocaleResolver<string | null, any, Context>;
-    model?: ModelResolver<DatoCmsModel | null, any, Context>;
-    image?: ImageResolver<DatoCmsAsset | null, any, Context>;
-    seoMetaTags?: SeoMetaTagsResolver<DatoCmsSeoMetaTags | null, any, Context>;
-    updatedAt?: UpdatedAtResolver<Date | null, any, Context>;
-  }
-
-  export type IdResolver<R = string, Parent = any, Context = any> = Resolver<
-    R,
-    Parent,
-    Context
-  >;
-  export type ParentResolver<
-    R = Node | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type ChildrenResolver<
-    R = (Node | null)[] | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type ChildDatoCmsAssetResolver<
-    R = DatoCmsAsset | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type ChildDatoCmsSeoMetaTagsResolver<
-    R = DatoCmsSeoMetaTags | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type OriginalIdResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type InternalResolver<
-    R = Internal_42 | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type LocaleResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type ModelResolver<
-    R = DatoCmsModel | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type ImageResolver<
-    R = DatoCmsAsset | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type SeoMetaTagsResolver<
-    R = DatoCmsSeoMetaTags | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type UpdatedAtResolver<
-    R = Date | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context, UpdatedAtArgs>;
-  export interface UpdatedAtArgs {
-    formatString?:
-      | string
-      | null /** Format the date using Moment.js' date tokens e.g. "date(formatString: "YYYY MMMM DD)" See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens */;
-    fromNow?:
-      | boolean
-      | null /** Returns a string generated with Moment.js' fromNow function */;
-    difference?:
-      | string
-      | null /** Returns the difference between this date and the current time. Defaults to miliseconds but you can also pass in as the measurement years, months, weeks, days, hours, minutes, and seconds. */;
-    locale?:
-      | string
-      | null /** Configures the locale Moment.js will use to format the date. */;
-  }
-}
-
-export namespace Internal_42Resolvers {
-  export interface Resolvers<Context = any> {
-    type?: TypeResolver<string | null, any, Context>;
-    contentDigest?: ContentDigestResolver<string | null, any, Context>;
-    owner?: OwnerResolver<string | null, any, Context>;
-  }
-
-  export type TypeResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type ContentDigestResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type OwnerResolver<
-    R = string | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
@@ -23803,7 +26603,7 @@ export namespace DatoCmsOneColumnSectionGroupConnectionEdgeResolvers {
   > = Resolver<R, Parent, Context>;
 }
 /** A connection to a list of items. */
-export namespace DatoCmsSiteConnectionResolvers {
+export namespace DatoCmsPageConnectionResolvers {
   export interface Resolvers<Context = any> {
     pageInfo?: PageInfoResolver<
       PageInfo,
@@ -23811,14 +26611,14 @@ export namespace DatoCmsSiteConnectionResolvers {
       Context
     > /** Information to aid in pagination. */;
     edges?: EdgesResolver<
-      (DatoCmsSiteEdge | null)[] | null,
+      (DatoCmsPageEdge | null)[] | null,
       any,
       Context
     > /** A list of edges. */;
     totalCount?: TotalCountResolver<number | null, any, Context>;
     distinct?: DistinctResolver<(string | null)[] | null, any, Context>;
     group?: GroupResolver<
-      (DatoCmsSiteGroupConnectionConnection | null)[] | null,
+      (DatoCmsPageGroupConnectionConnection | null)[] | null,
       any,
       Context
     >;
@@ -23830,7 +26630,7 @@ export namespace DatoCmsSiteConnectionResolvers {
     Context = any
   > = Resolver<R, Parent, Context>;
   export type EdgesResolver<
-    R = (DatoCmsSiteEdge | null)[] | null,
+    R = (DatoCmsPageEdge | null)[] | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
@@ -23845,58 +26645,58 @@ export namespace DatoCmsSiteConnectionResolvers {
     Context = any
   > = Resolver<R, Parent, Context, DistinctArgs>;
   export interface DistinctArgs {
-    field?: DatoCmsSiteDistinctEnum | null;
+    field?: DatoCmsPageDistinctEnum | null;
   }
 
   export type GroupResolver<
-    R = (DatoCmsSiteGroupConnectionConnection | null)[] | null,
+    R = (DatoCmsPageGroupConnectionConnection | null)[] | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context, GroupArgs>;
   export interface GroupArgs {
     skip?: number | null;
     limit?: number | null;
-    field?: DatoCmsSiteGroupEnum | null;
+    field?: DatoCmsPageGroupEnum | null;
   }
 }
 /** An edge in a connection. */
-export namespace DatoCmsSiteEdgeResolvers {
+export namespace DatoCmsPageEdgeResolvers {
   export interface Resolvers<Context = any> {
     node?: NodeResolver<
-      DatoCmsSite | null,
+      DatoCmsPage | null,
       any,
       Context
     > /** The item at the end of the edge */;
     next?: NextResolver<
-      DatoCmsSite | null,
+      DatoCmsPage | null,
       any,
       Context
     > /** The next edge in the connection */;
     previous?: PreviousResolver<
-      DatoCmsSite | null,
+      DatoCmsPage | null,
       any,
       Context
     > /** The previous edge in the connection */;
   }
 
   export type NodeResolver<
-    R = DatoCmsSite | null,
+    R = DatoCmsPage | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
   export type NextResolver<
-    R = DatoCmsSite | null,
+    R = DatoCmsPage | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
   export type PreviousResolver<
-    R = DatoCmsSite | null,
+    R = DatoCmsPage | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
 }
-/** Node of type DatoCmsSite */
-export namespace DatoCmsSiteResolvers {
+/** Node of type DatoCmsPage */
+export namespace DatoCmsPageResolvers {
   export interface Resolvers<Context = any> {
     id?: IdResolver<string, any, Context> /** The id of this node. */;
     parent?: ParentResolver<
@@ -23909,14 +26709,30 @@ export namespace DatoCmsSiteResolvers {
       any,
       Context
     > /** The children of this node. */;
-    name?: NameResolver<string | null, any, Context>;
-    locales?: LocalesResolver<(string | null)[] | null, any, Context>;
-    theme?: ThemeResolver<Theme_2 | null, any, Context>;
-    internalDomain?: InternalDomainResolver<string | null, any, Context>;
-    noIndex?: NoIndexResolver<boolean | null, any, Context>;
-    originalId?: OriginalIdResolver<Date | null, any, Context>;
-    internal?: InternalResolver<Internal_43 | null, any, Context>;
+    childDatoCmsAsset?: ChildDatoCmsAssetResolver<
+      DatoCmsAsset | null,
+      any,
+      Context
+    > /** The child of this node of type datoCmsAsset */;
+    childDatoCmsSeoMetaTags?: ChildDatoCmsSeoMetaTagsResolver<
+      DatoCmsSeoMetaTags | null,
+      any,
+      Context
+    > /** The child of this node of type datoCmsSeoMetaTags */;
+    originalId?: OriginalIdResolver<string | null, any, Context>;
+    internal?: InternalResolver<Internal_44 | null, any, Context>;
     locale?: LocaleResolver<string | null, any, Context>;
+    model?: ModelResolver<DatoCmsModel | null, any, Context>;
+    title?: TitleResolver<string | null, any, Context>;
+    slug?: SlugResolver<string | null, any, Context>;
+    headerImage?: HeaderImageResolver<DatoCmsAsset | null, any, Context>;
+    contenuDeLaPage?: ContenuDeLaPageResolver<
+      (UnionContenuDeLaPageNode_2 | null)[] | null,
+      any,
+      Context
+    >;
+    seoMetaTags?: SeoMetaTagsResolver<DatoCmsSeoMetaTags | null, any, Context>;
+    updatedAt?: UpdatedAtResolver<Date | null, any, Context>;
   }
 
   export type IdResolver<R = string, Parent = any, Context = any> = Resolver<
@@ -23934,37 +26750,67 @@ export namespace DatoCmsSiteResolvers {
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
-  export type NameResolver<
-    R = string | null,
+  export type ChildDatoCmsAssetResolver<
+    R = DatoCmsAsset | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
-  export type LocalesResolver<
-    R = (string | null)[] | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type ThemeResolver<
-    R = Theme_2 | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type InternalDomainResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type NoIndexResolver<
-    R = boolean | null,
+  export type ChildDatoCmsSeoMetaTagsResolver<
+    R = DatoCmsSeoMetaTags | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
   export type OriginalIdResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type InternalResolver<
+    R = Internal_44 | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type LocaleResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type ModelResolver<
+    R = DatoCmsModel | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type TitleResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type SlugResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type HeaderImageResolver<
+    R = DatoCmsAsset | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type ContenuDeLaPageResolver<
+    R = (UnionContenuDeLaPageNode_2 | null)[] | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type SeoMetaTagsResolver<
+    R = DatoCmsSeoMetaTags | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type UpdatedAtResolver<
     R = Date | null,
     Parent = any,
     Context = any
-  > = Resolver<R, Parent, Context, OriginalIdArgs>;
-  export interface OriginalIdArgs {
+  > = Resolver<R, Parent, Context, UpdatedAtArgs>;
+  export interface UpdatedAtArgs {
     formatString?:
       | string
       | null /** Format the date using Moment.js' date tokens e.g. "date(formatString: "YYYY MMMM DD)" See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens */;
@@ -23978,170 +26824,9 @@ export namespace DatoCmsSiteResolvers {
       | string
       | null /** Configures the locale Moment.js will use to format the date. */;
   }
-
-  export type InternalResolver<
-    R = Internal_43 | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type LocaleResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
 }
 
-export namespace Theme_2Resolvers {
-  export interface Resolvers<Context = any> {
-    primaryColor?: PrimaryColorResolver<PrimaryColor_2 | null, any, Context>;
-    lightColor?: LightColorResolver<LightColor_2 | null, any, Context>;
-    darkColor?: DarkColorResolver<DarkColor_2 | null, any, Context>;
-    accentColor?: AccentColorResolver<AccentColor_2 | null, any, Context>;
-  }
-
-  export type PrimaryColorResolver<
-    R = PrimaryColor_2 | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type LightColorResolver<
-    R = LightColor_2 | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type DarkColorResolver<
-    R = DarkColor_2 | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type AccentColorResolver<
-    R = AccentColor_2 | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-}
-
-export namespace PrimaryColor_2Resolvers {
-  export interface Resolvers<Context = any> {
-    red?: RedResolver<number | null, any, Context>;
-    blue?: BlueResolver<number | null, any, Context>;
-    alpha?: AlphaResolver<number | null, any, Context>;
-    green?: GreenResolver<number | null, any, Context>;
-  }
-
-  export type RedResolver<
-    R = number | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type BlueResolver<
-    R = number | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type AlphaResolver<
-    R = number | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type GreenResolver<
-    R = number | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-}
-
-export namespace LightColor_2Resolvers {
-  export interface Resolvers<Context = any> {
-    red?: RedResolver<number | null, any, Context>;
-    blue?: BlueResolver<number | null, any, Context>;
-    alpha?: AlphaResolver<number | null, any, Context>;
-    green?: GreenResolver<number | null, any, Context>;
-  }
-
-  export type RedResolver<
-    R = number | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type BlueResolver<
-    R = number | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type AlphaResolver<
-    R = number | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type GreenResolver<
-    R = number | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-}
-
-export namespace DarkColor_2Resolvers {
-  export interface Resolvers<Context = any> {
-    red?: RedResolver<number | null, any, Context>;
-    blue?: BlueResolver<number | null, any, Context>;
-    alpha?: AlphaResolver<number | null, any, Context>;
-    green?: GreenResolver<number | null, any, Context>;
-  }
-
-  export type RedResolver<
-    R = number | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type BlueResolver<
-    R = number | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type AlphaResolver<
-    R = number | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type GreenResolver<
-    R = number | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-}
-
-export namespace AccentColor_2Resolvers {
-  export interface Resolvers<Context = any> {
-    red?: RedResolver<number | null, any, Context>;
-    blue?: BlueResolver<number | null, any, Context>;
-    alpha?: AlphaResolver<number | null, any, Context>;
-    green?: GreenResolver<number | null, any, Context>;
-  }
-
-  export type RedResolver<
-    R = number | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type BlueResolver<
-    R = number | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type AlphaResolver<
-    R = number | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type GreenResolver<
-    R = number | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-}
-
-export namespace Internal_43Resolvers {
+export namespace Internal_44Resolvers {
   export interface Resolvers<Context = any> {
     type?: TypeResolver<string | null, any, Context>;
     contentDigest?: ContentDigestResolver<string | null, any, Context>;
@@ -24165,7 +26850,7 @@ export namespace Internal_43Resolvers {
   > = Resolver<R, Parent, Context>;
 }
 /** A connection to a list of items. */
-export namespace DatoCmsSiteGroupConnectionConnectionResolvers {
+export namespace DatoCmsPageGroupConnectionConnectionResolvers {
   export interface Resolvers<Context = any> {
     pageInfo?: PageInfoResolver<
       PageInfo,
@@ -24173,7 +26858,7 @@ export namespace DatoCmsSiteGroupConnectionConnectionResolvers {
       Context
     > /** Information to aid in pagination. */;
     edges?: EdgesResolver<
-      (DatoCmsSiteGroupConnectionEdge | null)[] | null,
+      (DatoCmsPageGroupConnectionEdge | null)[] | null,
       any,
       Context
     > /** A list of edges. */;
@@ -24188,7 +26873,7 @@ export namespace DatoCmsSiteGroupConnectionConnectionResolvers {
     Context = any
   > = Resolver<R, Parent, Context>;
   export type EdgesResolver<
-    R = (DatoCmsSiteGroupConnectionEdge | null)[] | null,
+    R = (DatoCmsPageGroupConnectionEdge | null)[] | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
@@ -24209,397 +26894,37 @@ export namespace DatoCmsSiteGroupConnectionConnectionResolvers {
   > = Resolver<R, Parent, Context>;
 }
 /** An edge in a connection. */
-export namespace DatoCmsSiteGroupConnectionEdgeResolvers {
+export namespace DatoCmsPageGroupConnectionEdgeResolvers {
   export interface Resolvers<Context = any> {
     node?: NodeResolver<
-      DatoCmsSite | null,
+      DatoCmsPage | null,
       any,
       Context
     > /** The item at the end of the edge */;
     next?: NextResolver<
-      DatoCmsSite | null,
+      DatoCmsPage | null,
       any,
       Context
     > /** The next edge in the connection */;
     previous?: PreviousResolver<
-      DatoCmsSite | null,
+      DatoCmsPage | null,
       any,
       Context
     > /** The previous edge in the connection */;
   }
 
   export type NodeResolver<
-    R = DatoCmsSite | null,
+    R = DatoCmsPage | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
   export type NextResolver<
-    R = DatoCmsSite | null,
+    R = DatoCmsPage | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
   export type PreviousResolver<
-    R = DatoCmsSite | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-}
-/** A connection to a list of items. */
-export namespace DatoCmsTwoColumnSectionFirstColumnContentTextNodeConnectionResolvers {
-  export interface Resolvers<Context = any> {
-    pageInfo?: PageInfoResolver<
-      PageInfo,
-      any,
-      Context
-    > /** Information to aid in pagination. */;
-    edges?: EdgesResolver<
-      (DatoCmsTwoColumnSectionFirstColumnContentTextNodeEdge | null)[] | null,
-      any,
-      Context
-    > /** A list of edges. */;
-    totalCount?: TotalCountResolver<number | null, any, Context>;
-    distinct?: DistinctResolver<(string | null)[] | null, any, Context>;
-    group?: GroupResolver<
-      | (DatoCmsTwoColumnSectionFirstColumnContentTextNodeGroupConnectionConnection | null)[]
-      | null,
-      any,
-      Context
-    >;
-  }
-
-  export type PageInfoResolver<
-    R = PageInfo,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type EdgesResolver<
-    R = (DatoCmsTwoColumnSectionFirstColumnContentTextNodeEdge | null)[] | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type TotalCountResolver<
-    R = number | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type DistinctResolver<
-    R = (string | null)[] | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context, DistinctArgs>;
-  export interface DistinctArgs {
-    field?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeDistinctEnum | null;
-  }
-
-  export type GroupResolver<
-    R =
-      | (DatoCmsTwoColumnSectionFirstColumnContentTextNodeGroupConnectionConnection | null)[]
-      | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context, GroupArgs>;
-  export interface GroupArgs {
-    skip?: number | null;
-    limit?: number | null;
-    field?: DatoCmsTwoColumnSectionFirstColumnContentTextNodeGroupEnum | null;
-  }
-}
-/** An edge in a connection. */
-export namespace DatoCmsTwoColumnSectionFirstColumnContentTextNodeEdgeResolvers {
-  export interface Resolvers<Context = any> {
-    node?: NodeResolver<
-      DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
-      any,
-      Context
-    > /** The item at the end of the edge */;
-    next?: NextResolver<
-      DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
-      any,
-      Context
-    > /** The next edge in the connection */;
-    previous?: PreviousResolver<
-      DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
-      any,
-      Context
-    > /** The previous edge in the connection */;
-  }
-
-  export type NodeResolver<
-    R = DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type NextResolver<
-    R = DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type PreviousResolver<
-    R = DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-}
-/** A connection to a list of items. */
-export namespace DatoCmsTwoColumnSectionFirstColumnContentTextNodeGroupConnectionConnectionResolvers {
-  export interface Resolvers<Context = any> {
-    pageInfo?: PageInfoResolver<
-      PageInfo,
-      any,
-      Context
-    > /** Information to aid in pagination. */;
-    edges?: EdgesResolver<
-      | (DatoCmsTwoColumnSectionFirstColumnContentTextNodeGroupConnectionEdge | null)[]
-      | null,
-      any,
-      Context
-    > /** A list of edges. */;
-    field?: FieldResolver<string | null, any, Context>;
-    fieldValue?: FieldValueResolver<string | null, any, Context>;
-    totalCount?: TotalCountResolver<number | null, any, Context>;
-  }
-
-  export type PageInfoResolver<
-    R = PageInfo,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type EdgesResolver<
-    R =
-      | (DatoCmsTwoColumnSectionFirstColumnContentTextNodeGroupConnectionEdge | null)[]
-      | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type FieldResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type FieldValueResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type TotalCountResolver<
-    R = number | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-}
-/** An edge in a connection. */
-export namespace DatoCmsTwoColumnSectionFirstColumnContentTextNodeGroupConnectionEdgeResolvers {
-  export interface Resolvers<Context = any> {
-    node?: NodeResolver<
-      DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
-      any,
-      Context
-    > /** The item at the end of the edge */;
-    next?: NextResolver<
-      DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
-      any,
-      Context
-    > /** The next edge in the connection */;
-    previous?: PreviousResolver<
-      DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
-      any,
-      Context
-    > /** The previous edge in the connection */;
-  }
-
-  export type NodeResolver<
-    R = DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type NextResolver<
-    R = DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type PreviousResolver<
-    R = DatoCmsTwoColumnSectionFirstColumnContentTextNode | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-}
-/** A connection to a list of items. */
-export namespace DatoCmsTwoColumnSectionSecondColumnContentTextNodeConnectionResolvers {
-  export interface Resolvers<Context = any> {
-    pageInfo?: PageInfoResolver<
-      PageInfo,
-      any,
-      Context
-    > /** Information to aid in pagination. */;
-    edges?: EdgesResolver<
-      (DatoCmsTwoColumnSectionSecondColumnContentTextNodeEdge | null)[] | null,
-      any,
-      Context
-    > /** A list of edges. */;
-    totalCount?: TotalCountResolver<number | null, any, Context>;
-    distinct?: DistinctResolver<(string | null)[] | null, any, Context>;
-    group?: GroupResolver<
-      | (DatoCmsTwoColumnSectionSecondColumnContentTextNodeGroupConnectionConnection | null)[]
-      | null,
-      any,
-      Context
-    >;
-  }
-
-  export type PageInfoResolver<
-    R = PageInfo,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type EdgesResolver<
-    R =
-      | (DatoCmsTwoColumnSectionSecondColumnContentTextNodeEdge | null)[]
-      | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type TotalCountResolver<
-    R = number | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type DistinctResolver<
-    R = (string | null)[] | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context, DistinctArgs>;
-  export interface DistinctArgs {
-    field?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeDistinctEnum | null;
-  }
-
-  export type GroupResolver<
-    R =
-      | (DatoCmsTwoColumnSectionSecondColumnContentTextNodeGroupConnectionConnection | null)[]
-      | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context, GroupArgs>;
-  export interface GroupArgs {
-    skip?: number | null;
-    limit?: number | null;
-    field?: DatoCmsTwoColumnSectionSecondColumnContentTextNodeGroupEnum | null;
-  }
-}
-/** An edge in a connection. */
-export namespace DatoCmsTwoColumnSectionSecondColumnContentTextNodeEdgeResolvers {
-  export interface Resolvers<Context = any> {
-    node?: NodeResolver<
-      DatoCmsTwoColumnSectionSecondColumnContentTextNode | null,
-      any,
-      Context
-    > /** The item at the end of the edge */;
-    next?: NextResolver<
-      DatoCmsTwoColumnSectionSecondColumnContentTextNode | null,
-      any,
-      Context
-    > /** The next edge in the connection */;
-    previous?: PreviousResolver<
-      DatoCmsTwoColumnSectionSecondColumnContentTextNode | null,
-      any,
-      Context
-    > /** The previous edge in the connection */;
-  }
-
-  export type NodeResolver<
-    R = DatoCmsTwoColumnSectionSecondColumnContentTextNode | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type NextResolver<
-    R = DatoCmsTwoColumnSectionSecondColumnContentTextNode | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type PreviousResolver<
-    R = DatoCmsTwoColumnSectionSecondColumnContentTextNode | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-}
-/** A connection to a list of items. */
-export namespace DatoCmsTwoColumnSectionSecondColumnContentTextNodeGroupConnectionConnectionResolvers {
-  export interface Resolvers<Context = any> {
-    pageInfo?: PageInfoResolver<
-      PageInfo,
-      any,
-      Context
-    > /** Information to aid in pagination. */;
-    edges?: EdgesResolver<
-      | (DatoCmsTwoColumnSectionSecondColumnContentTextNodeGroupConnectionEdge | null)[]
-      | null,
-      any,
-      Context
-    > /** A list of edges. */;
-    field?: FieldResolver<string | null, any, Context>;
-    fieldValue?: FieldValueResolver<string | null, any, Context>;
-    totalCount?: TotalCountResolver<number | null, any, Context>;
-  }
-
-  export type PageInfoResolver<
-    R = PageInfo,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type EdgesResolver<
-    R =
-      | (DatoCmsTwoColumnSectionSecondColumnContentTextNodeGroupConnectionEdge | null)[]
-      | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type FieldResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type FieldValueResolver<
-    R = string | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type TotalCountResolver<
-    R = number | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-}
-/** An edge in a connection. */
-export namespace DatoCmsTwoColumnSectionSecondColumnContentTextNodeGroupConnectionEdgeResolvers {
-  export interface Resolvers<Context = any> {
-    node?: NodeResolver<
-      DatoCmsTwoColumnSectionSecondColumnContentTextNode | null,
-      any,
-      Context
-    > /** The item at the end of the edge */;
-    next?: NextResolver<
-      DatoCmsTwoColumnSectionSecondColumnContentTextNode | null,
-      any,
-      Context
-    > /** The next edge in the connection */;
-    previous?: PreviousResolver<
-      DatoCmsTwoColumnSectionSecondColumnContentTextNode | null,
-      any,
-      Context
-    > /** The previous edge in the connection */;
-  }
-
-  export type NodeResolver<
-    R = DatoCmsTwoColumnSectionSecondColumnContentTextNode | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type NextResolver<
-    R = DatoCmsTwoColumnSectionSecondColumnContentTextNode | null,
-    Parent = any,
-    Context = any
-  > = Resolver<R, Parent, Context>;
-  export type PreviousResolver<
-    R = DatoCmsTwoColumnSectionSecondColumnContentTextNode | null,
+    R = DatoCmsPage | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
@@ -24778,7 +27103,7 @@ export namespace DatoCmsTwoColumnSectionGroupConnectionEdgeResolvers {
   > = Resolver<R, Parent, Context>;
 }
 /** A connection to a list of items. */
-export namespace DatoCmsAssetConnectionResolvers {
+export namespace DatoCmsSiteConnectionResolvers {
   export interface Resolvers<Context = any> {
     pageInfo?: PageInfoResolver<
       PageInfo,
@@ -24786,14 +27111,14 @@ export namespace DatoCmsAssetConnectionResolvers {
       Context
     > /** Information to aid in pagination. */;
     edges?: EdgesResolver<
-      (DatoCmsAssetEdge | null)[] | null,
+      (DatoCmsSiteEdge | null)[] | null,
       any,
       Context
     > /** A list of edges. */;
     totalCount?: TotalCountResolver<number | null, any, Context>;
     distinct?: DistinctResolver<(string | null)[] | null, any, Context>;
     group?: GroupResolver<
-      (DatoCmsAssetGroupConnectionConnection | null)[] | null,
+      (DatoCmsSiteGroupConnectionConnection | null)[] | null,
       any,
       Context
     >;
@@ -24805,7 +27130,7 @@ export namespace DatoCmsAssetConnectionResolvers {
     Context = any
   > = Resolver<R, Parent, Context>;
   export type EdgesResolver<
-    R = (DatoCmsAssetEdge | null)[] | null,
+    R = (DatoCmsSiteEdge | null)[] | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
@@ -24820,58 +27145,327 @@ export namespace DatoCmsAssetConnectionResolvers {
     Context = any
   > = Resolver<R, Parent, Context, DistinctArgs>;
   export interface DistinctArgs {
-    field?: DatoCmsAssetDistinctEnum | null;
+    field?: DatoCmsSiteDistinctEnum | null;
   }
 
   export type GroupResolver<
-    R = (DatoCmsAssetGroupConnectionConnection | null)[] | null,
+    R = (DatoCmsSiteGroupConnectionConnection | null)[] | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context, GroupArgs>;
   export interface GroupArgs {
     skip?: number | null;
     limit?: number | null;
-    field?: DatoCmsAssetGroupEnum | null;
+    field?: DatoCmsSiteGroupEnum | null;
   }
 }
 /** An edge in a connection. */
-export namespace DatoCmsAssetEdgeResolvers {
+export namespace DatoCmsSiteEdgeResolvers {
   export interface Resolvers<Context = any> {
     node?: NodeResolver<
-      DatoCmsAsset | null,
+      DatoCmsSite | null,
       any,
       Context
     > /** The item at the end of the edge */;
     next?: NextResolver<
-      DatoCmsAsset | null,
+      DatoCmsSite | null,
       any,
       Context
     > /** The next edge in the connection */;
     previous?: PreviousResolver<
-      DatoCmsAsset | null,
+      DatoCmsSite | null,
       any,
       Context
     > /** The previous edge in the connection */;
   }
 
   export type NodeResolver<
-    R = DatoCmsAsset | null,
+    R = DatoCmsSite | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
   export type NextResolver<
-    R = DatoCmsAsset | null,
+    R = DatoCmsSite | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
   export type PreviousResolver<
-    R = DatoCmsAsset | null,
+    R = DatoCmsSite | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+/** Node of type DatoCmsSite */
+export namespace DatoCmsSiteResolvers {
+  export interface Resolvers<Context = any> {
+    id?: IdResolver<string, any, Context> /** The id of this node. */;
+    parent?: ParentResolver<
+      Node | null,
+      any,
+      Context
+    > /** The parent of this node. */;
+    children?: ChildrenResolver<
+      (Node | null)[] | null,
+      any,
+      Context
+    > /** The children of this node. */;
+    name?: NameResolver<string | null, any, Context>;
+    locales?: LocalesResolver<(string | null)[] | null, any, Context>;
+    theme?: ThemeResolver<Theme_2 | null, any, Context>;
+    internalDomain?: InternalDomainResolver<string | null, any, Context>;
+    noIndex?: NoIndexResolver<boolean | null, any, Context>;
+    originalId?: OriginalIdResolver<Date | null, any, Context>;
+    internal?: InternalResolver<Internal_45 | null, any, Context>;
+    locale?: LocaleResolver<string | null, any, Context>;
+  }
+
+  export type IdResolver<R = string, Parent = any, Context = any> = Resolver<
+    R,
+    Parent,
+    Context
+  >;
+  export type ParentResolver<
+    R = Node | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type ChildrenResolver<
+    R = (Node | null)[] | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type NameResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type LocalesResolver<
+    R = (string | null)[] | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type ThemeResolver<
+    R = Theme_2 | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type InternalDomainResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type NoIndexResolver<
+    R = boolean | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type OriginalIdResolver<
+    R = Date | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context, OriginalIdArgs>;
+  export interface OriginalIdArgs {
+    formatString?:
+      | string
+      | null /** Format the date using Moment.js' date tokens e.g. "date(formatString: "YYYY MMMM DD)" See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens */;
+    fromNow?:
+      | boolean
+      | null /** Returns a string generated with Moment.js' fromNow function */;
+    difference?:
+      | string
+      | null /** Returns the difference between this date and the current time. Defaults to miliseconds but you can also pass in as the measurement years, months, weeks, days, hours, minutes, and seconds. */;
+    locale?:
+      | string
+      | null /** Configures the locale Moment.js will use to format the date. */;
+  }
+
+  export type InternalResolver<
+    R = Internal_45 | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type LocaleResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+
+export namespace Theme_2Resolvers {
+  export interface Resolvers<Context = any> {
+    primaryColor?: PrimaryColorResolver<PrimaryColor_2 | null, any, Context>;
+    lightColor?: LightColorResolver<LightColor_2 | null, any, Context>;
+    darkColor?: DarkColorResolver<DarkColor_2 | null, any, Context>;
+    accentColor?: AccentColorResolver<AccentColor_2 | null, any, Context>;
+  }
+
+  export type PrimaryColorResolver<
+    R = PrimaryColor_2 | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type LightColorResolver<
+    R = LightColor_2 | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type DarkColorResolver<
+    R = DarkColor_2 | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type AccentColorResolver<
+    R = AccentColor_2 | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+
+export namespace PrimaryColor_2Resolvers {
+  export interface Resolvers<Context = any> {
+    red?: RedResolver<number | null, any, Context>;
+    blue?: BlueResolver<number | null, any, Context>;
+    alpha?: AlphaResolver<number | null, any, Context>;
+    green?: GreenResolver<number | null, any, Context>;
+  }
+
+  export type RedResolver<
+    R = number | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type BlueResolver<
+    R = number | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type AlphaResolver<
+    R = number | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type GreenResolver<
+    R = number | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+
+export namespace LightColor_2Resolvers {
+  export interface Resolvers<Context = any> {
+    red?: RedResolver<number | null, any, Context>;
+    blue?: BlueResolver<number | null, any, Context>;
+    alpha?: AlphaResolver<number | null, any, Context>;
+    green?: GreenResolver<number | null, any, Context>;
+  }
+
+  export type RedResolver<
+    R = number | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type BlueResolver<
+    R = number | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type AlphaResolver<
+    R = number | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type GreenResolver<
+    R = number | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+
+export namespace DarkColor_2Resolvers {
+  export interface Resolvers<Context = any> {
+    red?: RedResolver<number | null, any, Context>;
+    blue?: BlueResolver<number | null, any, Context>;
+    alpha?: AlphaResolver<number | null, any, Context>;
+    green?: GreenResolver<number | null, any, Context>;
+  }
+
+  export type RedResolver<
+    R = number | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type BlueResolver<
+    R = number | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type AlphaResolver<
+    R = number | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type GreenResolver<
+    R = number | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+
+export namespace AccentColor_2Resolvers {
+  export interface Resolvers<Context = any> {
+    red?: RedResolver<number | null, any, Context>;
+    blue?: BlueResolver<number | null, any, Context>;
+    alpha?: AlphaResolver<number | null, any, Context>;
+    green?: GreenResolver<number | null, any, Context>;
+  }
+
+  export type RedResolver<
+    R = number | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type BlueResolver<
+    R = number | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type AlphaResolver<
+    R = number | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type GreenResolver<
+    R = number | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+}
+
+export namespace Internal_45Resolvers {
+  export interface Resolvers<Context = any> {
+    type?: TypeResolver<string | null, any, Context>;
+    contentDigest?: ContentDigestResolver<string | null, any, Context>;
+    owner?: OwnerResolver<string | null, any, Context>;
+  }
+
+  export type TypeResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type ContentDigestResolver<
+    R = string | null,
+    Parent = any,
+    Context = any
+  > = Resolver<R, Parent, Context>;
+  export type OwnerResolver<
+    R = string | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
 }
 /** A connection to a list of items. */
-export namespace DatoCmsAssetGroupConnectionConnectionResolvers {
+export namespace DatoCmsSiteGroupConnectionConnectionResolvers {
   export interface Resolvers<Context = any> {
     pageInfo?: PageInfoResolver<
       PageInfo,
@@ -24879,7 +27473,7 @@ export namespace DatoCmsAssetGroupConnectionConnectionResolvers {
       Context
     > /** Information to aid in pagination. */;
     edges?: EdgesResolver<
-      (DatoCmsAssetGroupConnectionEdge | null)[] | null,
+      (DatoCmsSiteGroupConnectionEdge | null)[] | null,
       any,
       Context
     > /** A list of edges. */;
@@ -24894,7 +27488,7 @@ export namespace DatoCmsAssetGroupConnectionConnectionResolvers {
     Context = any
   > = Resolver<R, Parent, Context>;
   export type EdgesResolver<
-    R = (DatoCmsAssetGroupConnectionEdge | null)[] | null,
+    R = (DatoCmsSiteGroupConnectionEdge | null)[] | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
@@ -24915,37 +27509,37 @@ export namespace DatoCmsAssetGroupConnectionConnectionResolvers {
   > = Resolver<R, Parent, Context>;
 }
 /** An edge in a connection. */
-export namespace DatoCmsAssetGroupConnectionEdgeResolvers {
+export namespace DatoCmsSiteGroupConnectionEdgeResolvers {
   export interface Resolvers<Context = any> {
     node?: NodeResolver<
-      DatoCmsAsset | null,
+      DatoCmsSite | null,
       any,
       Context
     > /** The item at the end of the edge */;
     next?: NextResolver<
-      DatoCmsAsset | null,
+      DatoCmsSite | null,
       any,
       Context
     > /** The next edge in the connection */;
     previous?: PreviousResolver<
-      DatoCmsAsset | null,
+      DatoCmsSite | null,
       any,
       Context
     > /** The previous edge in the connection */;
   }
 
   export type NodeResolver<
-    R = DatoCmsAsset | null,
+    R = DatoCmsSite | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
   export type NextResolver<
-    R = DatoCmsAsset | null,
+    R = DatoCmsSite | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
   export type PreviousResolver<
-    R = DatoCmsAsset | null,
+    R = DatoCmsSite | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
@@ -24970,7 +27564,7 @@ export namespace SiteResolvers {
     pathPrefix?: PathPrefixResolver<string | null, any, Context>;
     polyfill?: PolyfillResolver<boolean | null, any, Context>;
     buildTime?: BuildTimeResolver<Date | null, any, Context>;
-    internal?: InternalResolver<Internal_44 | null, any, Context>;
+    internal?: InternalResolver<Internal_46 | null, any, Context>;
   }
 
   export type IdResolver<R = string, Parent = any, Context = any> = Resolver<
@@ -25049,7 +27643,7 @@ export namespace SiteResolvers {
   }
 
   export type InternalResolver<
-    R = Internal_44 | null,
+    R = Internal_46 | null,
     Parent = any,
     Context = any
   > = Resolver<R, Parent, Context>;
@@ -25067,7 +27661,7 @@ export namespace SiteMetadata_2Resolvers {
   > = Resolver<R, Parent, Context>;
 }
 
-export namespace Internal_44Resolvers {
+export namespace Internal_46Resolvers {
   export interface Resolvers<Context = any> {
     contentDigest?: ContentDigestResolver<string | null, any, Context>;
     type?: TypeResolver<string | null, any, Context>;

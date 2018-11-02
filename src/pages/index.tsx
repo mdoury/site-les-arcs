@@ -1,6 +1,11 @@
 import * as React from 'react';
 
-import { DatoCmsHomepage, DatoCmsOneColumnSection, DatoCmsTwoColumnSection } from '../interfaces/gatsby-graphql.interface';
+import {
+  DatoCmsFullWidthImage,
+  DatoCmsHomepage,
+  DatoCmsOneColumnSection,
+  DatoCmsTwoColumnSection
+} from '../interfaces/gatsby-graphql.interface';
 import { Link, graphql } from 'gatsby';
 
 import Header from '../components/header';
@@ -17,41 +22,79 @@ export default class IndexPage extends React.Component<IndexPageProps> {
     const homePage = this.props.data.homePage;
     return (
       <Layout>
-        <Header title={ homePage.title } image={ homePage.headerImage } height="100vh" />
-        { homePage.content && homePage.content.map(content => {
+        <Header
+          title={homePage.title}
+          image={homePage.headerImage}
+          height="100vh"
+        />
+        {homePage.content &&
+          homePage.content.map(content => {
             if (content.model.apiKey === 'one_column_section') {
               const section = content as DatoCmsOneColumnSection;
               return (
                 <section key={section.id}>
-                  { section.headerImage
-                    ? <Header title={section.title} image={section.headerImage} height="400px"></Header>
-                    : <h2>{ section.title }</h2>
-                  }
-                  <article dangerouslySetInnerHTML={{
-                    __html: section.contentNode.childMarkdownRemark.html
-                  }} />
+                  {section.headerImage ? (
+                    <Header
+                      title={section.title}
+                      image={section.headerImage}
+                      height="400px"
+                    />
+                  ) : (
+                    <h2>{section.title}</h2>
+                  )}
+                  <article
+                    dangerouslySetInnerHTML={{
+                      __html: section.contentNode.childMarkdownRemark.html
+                    }}
+                  />
                 </section>
-              )
+              );
             } else if (content.model.apiKey === 'two_column_section') {
               const section = content as DatoCmsTwoColumnSection;
               return (
                 <section key={section.id}>
-                  { section.headerImage
-                    ? <Header title={section.title} image={section.headerImage} height="400px"></Header>
-                    : <h2>{ section.title }</h2>
-                  }
+                  {section.headerImage ? (
+                    <Header
+                      title={section.title}
+                      image={section.headerImage}
+                      height="400px"
+                    />
+                  ) : (
+                    <h2>{section.title}</h2>
+                  )}
                   <div className="two-colum-wrapper">
-                    <article dangerouslySetInnerHTML={{
-                      __html: section.firstColumnContentNode.childMarkdownRemark.html
-                    }} />
-                    <article dangerouslySetInnerHTML={{
-                      __html: section.secondColumnContentNode.childMarkdownRemark.html
-                    }} />
+                    <article
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          section.firstColumnContentNode.childMarkdownRemark
+                            .html
+                      }}
+                    />
+                    <article
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          section.secondColumnContentNode.childMarkdownRemark
+                            .html
+                      }}
+                    />
                   </div>
                 </section>
-              )
+              );
+            } else if (content.model.apiKey === 'full_width_image') {
+              const section = content as DatoCmsFullWidthImage;
+              return (
+                <section key={section.id}>
+                  {section.image && (
+                    <Img
+                    alt={section.image.alt}
+                      fluid={section.image.fluid}
+                      style={{ maxHeight: `400px` }}
+                    />
+                  )}
+                </section>
+              );
             }
-        })}
+          })}
       </Layout>
     );
   }
@@ -62,10 +105,8 @@ export const pageQuery = graphql`
     homePage: datoCmsHomepage {
       title
       headerImage {
-        fluid(
-          maxWidth: 2048
-          imgixParams: { fm: "jpg", auto: "compress" }
-        ) {
+        alt
+        fluid(maxWidth: 1440, imgixParams: { fm: "jpg", auto: "compress" }) {
           ...GatsbyDatoCmsFluid
         }
       }
@@ -73,6 +114,15 @@ export const pageQuery = graphql`
         ... on DatoCmsOneColumnSection {
           id
           title
+          headerImage {
+            alt
+            fluid(
+              maxWidth: 1440
+              imgixParams: { fm: "jpg", auto: "compress" }
+            ) {
+              ...GatsbyDatoCmsFluid
+            }
+          }
           contentNode {
             childMarkdownRemark {
               html
@@ -85,6 +135,14 @@ export const pageQuery = graphql`
         ... on DatoCmsTwoColumnSection {
           id
           title
+          headerImage {
+            fluid(
+              maxWidth: 1440
+              imgixParams: { fm: "jpg", auto: "compress" }
+            ) {
+              ...GatsbyDatoCmsFluid
+            }
+          }
           firstColumnContentNode {
             childMarkdownRemark {
               html
@@ -93,6 +151,21 @@ export const pageQuery = graphql`
           secondColumnContentNode {
             childMarkdownRemark {
               html
+            }
+          }
+          model {
+            apiKey
+          }
+        }
+        ... on DatoCmsFullWidthImage {
+          id
+          image {
+            alt
+            fluid(
+              maxWidth: 1440
+              imgixParams: { fm: "jpg", auto: "compress" }
+            ) {
+              ...GatsbyDatoCmsFluid
             }
           }
           model {
