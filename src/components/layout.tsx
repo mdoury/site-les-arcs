@@ -14,7 +14,7 @@ const Layout = ({ children }) => (
         datoCmsSite {
           name
           internalDomain
-          locales
+          locale
         }
       }
     `}
@@ -27,7 +27,7 @@ const Layout = ({ children }) => (
             { name: `keywords`, content: `` }
           ]}
         >
-          <html lang="data.datoCmsSite.locale" />
+          <html lang={data.datoCmsSite.locale} />
         </Helmet>
         <div
           className="children-wrapper"
