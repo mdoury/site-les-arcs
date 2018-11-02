@@ -37,7 +37,6 @@
     "gatsby-source-graphcms": "1.0.0-alpha.3",
     "gatsby-transformer-remark": "2.1.9",
     "gatsby-transformer-sharp": "2.1.5",
-    "graphcms-image": "^1.1.0-beta4",
     "graphql-tag": "^2.10.0",
     "node-sass": "^4.9.4",
     "react": "16.6.0",
@@ -50,6 +49,7 @@
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier-eslint --write \"src/**/*.{js|jsx|ts|tsx}\" \"gatsby-*.js\"",
+    "clean-cache": "rm -rf ./.cache",
     "lint": "npm run format",
     "test": "echo \"Error: no test specified\" && exit 1",
     "graphql-types": "yarn gql-gen --schema http://localhost:8000/___graphql --header 'Authorization: MY_KEY' --template graphql-codegen-typescript-template --out ./src/interfaces/ './src/**/*.graphql'"
