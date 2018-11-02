@@ -106,7 +106,7 @@ export const pageQuery = graphql`
       title
       headerImage {
         alt
-        fluid(maxWidth: 1440, imgixParams: { fm: "jpg", auto: "compress,format" }) {
+        fluid(maxWidth: 1440, imgixParams: { fm: "jpg", auto: "compress" }) {
           ...GatsbyDatoCmsFluid
         }
       }
@@ -118,7 +118,7 @@ export const pageQuery = graphql`
             alt
             fluid(
               maxWidth: 1440
-              imgixParams: { fm: "jpg", auto: "compress,format" }
+              imgixParams: { fm: "jpg", auto: "compress" }
             ) {
               ...GatsbyDatoCmsFluid 
             }
@@ -139,7 +139,7 @@ export const pageQuery = graphql`
             alt
             fluid(
               maxWidth: 1440
-              imgixParams: { fm: "jpg", auto: "compress,format" }
+              imgixParams: { fm: "jpg", auto: "compress" }
             ) {
               ...GatsbyDatoCmsFluid
             }
@@ -164,7 +164,7 @@ export const pageQuery = graphql`
             alt
             fluid(
               maxWidth: 1440
-              imgixParams: { fm: "jpg", auto: "compress,format" }
+              imgixParams: { fm: "jpg", auto: "compress" }
             ) {
               ...GatsbyDatoCmsFluid
             }
