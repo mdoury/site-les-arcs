@@ -13,8 +13,8 @@ export interface HeaderProps {
 }
 
 const Header = ({ title, image, height }: HeaderProps) => (
-  <section className="hero-section" style={{ maxHeight: height }}>
-    <Img className="hero--cover" fluid={image.fluid} alt={title} />
+  <section className="hero-section" style={{ height: height }}>
+    <Img className="hero--cover" alt={image.alt} fluid={image.fluid} style={{ height: height }} />
     <div className="hero--text-wrapper">
       <h1 className="hero--title">{title}</h1>
     </div>

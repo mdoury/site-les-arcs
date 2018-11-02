@@ -136,6 +136,7 @@ export const pageQuery = graphql`
           id
           title
           headerImage {
+            alt
             fluid(
               maxWidth: 1440
               imgixParams: { fm: "jpg", auto: "compress" }
