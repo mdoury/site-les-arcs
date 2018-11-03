@@ -27,6 +27,7 @@ import GatsbyImage from 'gatsby-image'
 import Header from '../components/Header'
 import { IconNames } from '@blueprintjs/icons'
 import Layout from '../components/Layout'
+import LazyLoading from '../components/LazyLoading'
 
 export interface IndexPageProps {
   data: {
@@ -64,12 +65,14 @@ export default class IndexPage extends React.Component<IndexPageProps> {
                   ) : (
                     <H2>{section.title}</H2>
                   )}
-                  <article
-                    className="column"
-                    dangerouslySetInnerHTML={{
-                      __html: section.contentNode!.childMarkdownRemark!.html!,
-                    }}
-                  />
+                  <LazyLoading>
+                    <article
+                      className="column"
+                      dangerouslySetInnerHTML={{
+                        __html: section.contentNode!.childMarkdownRemark!.html!,
+                      }}
+                    />
+                  </LazyLoading>
                 </Card>
               )
             }
@@ -78,20 +81,22 @@ export default class IndexPage extends React.Component<IndexPageProps> {
               return (
                 <Card key={section.id} elevation={Elevation.TWO} className="two-column-section">
                   <Header title={section.title} image={section.headerImage} height="400px" />
-                  <div className="two-colum-wrapper">
-                    <article
-                      className="column"
-                      dangerouslySetInnerHTML={{
-                        __html: section.firstColumnContentNode!.childMarkdownRemark!.html!,
-                      }}
-                    />
-                    <article
-                      className="column"
-                      dangerouslySetInnerHTML={{
-                        __html: section.secondColumnContentNode!.childMarkdownRemark!.html!,
-                      }}
-                    />
-                  </div>
+                  <LazyLoading>
+                    <div className="two-colum-wrapper">
+                      <article
+                        className="column"
+                        dangerouslySetInnerHTML={{
+                          __html: section.firstColumnContentNode!.childMarkdownRemark!.html!,
+                        }}
+                      />
+                      <article
+                        className="column"
+                        dangerouslySetInnerHTML={{
+                          __html: section.secondColumnContentNode!.childMarkdownRemark!.html!,
+                        }}
+                      />
+                    </div>
+                  </LazyLoading>
                 </Card>
               )
             }
@@ -118,7 +123,7 @@ export const pageQuery = graphql`
       title
       headerImage {
         alt
-        fluid(maxWidth: 2048, imgixParams: { fm: "jpg", auto: "compress", crop: "faces,edges" }) {
+        fluid(maxWidth: 2048, imgixParams: { fm: "jpg", auto: "compress" }) {
           ...GatsbyDatoCmsFluid
         }
       }

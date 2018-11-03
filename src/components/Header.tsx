@@ -12,13 +12,16 @@ export interface HeaderProps {
   image?: DatoCmsAsset | null
 }
 
-const Header = ({ title, image, height }: HeaderProps) => (
-  <section className="hero-section" style={{ height }}>
-    {image && <GatsbyImage className="hero--cover" alt={image.alt!} fluid={image.fluid!} style={{ height }} />}
-    <div className="hero--text-wrapper">
-      <H1 className="hero--title">{title}</H1>
-    </div>
-  </section>
-)
-
-export default Header
+export default class Header extends React.Component<HeaderProps> {
+  public render() {
+    const { title, image, height } = this.props
+    return (
+      <section className="hero-section" style={{ height }}>
+        {image && <GatsbyImage className="hero--cover" alt={image.alt!} fluid={image.fluid!} style={{ height }} />}
+        <div className="hero--text-wrapper">
+          <H1 className="hero--title">{title}</H1>
+        </div>
+      </section>
+    )
+  }
+}
