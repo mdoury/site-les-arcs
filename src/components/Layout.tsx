@@ -1,11 +1,11 @@
-import "./layout.scss";
+import './Layout.scss'
 
-import * as React from "react";
+import * as React from 'react'
 
-import { StaticQuery, graphql } from "gatsby";
+import { StaticQuery, graphql } from 'gatsby'
 
-import Header from "./header";
-import Helmet from "react-helmet";
+import Header from './Header'
+import Helmet from 'react-helmet'
 
 const Layout = ({ children }) => (
   <StaticQuery
@@ -22,17 +22,14 @@ const Layout = ({ children }) => (
       <>
         <Helmet
           title={data.datoCmsSite.name}
-          meta={[
-            { name: `description`, content: data.datoCmsSite.name },
-            { name: `keywords`, content: `` }
-          ]}
+          meta={[{ name: `description`, content: data.datoCmsSite.name }, { name: `keywords`, content: `` }]}
         >
           <html lang={data.datoCmsSite.locale} />
         </Helmet>
         <div
           className="children-wrapper"
           style={{
-            margin: `0 auto`
+            margin: `0 auto`,
           }}
         >
           {children}
@@ -40,6 +37,6 @@ const Layout = ({ children }) => (
       </>
     )}
   />
-);
+)
 
-export default Layout;
+export default Layout

@@ -1,8 +1,8 @@
-import { configQuery } from './queries/config.query';
+import { configQuery } from './queries/config.query'
 
 export const gatsbyConfig = {
   siteMetadata: {
-    title: `Renovation Man`
+    title: `Renovation Man`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -10,14 +10,14 @@ export const gatsbyConfig = {
       resolve: `gatsby-source-graphcms`,
       options: {
         endpoint: `https://api.graphcms.com/simple/v1/vinylbase`,
-        query: configQuery
-      }
+        query: configQuery,
+      },
     },
     {
       resolve: `gatsby-source-datocms`,
       options: {
-        apiToken: process.env.DATO_API_TOKEN
-      }
+        apiToken: process.env.DATO_API_TOKEN,
+      },
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
@@ -31,11 +31,11 @@ export const gatsbyConfig = {
               // It's important to specify the maxWidth (in pixels) of
               // the content container as this plugin uses this as the
               // base for generating different widths of each image.
-              maxWidth: 1024
-            }
-          }
-        ]
-      }
+              maxWidth: 1024,
+            },
+          },
+        ],
+      },
     },
     `gatsby-plugin-typescript`,
     `gatsby-plugin-sass`,
@@ -52,16 +52,16 @@ export const gatsbyConfig = {
           {
             src: `/favicons/chrome-192.png`,
             sizes: `192x192`,
-            type: `image/png`
+            type: `image/png`,
           },
           {
             src: `/favicons/chrome-512.png`,
             sizes: `512x512`,
-            type: `image/png`
-          }
-        ]
-      }
+            type: `image/png`,
+          },
+        ],
+      },
     },
-    `gatsby-plugin-offline`
-  ]
-};
+    `gatsby-plugin-offline`,
+  ],
+}

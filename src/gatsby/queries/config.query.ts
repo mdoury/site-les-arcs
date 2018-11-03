@@ -60,4 +60,4 @@ export const configQuery = `
       }
     }
   }
-`;
+`

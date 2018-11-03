@@ -1,32 +1,32 @@
-import * as React from "react";
+import * as React from 'react'
 
-import { Link, graphql } from "gatsby";
+import { Link, graphql } from 'gatsby'
 
-import Layout from "../components/layout";
+import Layout from '../components/Layout'
 
 export const allArtistQuery = graphql`
-query allArtist { 
-   allArtist {
-     edges {
-       node {
-         id
-         name
-         slug
-         picture {
-           id
-           handle
-           width
-           height
-         }
-       }
-     }
-   }
+  query allArtist {
+    allArtist {
+      edges {
+        node {
+          id
+          name
+          slug
+          picture {
+            id
+            handle
+            width
+            height
+          }
+        }
+      }
+    }
   }
-`;
+`
 
 export default class ArtistPage extends React.Component<any> {
-  render(): React.ReactNode {
-    const artists = this.props.data.allArtist.edges;
+  public render(): React.ReactNode {
+    const artists = this.props.data.allArtist.edges
     return (
       <Layout>
         <section className="artists" style={{ textAlign: `center` }}>
@@ -40,36 +40,33 @@ export default class ArtistPage extends React.Component<any> {
                 flexWrap: `wrap`,
                 alignItems: `center`,
                 justifyContent: `center`,
-                width: `100%`
+                width: `100%`,
               }}
             >
               {artists.map(({ node }, i) => (
                 <li
-                  key={node.id + `nav`}
+                  key={`${node.id}nav`}
                   style={{
                     marginBottom: `0.5rem`,
                     width: `128px`,
-
-                    flexBasis: `128px`
+                    flexBasis: `128px`,
                   }}
                 >
                   <Link
-                    to={`/artists/` + node.slug}
+                    to={`/artists/${node.slug}`}
                     style={{
-                      textDecoration: `none`
+                      textDecoration: `none`,
                     }}
                   >
                     <figure>
                       <img
-                        src={`https://media.graphcms.com/resize=w:224,h:224,a:top,fit:crop/${
-                          node.picture.handle
-                        }`}
+                        src={`https://media.graphcms.com/resize=w:224,h:224,a:top,fit:crop/${node.picture.handle}`}
                         alt={node.name}
                         title={node.name}
                         width="112"
                         style={{
                           marginBottom: `0`,
-                          marginTop: `0.125rem`
+                          marginTop: `0.125rem`,
                         }}
                       />
                       <figcaption>
@@ -77,7 +74,7 @@ export default class ArtistPage extends React.Component<any> {
                           style={{
                             fontSize: `0.5675rem`,
                             marginBottom: `0.125rem`,
-                            marginTop: `0`
+                            marginTop: `0`,
                           }}
                         >
                           {node.name}
@@ -91,6 +88,6 @@ export default class ArtistPage extends React.Component<any> {
           </nav>
         </section>
       </Layout>
-    );
+    )
   }
 }

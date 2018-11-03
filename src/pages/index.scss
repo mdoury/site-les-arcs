@@ -1,2 +1,17 @@
-{
+.one-column-section,
+.two-column-section {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    .column {
+        flex: 1 auto;
+        margin: 16px;
+        & + .column {
+            margin-left: 0;
+        }
+    }
+    .two-colum-wrapper {
+        display: flex;
+        flex-direction: row;
+    }
 }

@@ -1,6 +1,6 @@
 export interface TextNode {
-  valueText: string;
+  valueText: string
   childMarkdownRemark: {
-    html: string;
-  };
+    html: string
+  }
 }

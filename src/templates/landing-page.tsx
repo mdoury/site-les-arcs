@@ -4,7 +4,7 @@
 
 // import { GatsbyQueryResults } from '../interfaces/gatsby-query-results.interface';
 // import Img from 'gatsby-image';
-// import Layout from '../components/layout';
+// import Layout from '../components/Layout';
 // import { graphql } from 'gatsby';
 
 // export default class LandingPageDetailPageTemplate extends React.Component<GatsbyQueryResults> {
@@ -13,7 +13,7 @@
 //     return (
 //       <Layout>
 //         <div className="wrapper">
-          
+
 //           <section className="value-section">
 //             {landingPage.valueBlocks.map(valueBlock => (
 //               <article className="value-block" key={valueBlock.id}>

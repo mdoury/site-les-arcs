@@ -1,20 +1,20 @@
-import * as React from "react";
+import * as React from 'react'
 
-import { Link, graphql } from "gatsby";
+import { Link, graphql } from 'gatsby'
 
-import Layout from "../components/layout";
-import StarRatingComponent from "react-star-rating-component";
+import Layout from '../components/Layout'
+import StarRatingComponent from 'react-star-rating-component'
 
 export default class ReviewDetailTemplate extends React.Component<any> {
-  render() {
-    const { review, reviewMarkdown } = this.props.data;
+  public render() {
+    const { review, reviewMarkdown } = this.props.data
     return (
       <Layout>
         <div style={{ marginBottom: `4rem` }}>
           <article key={review.id} style={{ marginBottom: `3rem` }}>
             <h1 id={review.slug}>{review.title}</h1>
             <p>
-              for{" "}
+              for{' '}
               <Link to={`/records/${review.record.slug}`}>
                 <em>{review.record.title}</em>
               </Link>
@@ -26,10 +26,7 @@ export default class ReviewDetailTemplate extends React.Component<any> {
               </Link>
             </p>
             {review.rating && (
-              <div
-                className="star-wrapper"
-                style={{ fontSize: `1.5rem`, marginBottom: `1rem` }}
-              >
+              <div className="star-wrapper" style={{ fontSize: `1.5rem`, marginBottom: `1rem` }}>
                 <StarRatingComponent
                   name="Rating"
                   className="rating"
@@ -42,7 +39,7 @@ export default class ReviewDetailTemplate extends React.Component<any> {
             {reviewMarkdown.childMarkdownRemark.html && (
               <div
                 dangerouslySetInnerHTML={{
-                  __html: reviewMarkdown.childMarkdownRemark.html
+                  __html: reviewMarkdown.childMarkdownRemark.html,
                 }}
               />
             )}
@@ -59,14 +56,14 @@ export default class ReviewDetailTemplate extends React.Component<any> {
             style={{
               marginBottom: `3rem`,
               marginTop: `2.5rem`,
-              textTransform: `uppercase`
+              textTransform: `uppercase`,
             }}
           >
             <Link to="/reviews">All Reviews</Link>
           </h4>
         </div>
       </Layout>
-    );
+    )
   }
 }
 
@@ -98,4 +95,4 @@ export const ReviewDetailPageQuery = graphql`
       }
     }
   }
-`;
+`

@@ -1,20 +1,18 @@
-import * as React from "react";
+import * as React from 'react'
 
-import { Link, graphql } from "gatsby";
+import { Link, graphql } from 'gatsby'
 
-import Layout from "../components/layout";
+import Layout from '../components/Layout'
 
 export default class ArtistDetailTemplate extends React.Component<any> {
-  render() {
-    const { artist } = this.props.data;
+  public render() {
+    const { artist } = this.props.data
     return (
       <Layout>
         <h1 id={artist.slug}>{artist.name}</h1>
         <figure style={{ marginBottom: `3rem` }}>
           <img
-            src={`https://media.graphcms.com/resize=w:512,h:512,a:top,fit:crop/${
-              artist.picture.handle
-            }`}
+            src={`https://media.graphcms.com/resize=w:512,h:512,a:top,fit:crop/${artist.picture.handle}`}
             alt={artist.name}
             title={artist.name}
             width="256"
@@ -34,7 +32,7 @@ export default class ArtistDetailTemplate extends React.Component<any> {
             style={{
               marginBottom: `1rem`,
               marginTop: `3rem`,
-              textTransform: `uppercase`
+              textTransform: `uppercase`,
             }}
           >
             Records
@@ -44,7 +42,7 @@ export default class ArtistDetailTemplate extends React.Component<any> {
           <div
             key={record.id}
             style={{
-              marginBottom: `3rem`
+              marginBottom: `3rem`,
             }}
           >
             <h3>
@@ -56,7 +54,7 @@ export default class ArtistDetailTemplate extends React.Component<any> {
           <Link to="/artists">All Artists</Link>
         </h4>
       </Layout>
-    );
+    )
   }
 }
 
@@ -79,4 +77,4 @@ export const ArtistDetailPageQuery = graphql`
       }
     }
   }
-`;
+`

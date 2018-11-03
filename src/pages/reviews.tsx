@@ -1,38 +1,36 @@
-import * as React from 'react';
+import * as React from 'react'
 
-import { Link, graphql } from 'gatsby';
+import { Link, graphql } from 'gatsby'
 
-import Layout from '../components/layout';
-import StarRatingComponent from 'react-star-rating-component';
+import Layout from '../components/Layout'
+import StarRatingComponent from 'react-star-rating-component'
 
 class ReviewPage extends React.Component<any> {
-  render(): React.ReactNode {
-    const reviews = this.props.data.allReview.edges;
+  public render(): React.ReactNode {
+    const reviews = this.props.data.allReview.edges
     return (
       <Layout>
         <section className="reviews" style={{ textAlign: `center` }}>
           <h1>Reviews</h1>
           <nav>
-            <ul
-              style={{ listStyle: `none`, margin: `0 0 2rem`, width: `100%` }}
-            >
+            <ul style={{ listStyle: `none`, margin: `0 0 2rem`, width: `100%` }}>
               {reviews.map(({ node }, i) => (
                 <li
-                  key={node.id + `nav`}
+                  key={`${node.id}nav`}
                   style={{
-                    marginBottom: `2rem`
+                    marginBottom: `2rem`,
                   }}
                 >
                   <h3
                     style={{
                       marginBottom: `0.125rem`,
-                      marginTop: `0`
+                      marginTop: `0`,
                     }}
                   >
                     <Link
-                      to={`/reviews/` + node.slug}
+                      to={`/reviews/${node.slug}`}
                       style={{
-                        textDecoration: `none`
+                        textDecoration: `none`,
                       }}
                     >
                       {node.title}
@@ -52,10 +50,7 @@ class ReviewPage extends React.Component<any> {
                     </Link>
                   </p>
                   {node.rating && (
-                    <div
-                      className="star-wrapper small"
-                      style={{ fontSize: `0.5rem`, marginBottom: `2rem` }}
-                    >
+                    <div className="star-wrapper small" style={{ fontSize: `0.5rem`, marginBottom: `2rem` }}>
                       <StarRatingComponent
                         name="Rating"
                         className="rating"
@@ -71,11 +66,11 @@ class ReviewPage extends React.Component<any> {
           </nav>
         </section>
       </Layout>
-    );
+    )
   }
 }
 
-export default ReviewPage;
+export default ReviewPage
 
 export const ReviewPageQuery = graphql`
   query getAllReviews {
@@ -99,4 +94,4 @@ export const ReviewPageQuery = graphql`
       }
     }
   }
-`;
+`
