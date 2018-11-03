@@ -25,6 +25,7 @@ import { Link, graphql } from 'gatsby'
 
 import GatsbyImage from 'gatsby-image'
 import Header from '../components/Header'
+import { IconNames } from '@blueprintjs/icons'
 import Layout from '../components/Layout'
 
 export interface IndexPageProps {
@@ -47,9 +48,9 @@ export default class IndexPage extends React.Component<IndexPageProps> {
               <NavbarHeading className="nav-bar-heading">Les Arcs</NavbarHeading>
             </Link>
             <NavbarDivider />
-            <Button className={Classes.MINIMAL} icon="home" text="Duplex" />
-            <Button className={Classes.MINIMAL} icon="map-marker" text="Accès" />
-            <Button className={Classes.MINIMAL} icon="phone" text="Contact" />
+            <Button className={Classes.MINIMAL} icon={IconNames.HOME} text="Duplex" />
+            <Button className={Classes.MINIMAL} icon={IconNames.MAP_MARKER} text="Accès" />
+            <Button className={Classes.MINIMAL} icon={IconNames.PHONE} text="Contact" />
           </NavbarGroup>
         </Navbar>
         {homePage.content &&
