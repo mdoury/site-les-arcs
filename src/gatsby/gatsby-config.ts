@@ -42,8 +42,8 @@ export const gatsbyConfig = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Renovation Man`,
-        short_name: `Gatsby + GraphCMS`,
+        name: `Duplex - Les Arcs`,
+        short_name: `Duplex`,
         start_url: `/`,
         background_color: `#fff`,
         theme_color: `#61045f`,

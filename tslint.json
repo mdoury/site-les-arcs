@@ -1,5 +1,6 @@
 {
   "extends": [
+    "@blueprintjs/tslint-config/blueprint-rules",
     "tslint:recommended",
     "tslint-config-airbnb",
     "tslint-config-prettier",
@@ -16,6 +17,9 @@
     "no-console": [false],
     "no-unused-expression": true,
     "comment-format": false,
+    "blueprint-classes-constants": true,
+    "blueprint-icon-components": false,
+    "blueprint-html-components": true,
     "semicolon": [true, "never", "ignore-interfaces"],
     "trailing-comma": [
       true,
@@ -59,13 +63,7 @@
         "variable-declaration": "nospace"
       }
     ],
-    "variable-name": [
-      true,
-      "ban-keywords",
-      "check-format",
-      "allow-leading-underscore",
-      "allow-pascal-case"
-    ],
+    "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore", "allow-pascal-case"],
     "whitespace": [
       true,
       "check-branch",
