@@ -4,6 +4,7 @@ import GatsbyImage from 'gatsby-image'
 export default class LazyLoading extends React.Component<{ children: JSX.Element; className?: string }> {
   private io: IntersectionObserver | null = null
   private childrenWrapper: HTMLElement | null = null
+  private observers: { placeholder: HTMLImageElement; picture: HTMLPictureElement }[] = []
   public componentDidMount = () => {
     if (typeof IntersectionObserver === 'undefined') {
       return
@@ -12,19 +13,33 @@ export default class LazyLoading extends React.Component<{ children: JSX.Element
       entries => {
         for (const entry of entries) {
           if (entry.isIntersecting || entry.intersectionRatio > 0) {
-            if (entry.target instanceof HTMLImageElement) {
-              const image = entry.target
-              image.onload = () => {
-                image.style.visibility = `visible`
-                image.style.opacity = `1`
-              }
-              image.src = image.dataset.src!
-              image.removeAttribute('data-src')
-              image.srcset = image.dataset.srcset!
-              image.removeAttribute('data-srcset')
+            const placeholder = entry.target
+            if (placeholder instanceof HTMLImageElement) {
+              const matchingObserver = this.observers.find(obs => obs.placeholder === placeholder)
+              if (matchingObserver) {
+                const picture = matchingObserver.picture
+                if (picture) {
+                  placeholder.parentElement!.insertBefore(picture, placeholder.nextSibling)
+                  const sources = Array.from(picture.querySelectorAll('source'))
+                  const image = picture.querySelector('img')
+                  if (sources && image) {
+                    image.onload = () => {
+                      picture.style.opacity = `1`
+                      placeholder.style.opacity = `0`
+                    }
+                    image.src = image.dataset.src!
+                    image.removeAttribute('data-src')
+                    sources.map(source => {
+                      source.srcset = source.dataset.srcset!
+                      source.removeAttribute('data-srcset')
+                      return source
+                    })
 
-              if (this.io) {
-                this.io.unobserve(image)
+                    if (this.io) {
+                      this.io.unobserve(placeholder)
+                    }
+                  }
+                }
               }
             }
           }
@@ -34,12 +49,22 @@ export default class LazyLoading extends React.Component<{ children: JSX.Element
     )
 
     if (this.childrenWrapper) {
-      const images = Array.from(this.childrenWrapper.getElementsByTagName('img')).filter((image: HTMLImageElement) =>
-        image.classList.contains('lazy')
+      const pictures = Array.from(this.childrenWrapper.getElementsByTagName('picture'))
+      const lazyPictures = pictures.filter((picture: HTMLPictureElement) => picture.classList.contains('lazy'))
+      const lazyPlaceholders = lazyPictures.map(
+        (picture: HTMLPictureElement) =>
+          picture &&
+          picture.parentElement &&
+          (picture.parentElement.querySelector('img.lazy-placeholder') as HTMLImageElement)
       )
-      for (const image of images) {
-        this.io.observe(image)
-      }
+      lazyPictures.forEach((picture: HTMLPictureElement, idx: number) => {
+        const placeholder = lazyPlaceholders[idx]
+        if (placeholder && this.io) {
+          this.observers.push({ placeholder, picture })
+          picture.remove()
+          this.io.observe(placeholder)
+        }
+      })
     }
   }
 

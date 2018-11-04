@@ -59,7 +59,7 @@ export default class IndexPage extends React.Component<IndexPageProps> {
             if (content && content.model && content.model.apiKey === 'one_column_section') {
               const section = content as DatoCmsOneColumnSection
               return (
-                <Card key={section.id} className="one-column-section">
+                <Card key={section.id} elevation={Elevation.TWO} className="one-column-section">
                   {section.headerImage ? (
                     <Header title={section.title!} image={section.headerImage} height="400px" />
                   ) : (

@@ -24,7 +24,7 @@ module.exports = ({ markdownAST, pathPrefix, reporter }, pluginOptions) => {
     markdownImageNodes.push({ node })
   })
 
-  const generateImages = async ({ url, alt, reporter }) => {
+  const generateImages = async ({ url, alt, title, reporter }) => {
     const imageBuffer = await request({ url, encoding: null })
     const pipeline = sharp(imageBuffer)
 
@@ -68,12 +68,13 @@ module.exports = ({ markdownAST, pathPrefix, reporter }, pluginOptions) => {
       aspectRatio,
       base64,
       originalSrc: url,
+      presentationWidth,
+      presentationHeight,
       src: fallbackSrc,
       srcSet,
       srcSetType,
       sizes,
-      presentationWidth,
-      presentationHeight,
+      title,
     }
   }
 
@@ -88,25 +89,29 @@ module.exports = ({ markdownAST, pathPrefix, reporter }, pluginOptions) => {
     const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
 
     const imageClass = `gatsby-resp-image-image`
-    const imageStyle = `position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover; object-position: center center; opacity: 1; transition: opacity 0.5s ease 0.5s;`
+    const baseImageStyle = `position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover; object-position: center center;`
+    const imageStyle = `${baseImageStyle} opacity: 1; transition: opacity 0.3s ease 0.2s;`
+    const pictureStyle = `${baseImageStyle} opacity: 0; transition: opacity 0.5s ease 0s;`
 
     // Construct new image node w/ aspect ratio placeholder
     let rawHTML = `
-  <div class="hero--cover gatsby-image-wrapper" style="position: relative; overflow: hidden;">
+  <div class="gatsby-datocms-image-wrapper" style="position: relative; overflow: hidden;">
     <div style="padding-bottom: ${ratio};"></div>
-    <img 
+    <img class="lazy-placeholder"
       alt="${fluid.alt ? fluid.alt : defaultAlt}"
       src="${fluid.base64}" 
       style="${imageStyle}" />
+    <picture class="lazy" style="${pictureStyle}">
+      <source
+        data-srcset="${fluid.srcSet}"
+        sizes="${fluid.sizes}">
+      </source>
       <img
-        class="${imageClass} lazy"
-        style="${imageStyle}"
+        class="${imageClass}"
         alt="${fluid.alt ? fluid.alt : defaultAlt}"
         title="${fluid.title ? fluid.title : ``}"
-        data-src="${fluid.src}"
-        data-srcset="${fluid.srcSet}"
-        sizes="${fluid.sizes}"
-      />
+        data-src="${fluid.src}" />
+    </picture>
   </div>
   `
     return rawHTML

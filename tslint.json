@@ -14,6 +14,7 @@
     "import-name": false,
     "object-literal-sort-keys": false,
     "arrow-parens": false,
+    "array-type": false,
     "no-console": [false],
     "no-unused-expression": true,
     "comment-format": false,
