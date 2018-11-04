@@ -29,7 +29,7 @@ export default class DatoRemarkImages extends React.Component<{ children: JSX.El
     sources: Array.from(picture.querySelectorAll('source')),
     image: picture.querySelector('img')!,
   })
-  private handleImageLoad = (picture: HTMLPictureElement, placeholder: HTMLImageElement) => () => {
+  private handleImageLoaded = (picture: HTMLPictureElement, placeholder: HTMLImageElement) => () => {
     picture.style.opacity = `1`
     placeholder.style.opacity = `0`
     return true
@@ -43,7 +43,7 @@ export default class DatoRemarkImages extends React.Component<{ children: JSX.El
             this.insertPictureElement(placeholder, picture)
             const { sources, image } = this.getPictureChildrenElements(picture)
             if (sources && image) {
-              image.onload = this.handleImageLoad(picture, placeholder)
+              image.onload = this.handleImageLoaded(picture, placeholder)
               this.triggerImageLoad(sources, image)
             }
           }

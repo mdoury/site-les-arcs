@@ -1,10 +1,8 @@
-import './Layout.scss'
-
+import { graphql, StaticQuery } from 'gatsby'
 import * as React from 'react'
-
-import { StaticQuery, graphql } from 'gatsby'
-
 import Helmet from 'react-helmet'
+import DatoRemarkImages from './DatoRemarkImages'
+import './Layout.scss'
 
 export default class Layout extends React.Component<{ children: any }> {
   public render() {
@@ -28,14 +26,16 @@ export default class Layout extends React.Component<{ children: any }> {
             >
               <html lang={data.datoCmsSite.locale} />
             </Helmet>
-            <div
-              className="children-wrapper"
-              style={{
-                margin: `0 auto`,
-              }}
-            >
-              {children}
-            </div>
+            <DatoRemarkImages>
+              <div
+                className="children-wrapper"
+                style={{
+                  margin: `0 auto`,
+                }}
+              >
+                {children}
+              </div>
+            </DatoRemarkImages>
           </>
         )}
       />

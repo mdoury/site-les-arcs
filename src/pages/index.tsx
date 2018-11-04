@@ -1,42 +1,18 @@
-import './index.scss'
-
-import * as React from 'react'
-
-import {
-  Alignment,
-  Button,
-  Card,
-  Classes,
-  Elevation,
-  H2,
-  Navbar,
-  NavbarDivider,
-  NavbarGroup,
-  NavbarHeading,
-} from '@blueprintjs/core'
-import {
-  DatoCmsFullWidthImage,
-  DatoCmsHomepage,
-  DatoCmsOneColumnSection,
-  DatoCmsTwoColumnSection,
-  UnionContentNode_2,
-} from '../interfaces/gatsby-graphql.interface'
-import { Link, graphql } from 'gatsby'
-
-import GatsbyImage from 'gatsby-image'
-import Header from '../components/Header'
+import { Alignment, Button, Classes, Navbar, NavbarDivider, NavbarGroup, NavbarHeading } from '@blueprintjs/core'
 import { IconNames } from '@blueprintjs/icons'
+import { graphql, Link } from 'gatsby'
+import * as React from 'react'
+import Header from '../components/Header'
 import Layout from '../components/Layout'
-import DatoRemarkImages from '../components/DatoRemarkImages'
+import { ModularContent } from '../components/ModularContent/ModularContent'
+import { DatoCmsHomepage, UnionContentNode_2 } from '../interfaces/gatsby-graphql.interface'
+import './index.scss'
 
 export interface IndexPageProps {
   data: {
     homePage: DatoCmsHomepage
   }
 }
-
-export type IndexPageContent = UnionContentNode_2
-
 export default class IndexPage extends React.Component<IndexPageProps> {
   public render() {
     const homePage = this.props.data.homePage
@@ -54,60 +30,7 @@ export default class IndexPage extends React.Component<IndexPageProps> {
             <Button className={Classes.MINIMAL} icon={IconNames.PHONE} text="Contact" />
           </NavbarGroup>
         </Navbar>
-        {homePage.content &&
-          homePage.content.map((content: IndexPageContent | null) => {
-            if (content && content.model && content.model.apiKey === 'one_column_section') {
-              const section = content as DatoCmsOneColumnSection
-              return (
-                <Card key={section.id} elevation={Elevation.TWO} className="one-column-section">
-                  <Header title={section.title!} image={section.headerImage} height="400px" />
-                  <DatoRemarkImages>
-                    <article
-                      className="column"
-                      dangerouslySetInnerHTML={{
-                        __html: section.contentNode!.childMarkdownRemark!.html!,
-                      }}
-                    />
-                  </DatoRemarkImages>
-                </Card>
-              )
-            }
-            if (content && content.model && content.model.apiKey === 'two_column_section') {
-              const section = content as DatoCmsTwoColumnSection
-              return (
-                <Card key={section.id} elevation={Elevation.TWO} className="two-column-section">
-                  {section.headerImage && <Header title={section.title} image={section.headerImage} height="400px" />}
-                  <DatoRemarkImages>
-                    <div className="two-colum-wrapper">
-                      <article
-                        className="column"
-                        dangerouslySetInnerHTML={{
-                          __html: section.firstColumnContentNode!.childMarkdownRemark!.html!,
-                        }}
-                      />
-                      <article
-                        className="column"
-                        dangerouslySetInnerHTML={{
-                          __html: section.secondColumnContentNode!.childMarkdownRemark!.html!,
-                        }}
-                      />
-                    </div>
-                  </DatoRemarkImages>
-                </Card>
-              )
-            }
-            if (content && content.model && content.model.apiKey === 'full_width_image') {
-              const section = content as DatoCmsFullWidthImage
-              return (
-                <section key={section.id} className="full-width-image">
-                  {section.image && (
-                    <GatsbyImage alt={section.image.alt!} fluid={section.image.fluid!} style={{ height: `400px` }} />
-                  )}
-                </section>
-              )
-            }
-            return undefined
-          })}
+        {homePage.content && <ModularContent content={homePage.content} headerImageHeight="200px" />}
       </Layout>
     )
   }
