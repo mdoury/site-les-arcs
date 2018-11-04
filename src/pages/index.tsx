@@ -27,7 +27,7 @@ import GatsbyImage from 'gatsby-image'
 import Header from '../components/Header'
 import { IconNames } from '@blueprintjs/icons'
 import Layout from '../components/Layout'
-import LazyLoading from '../components/LazyLoading'
+import DatoRemarkImages from '../components/DatoRemarkImages'
 
 export interface IndexPageProps {
   data: {
@@ -65,14 +65,14 @@ export default class IndexPage extends React.Component<IndexPageProps> {
                   ) : (
                     <H2>{section.title}</H2>
                   )}
-                  <LazyLoading>
+                  <DatoRemarkImages>
                     <article
                       className="column"
                       dangerouslySetInnerHTML={{
                         __html: section.contentNode!.childMarkdownRemark!.html!,
                       }}
                     />
-                  </LazyLoading>
+                  </DatoRemarkImages>
                 </Card>
               )
             }
@@ -81,7 +81,7 @@ export default class IndexPage extends React.Component<IndexPageProps> {
               return (
                 <Card key={section.id} elevation={Elevation.TWO} className="two-column-section">
                   <Header title={section.title} image={section.headerImage} height="400px" />
-                  <LazyLoading>
+                  <DatoRemarkImages>
                     <div className="two-colum-wrapper">
                       <article
                         className="column"
@@ -96,7 +96,7 @@ export default class IndexPage extends React.Component<IndexPageProps> {
                         }}
                       />
                     </div>
-                  </LazyLoading>
+                  </DatoRemarkImages>
                 </Card>
               )
             }

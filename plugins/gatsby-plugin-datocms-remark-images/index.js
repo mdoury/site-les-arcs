@@ -1,4 +1,3 @@
-// const select = require(`unist-util-select`)
 const visitWithParents = require(`unist-util-visit-parents`)
 const { sortBy, minBy, defaults } = require(`lodash`)
 const Promise = require(`bluebird`)
@@ -24,7 +23,7 @@ module.exports = ({ markdownAST, pathPrefix, reporter }, pluginOptions) => {
     markdownImageNodes.push({ node })
   })
 
-  const generateImages = async ({ url, alt, title, reporter }) => {
+  const generateFluidImages = async ({ url, alt, title, reporter }) => {
     const imageBuffer = await request({ url, encoding: null })
     const pipeline = sharp(imageBuffer)
 
@@ -78,43 +77,70 @@ module.exports = ({ markdownAST, pathPrefix, reporter }, pluginOptions) => {
     }
   }
 
-  const generateHtmlImage = fluid => {
+  const generateHtmlTag = fluid => {
     // Calculate the paddingBottom %
     const ratio = `${(1 / fluid.aspectRatio) * 100}%`
 
     // Generate default alt tag
-    const srcSplit = fluid.originalSrc.split(`/`)
-    const fileName = srcSplit[srcSplit.length - 1]
-    const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
-    const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
+    if (!fluid.alt) {
+      const srcSplit = fluid.originalSrc.split(`/`)
+      const fileName = srcSplit[srcSplit.length - 1]
+      const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
+      fluid.alt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
+    }
 
     const imageClass = `gatsby-resp-image-image`
     const baseImageStyle = `position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover; object-position: center center;`
-    const imageStyle = `${baseImageStyle} opacity: 1; transition: opacity 0.3s ease 0.2s;`
-    const pictureStyle = `${baseImageStyle} opacity: 0; transition: opacity 0.5s ease 0s;`
+    const imageTagStyle = `${baseImageStyle} opacity: 1; transition: opacity 0.3s ease 0.2s;`
+    const pictureTagStyle = `${baseImageStyle} opacity: 0; transition: opacity 0.5s ease 0s;`
 
     // Construct new image node w/ aspect ratio placeholder
     let rawHTML = `
-  <div class="gatsby-datocms-image-wrapper" style="position: relative; overflow: hidden;">
+  <div class="datocms-remark-image-wrapper" style="position: relative; overflow: hidden;">
     <div style="padding-bottom: ${ratio};"></div>
-    <img class="lazy-placeholder"
-      alt="${fluid.alt ? fluid.alt : defaultAlt}"
+    <img class="datocms-lazy-placeholder"
+      alt="${fluid.alt}"
       src="${fluid.base64}" 
-      style="${imageStyle}" />
-    <picture class="lazy" style="${pictureStyle}">
+      style="${imageTagStyle}" />
+    <picture class="datocms-lazy-picture" 
+      style="${pictureTagStyle}">
       <source
         data-srcset="${fluid.srcSet}"
         sizes="${fluid.sizes}">
       </source>
       <img
         class="${imageClass}"
-        alt="${fluid.alt ? fluid.alt : defaultAlt}"
-        title="${fluid.title ? fluid.title : ``}"
+        alt="${fluid.alt}"
+        title="${fluid.title || fluid.alt}"
         data-src="${fluid.src}" />
     </picture>
   </div>
   `
     return rawHTML
+  }
+
+  const checkDatoCmsNode = node => {
+    try {
+      let [
+        datoCmsAssetUrl,
+        datoCmsAssetArgumentString,
+      ] = /^https:\/\/www\.datocms-assets\.com\/\d+\/.*\.[a-z]{3}(\?.*)?$/gi.exec(node.url)
+      if (datoCmsAssetUrl) {
+        if (datoCmsAssetArgumentString && datoCmsAssetArgumentString.length) {
+          const argumentStringIndex = datoCmsAssetUrl.indexOf(datoCmsAssetArgumentString)
+          if (argumentStringIndex !== -1) {
+            datoCmsAssetUrl = datoCmsAssetUrl.slice(0, argumentStringIndex)
+          }
+        }
+        node.url = datoCmsAssetUrl
+        return node
+      } else {
+        return undefined
+      }
+    } catch (error) {
+      console.error(error)
+      throw new Error(`Couldn't match image url: ${datoCmsAssetUrl}.\n${error}`)
+    }
   }
 
   return Promise.all(
@@ -126,17 +152,18 @@ module.exports = ({ markdownAST, pathPrefix, reporter }, pluginOptions) => {
 
           // Ignore gifs as we can't process them,
           // svgs as they are already responsive by definition
-          if (fileType !== `gif` && fileType !== `svg`) {
-            const rawHTML = await generateHtmlImage(await generateImages(node))
+          const datoCmsNode = checkDatoCmsNode(node)
+          if (datoCmsNode && fileType !== `gif` && fileType !== `svg`) {
+            const rawHTML = await generateHtmlTag(await generateFluidImages(datoCmsNode))
 
             if (rawHTML) {
               // Replace the image node with an inline HTML node.
-              node.type = `html`
-              node.value = rawHTML
+              datoCmsNode.type = `html`
+              datoCmsNode.value = rawHTML
             }
-            return resolve(node)
+            return resolve(datoCmsNode)
           } else {
-            // Image isn't relative so there's nothing for us to do.
+            // Image isn't served from DatoCMS...
             return resolve()
           }
         })
