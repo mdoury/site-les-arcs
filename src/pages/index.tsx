@@ -42,7 +42,7 @@ export default class IndexPage extends React.Component<IndexPageProps> {
     const homePage = this.props.data.homePage
     return (
       <Layout>
-        <Header title={homePage.title!} image={homePage.headerImage!} height="100vh" />
+        <Header title={homePage.title} critical={true} image={homePage.headerImage} height="100vh" />
         <Navbar className="nav-bar">
           <NavbarGroup align={Alignment.CENTER} className="nav-bar">
             <Link to="/">
@@ -60,11 +60,7 @@ export default class IndexPage extends React.Component<IndexPageProps> {
               const section = content as DatoCmsOneColumnSection
               return (
                 <Card key={section.id} elevation={Elevation.TWO} className="one-column-section">
-                  {section.headerImage ? (
-                    <Header title={section.title!} image={section.headerImage} height="400px" />
-                  ) : (
-                    <H2>{section.title}</H2>
-                  )}
+                  <Header title={section.title!} image={section.headerImage} height="400px" />
                   <DatoRemarkImages>
                     <article
                       className="column"

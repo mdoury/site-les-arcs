@@ -7,7 +7,7 @@ import GatsbyImage from 'gatsby-image'
 import { H1 } from '@blueprintjs/core'
 
 export interface HeaderProps {
-  image: DatoCmsAsset
+  image?: DatoCmsAsset | null
   title?: string | null
   height?: string
   critical?: boolean
@@ -15,7 +15,7 @@ export interface HeaderProps {
 
 export default class Header extends React.Component<HeaderProps> {
   public render() {
-    const { title, image, height, critical = true } = this.props
+    const { title, image, height, critical = false } = this.props
     return (
       <section className="hero-section" style={{ height }}>
         {image && (
@@ -27,9 +27,11 @@ export default class Header extends React.Component<HeaderProps> {
             style={{ height }}
           />
         )}
-        <div className="hero--text-wrapper">
-          <H1 className="hero--title">{title}</H1>
-        </div>
+        {title && (
+          <div className="hero--text-wrapper">
+            <H1 className="hero--title">{title}</H1>
+          </div>
+        )}
       </section>
     )
   }

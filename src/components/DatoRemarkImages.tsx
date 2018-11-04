@@ -1,5 +1,5 @@
 import * as React from 'react'
-interface Observer {
+interface References {
   placeholder: HTMLImageElement
   picture: HTMLPictureElement
 }
@@ -7,10 +7,10 @@ interface Observer {
 export default class DatoRemarkImages extends React.Component<{ children: JSX.Element; className?: string }> {
   private io: IntersectionObserver | null = null
   private childrenWrapper: HTMLElement | null = null
-  private observers: Observer[] = []
+  private references: References[] = []
 
-  private findPlaceholderObserver = (placeholder: HTMLElement): Observer | undefined =>
-    this.observers.find(obs => obs.placeholder === placeholder)
+  private findReferenceByPlaceholder = (placeholder: HTMLElement): References | undefined =>
+    this.references.find(ref => ref.placeholder === placeholder)
   private insertPictureElement = (placeholder: HTMLElement, picture: HTMLPictureElement): void => {
     placeholder.parentElement!.insertBefore(picture, placeholder.nextSibling)
   }
@@ -23,7 +23,6 @@ export default class DatoRemarkImages extends React.Component<{ children: JSX.El
       return source
     })
   }
-
   private getPictureChildrenElements = (
     picture: HTMLPictureElement
   ): { sources: HTMLSourceElement[]; image: HTMLImageElement } => ({
@@ -39,7 +38,7 @@ export default class DatoRemarkImages extends React.Component<{ children: JSX.El
     for (const entry of entries) {
       if (entry.isIntersecting || entry.intersectionRatio > 0) {
         if (entry.target instanceof HTMLImageElement) {
-          const { picture, placeholder } = this.findPlaceholderObserver(entry.target)!
+          const { picture, placeholder } = this.findReferenceByPlaceholder(entry.target)!
           if (picture) {
             this.insertPictureElement(placeholder, picture)
             const { sources, image } = this.getPictureChildrenElements(picture)
@@ -69,7 +68,7 @@ export default class DatoRemarkImages extends React.Component<{ children: JSX.El
   private setupLazyLoading = (placeholder: HTMLImageElement | null, picture: HTMLPictureElement) => {
     if (this.io && placeholder) {
       this.io.observe(placeholder)
-      this.observers.push({ placeholder, picture })
+      this.references.push({ placeholder, picture })
       picture.remove()
     }
   }
