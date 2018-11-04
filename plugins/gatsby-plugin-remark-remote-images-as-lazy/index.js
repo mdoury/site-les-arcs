@@ -72,17 +72,17 @@ module.exports = ({ markdownAST, pathPrefix, reporter }, pluginOptions) => {
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
     const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
 
-    // TODO
-    // Fade in images on load.
-    // https://www.perpetual-beta.org/weblog/silky-smooth-image-loading.html
-
     const imageClass = `gatsby-resp-image-image`
-    const imageStyle = `width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px ${
-      options.backgroundColor
-    };`
+    const imageStyle = `position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; object-fit: cover; object-position: center center; opacity: 1; transition: opacity 0.5s ease 0.5s;`
 
-    // Create our base image tag
-    let imageTag = `
+    // Construct new image node w/ aspect ratio placeholder
+    let rawHTML = `
+  <div class="hero--cover gatsby-image-wrapper" style="position: relative; overflow: hidden;">
+    <div style="padding-bottom: ${ratio};"></div>
+    <img 
+      alt="${node.alt ? node.alt : defaultAlt}"
+      src="${fluidResult.base64}" 
+      style="${imageStyle}" />
       <img
         class="${imageClass} lazy"
         style="${imageStyle}"
@@ -92,36 +92,8 @@ module.exports = ({ markdownAST, pathPrefix, reporter }, pluginOptions) => {
         data-srcset="${fluidResult.srcSet}"
         sizes="${fluidResult.sizes}"
       />
-    `
-
-    // Construct new image node w/ aspect ratio placeholder
-    const showCaptions = options.showCaptions && node.title
-    let rawHTML = `
-  <span
-    class="gatsby-resp-image-wrapper"
-    style="position: relative; display: block; ${
-      showCaptions ? `` : options.wrapperStyle
-    } max-width: ${presentationWidth}px; margin-left: auto; margin-right: auto;"
-  >
-    <span
-      class="gatsby-resp-image-background-image"
-      style="padding-bottom: ${ratio}; position: relative; bottom: 0; left: 0; background-image: url('${
-      fluidResult.base64
-    }'); background-size: cover; display: block;"
-    >${imageTag}</span>
-  </span>
+  </div>
   `
-
-    // Wrap in figure and use title as caption
-    if (showCaptions) {
-      rawHTML = `
-  <figure class="gatsby-resp-image-figure" style="${options.wrapperStyle}">
-  ${rawHTML}
-  <figcaption class="gatsby-resp-image-figcaption">${node.title}</figcaption>
-  </figure>
-      `
-    }
-
     return rawHTML
   }
 
