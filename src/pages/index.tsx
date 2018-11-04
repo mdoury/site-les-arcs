@@ -30,7 +30,7 @@ export default class IndexPage extends React.Component<IndexPageProps> {
             <Button className={Classes.MINIMAL} icon={IconNames.PHONE} text="Contact" />
           </NavbarGroup>
         </Navbar>
-        {homePage.content && <ModularContent content={homePage.content} headerImageHeight="200px" />}
+        {homePage.content && <ModularContent content={homePage.content} headerImageHeight="300px" />}
       </Layout>
     )
   }
