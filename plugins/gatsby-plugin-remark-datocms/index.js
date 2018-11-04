@@ -1,13 +1,12 @@
 // const select = require(`unist-util-select`)
 const visitWithParents = require(`unist-util-visit-parents`)
-const _ = require(`lodash`)
+const { sortBy, minBy, defaults } = require(`lodash`)
 const Promise = require(`bluebird`)
-const cheerio = require(`cheerio`)
 const sharp = require('sharp')
 const request = require('request-promise-native')
 
 module.exports = ({ markdownAST, pathPrefix, reporter }, pluginOptions) => {
-  const defaults = {
+  const defaultProps = {
     maxWidth: 650,
     wrapperStyle: ``,
     backgroundColor: `white`,
@@ -17,7 +16,7 @@ module.exports = ({ markdownAST, pathPrefix, reporter }, pluginOptions) => {
     withWebp: false,
   }
 
-  const options = _.defaults(pluginOptions, defaults)
+  const options = defaults(pluginOptions, defaultProps)
 
   // This will only work for markdown syntax image tags
   let markdownImageNodes = []
@@ -25,17 +24,38 @@ module.exports = ({ markdownAST, pathPrefix, reporter }, pluginOptions) => {
     markdownImageNodes.push({ node })
   })
 
-  const lazy = async ({ src, reporter }) => {
-    const imageBuffer = await request({ url: src, encoding: null })
+  const generateImages = async ({ url, alt, reporter }) => {
+    const imageBuffer = await request({ url, encoding: null })
     const pipeline = sharp(imageBuffer)
 
     const { width, height, format } = await pipeline.metadata()
     const aspectRatio = width / height
 
-    const presentationWidth = Math.min(2048, width)
+    const maxWidth = 2048
+    const presentationWidth = Math.min(maxWidth, width)
     const presentationHeight = Math.round(presentationWidth / aspectRatio)
     const sizes = `(max-width: ${presentationWidth}px) 100vw, ${presentationWidth}px`
-    const srcSet = `${src} ${Math.round(presentationWidth)}w`
+
+    const fluidSizes = [presentationWidth]
+    fluidSizes.push(presentationWidth / 4)
+    fluidSizes.push(presentationWidth / 2)
+    fluidSizes.push(presentationWidth * 1.5)
+    fluidSizes.push(presentationWidth * 2)
+    fluidSizes.push(presentationWidth * 3)
+
+    const filteredSizes = fluidSizes.filter(size => size < width)
+    filteredSizes.push(width)
+    const sortedSizes = sortBy(filteredSizes)
+    const images = sortedSizes.map(size => {
+      const roundedSize = Math.round(size)
+      return {
+        width: roundedSize,
+        src: `${url}?auto=compress&fit=crop&fm=jpg&h=${Math.round(size / aspectRatio)}&w=${roundedSize}`,
+      }
+    })
+    const fallbackSrc = minBy(images, image => Math.abs(presentationWidth - image.width)).src
+
+    const srcSet = images.map(image => `${image.src} ${Math.round(image.width)}w`).join(`,\n`)
     const srcSetType = `image/${format}`
 
     const thumbnailWidth = 20
@@ -44,9 +64,11 @@ module.exports = ({ markdownAST, pathPrefix, reporter }, pluginOptions) => {
     const base64 = `data:image/${info.format};base64,${buffer.toString('base64')}`
 
     return {
-      base64,
+      alt,
       aspectRatio,
-      src,
+      base64,
+      originalSrc: url,
+      src: fallbackSrc,
       srcSet,
       srcSetType,
       sizes,
@@ -55,19 +77,12 @@ module.exports = ({ markdownAST, pathPrefix, reporter }, pluginOptions) => {
     }
   }
 
-  // Takes a node and generates the needed images and then returns
-  // the needed HTML replacement for the image
-  const generateImagesAndUpdateNode = async function(node) {
-    const fluidResult = await lazy({ src: node.url })
-
+  const generateHtmlImage = fluid => {
     // Calculate the paddingBottom %
-    const ratio = `${(1 / fluidResult.aspectRatio) * 100}%`
-
-    const fallbackSrc = fluidResult.src
-    const presentationWidth = fluidResult.presentationWidth
+    const ratio = `${(1 / fluid.aspectRatio) * 100}%`
 
     // Generate default alt tag
-    const srcSplit = node.url.split(`/`)
+    const srcSplit = fluid.originalSrc.split(`/`)
     const fileName = srcSplit[srcSplit.length - 1]
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
     const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
@@ -80,17 +95,17 @@ module.exports = ({ markdownAST, pathPrefix, reporter }, pluginOptions) => {
   <div class="hero--cover gatsby-image-wrapper" style="position: relative; overflow: hidden;">
     <div style="padding-bottom: ${ratio};"></div>
     <img 
-      alt="${node.alt ? node.alt : defaultAlt}"
-      src="${fluidResult.base64}" 
+      alt="${fluid.alt ? fluid.alt : defaultAlt}"
+      src="${fluid.base64}" 
       style="${imageStyle}" />
       <img
         class="${imageClass} lazy"
         style="${imageStyle}"
-        alt="${node.alt ? node.alt : defaultAlt}"
-        title="${node.title ? node.title : ``}"
-        data-src="${fallbackSrc}"
-        data-srcset="${fluidResult.srcSet}"
-        sizes="${fluidResult.sizes}"
+        alt="${fluid.alt ? fluid.alt : defaultAlt}"
+        title="${fluid.title ? fluid.title : ``}"
+        data-src="${fluid.src}"
+        data-srcset="${fluid.srcSet}"
+        sizes="${fluid.sizes}"
       />
   </div>
   `
@@ -107,7 +122,7 @@ module.exports = ({ markdownAST, pathPrefix, reporter }, pluginOptions) => {
           // Ignore gifs as we can't process them,
           // svgs as they are already responsive by definition
           if (fileType !== `gif` && fileType !== `svg`) {
-            const rawHTML = await generateImagesAndUpdateNode(node)
+            const rawHTML = await generateHtmlImage(await generateImages(node))
 
             if (rawHTML) {
               // Replace the image node with an inline HTML node.

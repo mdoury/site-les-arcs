@@ -4,7 +4,6 @@ import GatsbyImage from 'gatsby-image'
 export default class LazyLoading extends React.Component<{ children: JSX.Element; className?: string }> {
   private io: IntersectionObserver | null = null
   private childrenWrapper: HTMLElement | null = null
-  private imageCache: { [id: string]: boolean } = {}
   public componentDidMount = () => {
     if (typeof IntersectionObserver === 'undefined') {
       return

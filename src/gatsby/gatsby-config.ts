@@ -26,7 +26,7 @@ export const gatsbyConfig = {
       options: {
         plugins: [
           {
-            resolve: `gatsby-plugin-remark-remote-images-as-lazy`,
+            resolve: `gatsby-plugin-remark-datocms`,
             options: {
               // It's important to specify the maxWidth (in pixels) of
               // the content container as this plugin uses this as the
