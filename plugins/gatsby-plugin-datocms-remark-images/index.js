@@ -114,6 +114,20 @@ module.exports = ({ markdownAST, pathPrefix, reporter }, pluginOptions) => {
         title="${fluid.title || fluid.alt}"
         data-src="${fluid.src}" />
     </picture>
+    <noscript>
+      <picture>
+        <source
+          srcset="${fluid.srcSet}"
+          sizes="${fluid.sizes}">
+        </source>
+        <img
+          alt="${fluid.alt}"
+          class="${imageClass}"
+          src="${fluid.src}"
+          style="${imageTagStyle}"
+          title="${fluid.title || fluid.alt}" />
+      </picture>
+    </noscript>
   </div>
   `
     return rawHTML

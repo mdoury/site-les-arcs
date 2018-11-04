@@ -80,7 +80,7 @@ export default class IndexPage extends React.Component<IndexPageProps> {
               const section = content as DatoCmsTwoColumnSection
               return (
                 <Card key={section.id} elevation={Elevation.TWO} className="two-column-section">
-                  <Header title={section.title} image={section.headerImage} height="400px" />
+                  {section.headerImage && <Header title={section.title} image={section.headerImage} height="400px" />}
                   <DatoRemarkImages>
                     <div className="two-colum-wrapper">
                       <article
